@@ -4,7 +4,7 @@
 ## Objetivos:
 - Desenvolver uma solução para um problema real do dia-a-dia;
 
-## Realizado por:
+## Autores:
 - Eduardo Rebelo (21105) -> Estudante de Licenciatura em Engenharia de Sistemas Informáticos - IPCA
 - João Oliveira (26001) -> Estudante de Licenciatura em Engenharia de Sistemas Informáticos - IPCA
 - Gonçalo Gonçalves (26019) -> Estudante de Licenciatura em Engenharia de Sistemas Informáticos - IPCA
