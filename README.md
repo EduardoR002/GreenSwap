@@ -1,12 +1,12 @@
-# Projeto Desenvolvimento de Software
-* Este é um repositório criado para a realização do projeto para a unidade curricular Projeto Desenvolvimento de Software (Linguagem C#, SQL)
+# Software Development Project
+* This is a repository created to carry out the project for the curricular unit Software Development Project (Language C#, SQL)
 
-## Objetivos:
-- Desenvolver uma solução para um problema real do dia-a-dia;
+## Goals:
+- Develop a solution to a real everyday problem;
 
-## Autores:
-- Eduardo Rebelo (21105) -> Estudante de Licenciatura em Engenharia de Sistemas Informáticos - IPCA
-- João Oliveira (26001) -> Estudante de Licenciatura em Engenharia de Sistemas Informáticos - IPCA
-- Gonçalo Gonçalves (26019) -> Estudante de Licenciatura em Engenharia de Sistemas Informáticos - IPCA
-- Pedro Daniel Fernandes Rei (26013) -> Estudante de Licenciatura em Engenharia de Sistemas Informáticos - IPCA
-- Rui Miguel (26016) -> Estudante de Licenciatura em Engenharia de Sistemas Informáticos - IPCA
+## Authors:
+- Eduardo Rebelo (21105) -> Degree Student in Computer Systems Engineering - IPCA
+- João Oliveira (26001) -> Degree Student in Computer Systems Engineering - IPCA
+- Gonçalo Gonçalves (26019) -> Degree Student in Computer Systems Engineering - IPCA
+- Pedro Daniel Fernandes Rei (26013) -> Degree Student in Computer Systems Engineering - IPCA
+- Rui Miguel (26016) -> Degree Student in Computer Systems Engineering - IPCA
