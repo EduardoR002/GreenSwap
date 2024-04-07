@@ -8,7 +8,7 @@ h1 {
 
 p {
     font-weight: bold;
-    font-size: 110%; /* tamanho do texto */
+    font-size: 140%; /* tamanho do texto */
     font-family: Arial, Helvetica, sans-serif; /* fonte do texto */
     text-align: justify;
 }
@@ -34,4 +34,13 @@ div.c {
     width: 12%; /* largura da div */
     border-radius: 10px; /* bordas arredondadas */
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* sombra */
+}
+
+
+div.d {
+    height: 50px; /* Altura da div */
+    width: 50%; /* Largura da div */
+    float: right; /* Alinha a div à direita */
+    margin-top: -270px; /* Espaço superior */
+    margin-right: 90px; /* Espaço direito */
 }
