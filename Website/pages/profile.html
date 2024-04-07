@@ -10,15 +10,17 @@
 
 <body>
     
-    <!--First section of the website that will contain clicable items for user go to other pages-->
-    <div class="container">
-        <div class="item"><a href="ranking.html"><img src="../images/Medal.png" style="width: 150px; height: 100px;"></a></div>
-        <div class="item"><a href="orders.html">Orders</a></div>
-        <div class="item"><a href="home.html"><img src="../images/GreenSwap.png" style="width: 150px; height: 100px;"></a></div>
-        <div class="item"><a href="aboutus.html">About us</a></div>
-        <div class="item"><a href="profile.html"><img src="../images/ProfileIcon.png" style="width: 100px; height: 100px;"></a></div>
-        <div class="item"><a href="buy.html"><img src="../images/BuyIcon.png" style="width: 100px; height: 100px;"></a></div>
-    </div>
+    <!--Navigation Script Topper-->
+    <script>
+        fetch('navigation.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('navigation').innerHTML = html;
+            });
+    </script>
+    
+    <!--Navigation Topper-->
+    <div id="navigation"></div>
 
 </body>
 </html>

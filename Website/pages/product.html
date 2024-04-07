@@ -6,6 +6,16 @@
     <title>Document</title>
 </head>
 <body>
+    <!--Navigation Script Topper-->
+    <script>
+        fetch('navigation.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('navigation').innerHTML = html;
+            });
+    </script>
     
+    <!--Navigation Topper-->
+    <div id="navigation"></div>
 </body>
 </html>
