@@ -1,0 +1,37 @@
+
+h1 {
+    font-weight: bold;
+    color: white; /* cor do texto */
+    font-size: 250%; /* tamanho do texto */
+    font-family: Helvética; /* fonte do texto */
+}
+
+p {
+    font-weight: bold;
+    font-size: 110%; /* tamanho do texto */
+    font-family: Arial, Helvetica, sans-serif; /* fonte do texto */
+    text-align: justify;
+}
+
+div.a {
+    background-color: burlywood;
+    width: 14.3%; /* largura da div */
+    border-radius: 10px; /* bordas arredondadas */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* sombra */
+}
+
+div.b {
+    
+    background-color: burlywood;
+    width: 10.9%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+div.c {
+    
+    background-color: burlywood;
+    width: 12%; /* largura da div */
+    border-radius: 10px; /* bordas arredondadas */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* sombra */
+}
