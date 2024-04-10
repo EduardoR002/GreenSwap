@@ -19,7 +19,7 @@ a {
 /*Style for personalize text box for Search products*/
 .search-container input[type=text] {
     padding: 10px;
-    margin-top: 10px;
+    margin-top: 10%;
     width: 25%;
     border: 2px solid black;
     border-radius: 5px;
