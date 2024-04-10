@@ -1,0 +1,50 @@
+/*Style for the body of the page*/
+body {
+    background-color: rgb(211, 246, 211);
+  }
+
+/* Style for personalize links */
+a {
+    text-decoration: none; /* Remove the underline */
+    color: black /* Change the color of clickable text */
+}
+
+
+.container {
+    position: absolute;
+    left: 13.3%;
+    right: 12%;
+    /* Define a largura máxima para evitar que os itens quebrem para a linha seguinte */
+    display: flex;
+    align-items: center;
+    width: 70%; /* largura da div */
+    height: 14%; /* altura da div */
+    background-color: rgb(32, 170, 92); /* cor de fundo */
+    border: 5px solid black; /* borda */
+    border-radius: 10px; /* bordas arredondadas */
+    padding: 10px; /* espaço interno */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* sombra */
+    text-align: center;
+    font-family: Helvética; /* fonte do texto */
+    color: black; /* cor do texto */
+    }
+
+    .item {
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        display: inline-block;
+        margin-right: 5.8%;
+        transition: transform 0.3s ease; /* Adiciona uma transição suave ao tamanho do botão */
+    }
+      
+    .item:hover {
+        transform: scale(1.1); /* Aumenta ligeiramente o tamanho do botão ao passar o mouse sobre ele */
+    }
+    
+      .item:first-child {
+        margin-left: 0; /* Remove a margem esquerda do primeiro item */
+      }
+      
+      .item:last-child {
+        margin-right: 0; /* Remove a margem direita do último item */
+      }
