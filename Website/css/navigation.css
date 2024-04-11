@@ -40,11 +40,4 @@ a {
     .item:hover {
         transform: scale(1.1); /* Aumenta ligeiramente o tamanho do botão ao passar o mouse sobre ele */
     }
-    
-      .item:first-child {
-        margin-left: 0; /* Remove a margem esquerda do primeiro item */
-      }
-      
-      .item:last-child {
-        margin-right: 0; /* Remove a margem direita do último item */
-      }
+
