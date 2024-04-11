@@ -14,7 +14,7 @@ a {
   background-color: rgb(32, 170, 92); /* cor de fundo */
   border: 5px solid black; /* borda */
   border-radius: 10px; /* bordas arredondadas */
-  width: 60%;
+  width: 75%;
   padding: 10px; 
   display: flex;
   justify-content: center;

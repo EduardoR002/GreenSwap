@@ -10,8 +10,15 @@
 </head>
 
 <body>
+   
     <!--Navigation Script Topper-->
-    <iframe src="navigation.html" width="600" height="400" frameborder="0" scrolling="no"></iframe>
+    <script>
+        fetch('navigation.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('navigation').innerHTML = html;
+            });
+    </script>
     
     <!--Navigation Topper-->
     <div id="navigation"></div>
