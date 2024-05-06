@@ -67,7 +67,7 @@ function createUser(req, res) {
 }
 
 function getUser(req, res){
-    const userID = req.params.userID;
+    const userID = req.params.IdUser;
 
     models.user.findOne({where: { id: userID} }     )
     .then(user => {
