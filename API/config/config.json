@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": "edu123",
+    "username": "greenswap",
+    "password": "@ipca123",
     "database": "greenswap",
-    "host": "127.0.0.1",
+    "host": "greenswapdb.mysql.database.azure.com",
     "dialect": "mysql"
   },
   "test": {
