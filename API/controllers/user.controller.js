@@ -11,7 +11,7 @@ function createUser(req, res){
         photo: req.body.photo
     }
 
-        // Verificar se o email e o telefone são únicos
+        // verify if email and phone are unique
         models.user.findOne({ 
             where: {
                 [models.Sequelize.Op.or]: [
@@ -21,22 +21,22 @@ function createUser(req, res){
             }
         }).then(existingUser => {
             if (existingUser) {
-                // Se o email já existir, retornar erro 409 (conflito)
+                // If the email already exists, returns error 409
                 if (existingUser.email === req.body.email) {
                     return res.status(409).json({
                         message: "Email already exists"
                     });
                 }
-                // Se o telefone já existir, retornar erro 409 (conflito)
+                // If the phone already exists, returns error 409
                 else if (existingUser.phone === req.body.phone) {
                     return res.status(409).json({
                         message: "Phone number already exists"
                     });
                 }
-            } else {
-                // Se não existir, criar o novo usuário
+            }else {
+                // Caso o email e o nu, criar o novo usuário
                 models.user.create(user).then(result => {
-                    res.status(201).json({
+                    res.status(200).json({
                         message: "User created successfully",
                         user: result
                     });
