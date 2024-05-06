@@ -68,7 +68,7 @@ function createUser(req, res) {
 function getUser(req, res){
     const userID = req.params.userID;
 
-    models.user.findbyPK(userID)
+    models.user.findByPK(userID)
     .then(user => {
         if (!user){
             return res.status(404).json({
