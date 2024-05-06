@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('user', {
-    idUser: {
+  return sequelize.define('certifier', {
+    idcertifier: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -14,56 +14,31 @@ module.exports = function(sequelize, DataTypes) {
     email: {
       type: DataTypes.STRING(45),
       allowNull: false,
-      unique: "Email_UNIQUE"
+      unique: "email_UNIQUE"
     },
     password: {
       type: DataTypes.STRING(45),
       allowNull: false
-    },
-    phone: {
-      type: DataTypes.STRING(45),
-      allowNull: false,
-      unique: "Phone_UNIQUE"
-    },
-    address: {
-      type: DataTypes.STRING(45),
-      allowNull: false
-    },
-    description: {
-      type: DataTypes.STRING(100),
-      allowNull: true
-    },
-    photo: {
-      type: DataTypes.BLOB,
-      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'user',
-    timestamps: true,
+    tableName: 'certifier',
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "idUser" },
+          { name: "idcertifier" },
         ]
       },
       {
-        name: "Email_UNIQUE",
+        name: "email_UNIQUE",
         unique: true,
         using: "BTREE",
         fields: [
           { name: "email" },
-        ]
-      },
-      {
-        name: "Phone_UNIQUE",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "phone" },
         ]
       },
     ]
