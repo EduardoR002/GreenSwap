@@ -1,7 +1,7 @@
 const models = require('../models')
 
 // Function that create a new User
-function createUser(req, res){
+function createUser(req, res) {
     const user = {
         name: req.body.name,
         email: req.body.email,
@@ -11,20 +11,22 @@ function createUser(req, res){
         description: req.body.description,
         photo: req.body.photo
     }
-    
+
     if (user.phone.length !== 9 || isNaN(user.phone)) {
         return res.status(422).json({
             message: "Phone number must be 9 digits long"
         });
     }
 
-
     // verify if email and phone are unique
-    models.user.findOne({ 
+    models.user.findOne({
         where: {
-            [models.Sequelize.Op.or]: [
-                { email: req.body.email },
-                { phone: req.body.phone }
+            [models.Sequelize.Op.or]: [{
+                    email: req.body.email
+                },
+                {
+                    phone: req.body.phone
+                }
             ]
         }
     }).then(existingUser => {
@@ -41,7 +43,7 @@ function createUser(req, res){
                     message: "Phone number already exists"
                 });
             }
-        }else {
+        } else {
             // If the email and the phone are new in the database, then proceed to create a new user
             models.user.create(user).then(result => {
                 res.status(200).json({
@@ -63,6 +65,31 @@ function createUser(req, res){
     });
 }
 
+function getUser(req, res){
+    const userID = req.params.userID;
+
+    models.user.findbyPK(userID)
+    .then(user => {
+        if (!user){
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        res.status(200).json({
+            message: "User found successfully",
+            user: user
+        });
+    })
+    .catch(error => {
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error
+        });
+    });
+}
+
 module.exports = {
-    createUser: createUser
+    createUser: createUser,
+    getUser: getUser
 }
