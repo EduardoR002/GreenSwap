@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 const models = require('../models')
 
 // Function that create a new User
@@ -68,7 +69,7 @@ function createUser(req, res) {
 function getUser(req, res){
     const userID = req.params.userID;
 
-    models.user.findByPk(userID)
+    models.user.findOne({where: { id: userID} }     )
     .then(user => {
         if (!user){
             return res.status(404).json({
