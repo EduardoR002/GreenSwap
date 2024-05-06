@@ -6,8 +6,6 @@ function insertUser() {
     var password = document.getElementById("password").value;
     var phone = document.getElementById("phone").value;
     var adress = document.getElementById("adress").value;
-    var adr = document.getElementById("adress").value;
-    var adress = document.getElementById("adress").value;
     var description = document.getElementById("description").value;
     //var photo = document.getElementById("photo").value;                      COMO PASSO A FOTO  ??
 
