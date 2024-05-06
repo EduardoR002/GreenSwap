@@ -11,7 +11,7 @@ function save(req, res){
         photo: req.body.photo
     }
 
-    models.User.create(user).then(result => {
+    models.user.create(user).then(result => {
         res.status(201).json({
             message: "User created successfully",
             user: result
