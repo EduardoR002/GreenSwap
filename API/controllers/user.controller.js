@@ -67,27 +67,27 @@ function createUser(req, res) {
 }
 
 function getUser(req, res){
-    const IdUser = req.params.IdUser;
+    const idUser = req.params.idUser;
 
-    models.user.findOne({where: { idUser: IdUser} }     )
-    .then(user => {
-        if (!user){
-            return res.status(404).json({
-                message: "User not found"
+    models.user.findOne({ where: { idUser: idUser } })
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({
+                    message: "User not found"
+                });
+            }
+            
+            res.status(200).json({
+                message: "User found successfully",
+                user: user
             });
-        }
-
-        res.status(200).json({
-            message: "User found successfully",
-            user: user
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: "Something went wrong",
+                error: error
+            });
         });
-    })
-    .catch(error => {
-        res.status(500).json({
-            message: "Something went wrong",
-            error: error
-        });
-    });
 }
 
 module.exports = {
