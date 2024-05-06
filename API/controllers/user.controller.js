@@ -13,6 +13,7 @@ function createUser(req, res) {
         photo: req.body.photo
     }
 
+    // Verify if the phone has 9 digits
     if (user.phone.length !== 9 || isNaN(user.phone)) {
         return res.status(422).json({
             message: "Phone number must be 9 digits long"
