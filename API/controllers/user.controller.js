@@ -1,6 +1,6 @@
 const models = require('../models')
 
-function save(req, res){
+function createUser(req, res){
     const user = {
         name: req.body.name,
         email: req.body.email,
@@ -25,5 +25,5 @@ function save(req, res){
 }
 
 module.exports = {
-    save: save
+    createUser: createUser
 }
