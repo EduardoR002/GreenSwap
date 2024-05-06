@@ -67,9 +67,9 @@ function createUser(req, res) {
 }
 
 function getUser(req, res){
-    const userID = req.params.IdUser;
+    const IdUser = req.params.IdUser;
 
-    models.user.findOne({where: { id: userID} }     )
+    models.user.findOne({where: { idUser: IdUser} }     )
     .then(user => {
         if (!user){
             return res.status(404).json({
