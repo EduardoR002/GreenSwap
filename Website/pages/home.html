@@ -11,17 +11,10 @@
 
 </head>
 
-<body>
-    <script>
-    //Navigation Script Topper
-    
-        fetch('navigation.html')
-        .then(response => response.text())
-        .then(html => {
-        document.getElementById('navigation').innerHTML = html;
-        });
-    
-    </script>
+
+<body onload="navigationTab()">
+
+
     <!--Navigation Topper-->
     <div id="navigation"></div>
 

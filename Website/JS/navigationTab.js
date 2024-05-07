@@ -1,5 +1,5 @@
 //Navigation Script Topper
-    function teste()
+    function navigationTab()
     {
         fetch('navigation.html')
         .then(response => response.text())
