@@ -90,7 +90,7 @@ function getUser(req, res){
         });
 }
 
-function getAllUsers(req, res){
+function getAllUsers(res){
     models.user.findAll()
     .then(users => {
         if(!users || users.length === 0) {
@@ -111,8 +111,36 @@ function getAllUsers(req, res){
     });
 }
 
+function deleteUser(req, res){
+    const userId = req.params.userId;
+
+    models.user.destroy({
+        where: {
+            id: userId
+        }
+    })
+    .then(deletedRows => {
+        if (deletedRows === 0) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        res.status(200).json({
+            message: "User deleted successfully"
+        });
+    })
+    .catch(error => {
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error
+        });
+    });
+}
+
 module.exports = {
     createUser: createUser,
     getUser: getUser,
-    getAllUsers: getAllUsers
+    getAllUsers: getAllUsers,
+    deleteUser: deleteUser
 }
