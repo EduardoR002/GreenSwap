@@ -164,12 +164,12 @@ function editUser(req, res){
         }
     }).then(existingUser => {
         if (existingUser) {
-            if (existingUser.email === updatedUserDate.email && existingUser.idUser !== updatedUserDate.userId) {
+            if (existingUser.email === updatedUserDate.email && existingUser.idUser !== updatedUserDate.idUser) {
                 return res.status(409).json({
                     message: "Email already exists"
                 });
             }
-            else if (existingUser.phone === updatedUserDate.phone && existingUser.idUser !== updatedUserDate.userId) {
+            else if (existingUser.phone === updatedUserDate.phone && existingUser.idUser !== updatedUserDate.idUser) {
                 return res.status(409).json({
                     message: "Phone already exists"
                 });
