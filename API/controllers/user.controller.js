@@ -67,6 +67,7 @@ function createUser(req, res) {
     });
 }
 
+// Function used to get all data of one user
 function getUser(req, res){
     const idUser = req.params.userId;
     models.user.findOne({ where: { idUser: idUser } })
@@ -90,6 +91,7 @@ function getUser(req, res){
         });
 }
 
+// Function used to get all users data
 function getAllUsers(req, res){
     models.user.findAll()
     .then(users => {
@@ -111,6 +113,7 @@ function getAllUsers(req, res){
     });
 }
 
+// Function used to delete one user
 function deleteUser(req, res){
     const userId = req.params.userId;
 
@@ -138,6 +141,7 @@ function deleteUser(req, res){
     });
 }
 
+// Function used to edit data from one user
 function editUser(req, res){
     const userId = req.params.userId;
     const updatedUserDate = req.body;
@@ -160,12 +164,12 @@ function editUser(req, res){
         }
     }).then(existingUser => {
         if (existingUser) {
-            if (existingUser.email === updatedUserDate.email) {
+            if (existingUser.email === updatedUserDate.email && existingUser.idUser !== updatedUserDate.userId) {
                 return res.status(409).json({
                     message: "Email already exists"
                 });
             }
-            else if (existingUser.phone === updatedUserDate.phone) {
+            else if (existingUser.phone === updatedUserDate.phone && existingUser.idUser !== updatedUserDate.userId) {
                 return res.status(409).json({
                     message: "Phone already exists"
                 });
