@@ -1,5 +1,6 @@
 const models = require('../models')
 
+// Function to create a type product
 function createTypeProduct(req, res){
     const typeproduct = {
         typeproduct: req.body.typeproduct
@@ -39,6 +40,7 @@ function createTypeProduct(req, res){
     });
 }
 
+// Function to get all type products
 function getAllTypes(req, res){
     models.typeproduct.findAll()
     .then(types => {
@@ -59,6 +61,7 @@ function getAllTypes(req, res){
     });
 }
 
+// Function to edit a type product
 function editTypeProduct(req, res){
     const idtypeproduct = req.params.idtypeproduct;
     const updatedTypeData = req.body;
