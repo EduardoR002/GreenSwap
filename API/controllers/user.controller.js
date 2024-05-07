@@ -90,7 +90,29 @@ function getUser(req, res){
         });
 }
 
+function getAllUsers(req, res){
+    models.user.findAll()
+    .then(users => {
+        if(!users || users.length === 0) {
+            return res.status(404).json({
+                message: "No users found"
+            });
+        }
+        res.status(200).json({
+            message: "Users found successfully",
+            users: users
+        });
+    })
+    .catch(error => {
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error
+        });
+    });
+}
+
 module.exports = {
     createUser: createUser,
-    getUser: getUser
+    getUser: getUser,
+    getAllUsers: getAllUsers
 }
