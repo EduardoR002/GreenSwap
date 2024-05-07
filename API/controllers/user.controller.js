@@ -138,9 +138,76 @@ function deleteUser(req, res){
     });
 }
 
+function editUser(req, res){
+    const userId = req.params.userId;
+    const updatedUserDate = req.body;
+
+    if (updatedUserDate.phone.length !== 9 || isNaN(updatedUserDate.phone)) {
+        return res.status(422).json({
+            message: "Phone number must be 9 digits long"
+        });
+    }
+
+    models.user.findOne({
+        where: {
+            [models.Sequelize.Op.or]: [{
+                    email: req.body.email
+                },
+                {
+                    phone: req.body.phone
+                }
+            ]
+        }
+    }).then(existingUser => {
+        if (existingUser) {
+            if (existingUser.email === updatedUserDate.email) {
+                return res.status(409).json({
+                    message: "Email already exists"
+                });
+            }
+            else if (existingUser.phone === updatedUserDate.phone) {
+                return res.status(409).json({
+                    message: "Phone already exists"
+                });
+            }
+        }else{
+            models.user.findByPk(userId)
+            .then(user => {
+                if (!user) {
+                    return res.status(404).json({
+                        message: "User not found"
+                    });
+                }
+        
+                Object.assign(user, updatedUserDate);
+        
+                return user.save();
+            })
+            .then(updatedUser => {
+                res.status(200).json({
+                    message: "User updated successfully",
+                    user: updatedUser
+                });
+            })
+            .catch(error => {
+                res.status(500).json({
+                    message: "Something went wrong",
+                    error: error
+                });
+            });
+        }
+    }).catch(error => {
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error
+        });
+    });
+}
+
 module.exports = {
     createUser: createUser,
     getUser: getUser,
     getAllUsers: getAllUsers,
-    deleteUser: deleteUser
+    deleteUser: deleteUser,
+    editUser: editUser
 }
