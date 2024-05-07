@@ -90,7 +90,7 @@ function getUser(req, res){
         });
 }
 
-function getAllUsers(res){
+function getAllUsers(req, res){
     models.user.findAll()
     .then(users => {
         if(!users || users.length === 0) {
