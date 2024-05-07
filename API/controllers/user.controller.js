@@ -116,7 +116,7 @@ function deleteUser(req, res){
 
     models.user.destroy({
         where: {
-            id: userId
+            idUser: userId
         }
     })
     .then(deletedRows => {
