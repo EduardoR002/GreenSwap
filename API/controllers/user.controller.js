@@ -144,56 +144,74 @@ function deleteUser(req, res){
 // Function used to edit data from one user
 function editUser(req, res){
     const userId = req.params.userId;
-    const updatedUserDate = req.body;
+    const updatedUserData = req.body;
 
-    if (updatedUserDate.phone.length !== 9 || isNaN(updatedUserDate.phone)) {
+    if (updatedUserData.phone.length !== 9 || isNaN(updatedUserData.phone)) {
         return res.status(422).json({
             message: "Phone number must be 9 digits long"
         });
     }
 
-    models.user.findOne({
-        where: {
-            [models.Sequelize.Op.or]: [{
-                    email: req.body.email
-                },
-                {
-                    phone: req.body.phone
-                }
-            ]
+    models.user.findByPk(userId)
+    .then(user => {
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
         }
-    }).then(existingUser => {
-        if (existingUser) {
-            if (existingUser.email === updatedUserDate.email && existingUser.idUser !== updatedUserDate.idUser) {
-                return res.status(409).json({
-                    message: "Email already exists"
-                });
-            }
-            else if (existingUser.phone === updatedUserDate.phone && existingUser.idUser !== updatedUserDate.idUser) {
-                return res.status(409).json({
-                    message: "Phone already exists"
-                });
-            }
-        }else{
-            models.user.findByPk(userId)
-            .then(user => {
-                if (!user) {
-                    return res.status(404).json({
-                        message: "User not found"
-                    });
+
+        // Check if email or phone number is being updated
+        if (
+            updatedUserData.email !== user.email ||
+            updatedUserData.phone !== user.phone
+        ) {
+            // If so, check if the new email or phone already exists
+            models.user.findOne({
+                where: {
+                    [models.Sequelize.Op.or]: [{
+                            email: updatedUserData.email
+                        },
+                        {
+                            phone: updatedUserData.phone
+                        }
+                    ]
                 }
-        
-                Object.assign(user, updatedUserDate);
-        
+            }).then(existingUser => {
+                if (existingUser) {
+                    if (existingUser.email === updatedUserData.email && existingUser.id !== userId) {
+                        return res.status(409).json({
+                            message: "Email already exists"
+                        });
+                    }
+                    if (existingUser.phone === updatedUserData.phone && existingUser.id !== userId) {
+                        return res.status(409).json({
+                            message: "Phone already exists"
+                        });
+                    }
+                }
+                // If no conflict, update the user
+                Object.assign(user, updatedUserData);
                 return user.save();
-            })
-            .then(updatedUser => {
+            }).then(updatedUser => {
                 res.status(200).json({
                     message: "User updated successfully",
                     user: updatedUser
                 });
-            })
-            .catch(error => {
+            }).catch(error => {
+                res.status(500).json({
+                    message: "Something went wrong",
+                    error: error
+                });
+            });
+        } else {
+            // If email and phone are not being updated, simply update the user
+            Object.assign(user, updatedUserData);
+            return user.save().then(updatedUser => {
+                res.status(200).json({
+                    message: "User updated successfully",
+                    user: updatedUser
+                });
+            }).catch(error => {
                 res.status(500).json({
                     message: "Something went wrong",
                     error: error
