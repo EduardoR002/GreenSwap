@@ -5,6 +5,6 @@ const router = Router();
 
 router.post("/create", createTypePurchase);
 router.get('/getall', getAllTypes);
-router.put('/edittnotific/:idtypePurchase', editTypePurchase);
+router.put('/edittpurchase/:idtypePurchase', editTypePurchase);
 
 module.exports = router;
