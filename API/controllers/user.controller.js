@@ -5,7 +5,7 @@ function createUser(req, res) {
     const { name, email, password, phone, address, description, photo } = req.body;
 
     // Check if any field is empty
-    if (!name || !email || !password || !phone || !address || !description || !photo) {
+    if (!name || !email || !password || !phone || !address) {
         return res.status(422).json({
             message: "All fields are required"
         });
