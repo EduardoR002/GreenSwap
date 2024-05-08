@@ -7,6 +7,8 @@ const app = express();
 const tnotificRoute = require('./routes/tnotific.js');
 const usersRoute = require('./routes/users.js');
 const tproductRoute = require('./routes/tproduct.js');
+const tchangeRoute = require('./routes/tchange.js');
+
 
 
 app.use(bodyParser.json());
@@ -22,5 +24,7 @@ app.use("/tnotific", tnotificRoute);
 app.use("/tproduct", tproductRoute);
 app.use("/users", usersRoute);
 app.use("/tproduct", tproductRoute);
+app.use("/tchange", tchangeRoute);
+
 
 module.exports = app;
