@@ -1,34 +1,29 @@
 function test() {
-    var name = document.getElementById("name").value.toString();
-    var address = document.getElementById("adress").value.toString();
-    var phone = document.getElementById("phone").value.toString();
-    var email = document.getElementById("email").value.toString();
-    var password = document.getElementById("password").value.toString();
-    var description;
-    var photo;
+    var name = document.getElementById("name").value;
+    var address = document.getElementById("adress").value;
+    var phone = document.getElementById("phone").value;
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+    var description = "test";
 
 
-    var formData = new FormData();
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('password', password);
-    formData.append('phone', phone);
-    formData.append('address', address);
-    formData.append('description', 'aNAL');
-    formData.append('photo', 'aNALDD');
+    var userData = {
+        name: name,
+        email: email,
+        password: password,
+        phone: phone,
+        address: address,
+        description: description // Como está fixo em "test", não precisa ser enviado
+    };
     
-    console.log(name);
-    console.log(email);
-    console.log(phone);
-    console.log(address);
-    console.log(password);
-    console.log(description);
-    console.log(photo);
-    
+    console.log(userData);
 
     fetch('http://localhost:3000/users/create', {
         method: 'POST',
-        body: formData
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
     })
     .then(response => response.json())
     .then(data => {
@@ -39,6 +34,6 @@ function test() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("registerButton").addEventListener("click", test);
 });
