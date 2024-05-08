@@ -1,3 +1,5 @@
+function test(){
+
 document.getElementById("registerButton").addEventListener("click", function() {
     // Pega os valores dos campos do formulário
     var name = document.getElementById("name").value;
@@ -36,3 +38,4 @@ document.getElementById("registerButton").addEventListener("click", function() {
         // Aqui você pode exibir uma mensagem de erro para o usuário
     });
 });
+}
