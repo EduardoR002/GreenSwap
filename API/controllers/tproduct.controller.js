@@ -68,7 +68,7 @@ function editTypeProduct(req, res){
     const updatedTypeData = req.body;
 
     models.typeproduct.findByPk(idtypeproduct)
-    .then(typeproduct =>{
+    .then(typeproduct => {
         if (!typeproduct) {
             return res.status(404).json({
                 message: "Type product not found"
