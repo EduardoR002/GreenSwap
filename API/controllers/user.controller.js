@@ -225,10 +225,45 @@ function editUser(req, res){
     });
 }
 
+// Function to validate login
+function loginUser(req, res) {
+    const { email, password } = req.body;
+
+    // Find user by email
+    models.user.findOne({ where: { email: email } })
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({
+                    message: "User not found"
+                });
+            }
+
+            // Check if password matches
+            if (password !== user.password) {
+                return res.status(401).json({
+                    message: "Incorrect password"
+                });
+            }
+            // If login successful, you may choose to return some user data or a token
+            // For simplicity, returning a success message here
+            res.status(200).json({
+                message: "Login successful",
+                user: user
+            });
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: "Something went wrong",
+                error: error
+            });
+        });
+}
+
 module.exports = {
     createUser: createUser,
     getUser: getUser,
     getAllUsers: getAllUsers,
     deleteUser: deleteUser,
-    editUser: editUser
+    editUser: editUser,
+    loginUser: loginUser
 }
