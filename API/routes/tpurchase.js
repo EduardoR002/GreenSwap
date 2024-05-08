@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { createTypePurchase, getAllTypes, editTypePurchase } = require('../controllers/tpurchase.controller.js')
+const { createTypePurchase, getAllTypes, editTypePurchase } = require('../controllers/purchasetype.controller.js')
 
 const router = Router();
 
