@@ -33,7 +33,3 @@ function test() {
         console.error('Error:', error);
     });
 }
-
-    document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("registerButton").addEventListener("click", test);
-});
