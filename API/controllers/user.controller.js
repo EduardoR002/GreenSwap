@@ -1,4 +1,3 @@
-const { where } = require('sequelize');
 const models = require('../models')
 
 // Function that create a new User

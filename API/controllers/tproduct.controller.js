@@ -20,7 +20,8 @@ function createTypeProduct(req, res){
                 });
             }
         }else{
-            models.typeproduct.create(typeproduct).then(result => {
+            models.typeproduct.create(typeproduct)
+            .then(result => {
                 res.status(200).json({
                     message: "Type product created successfully",
                     typeproduct: result
