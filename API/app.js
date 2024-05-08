@@ -10,6 +10,11 @@ const usersRoute = require('./routes/users.js');
 
 app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    next();
+});
+
 app.use("/tnotific", tnotificRoute);
 app.use("/tproduct", tproductRoute);
 app.use("/users", usersRoute);
