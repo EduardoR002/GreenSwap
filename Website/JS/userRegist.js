@@ -1,9 +1,12 @@
 function test() {
-    var name = document.getElementById("name").value;
-    var address = document.getElementById("adress").value;
-    var phone = document.getElementById("phone").value;
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value;
+    var name = document.getElementById("name").value.toString();
+    var address = document.getElementById("adress").value.toString();
+    var phone = document.getElementById("phone").value.toString();
+    var email = document.getElementById("email").value.toString();
+    var password = document.getElementById("password").value.toString();
+    var description;
+    var photo;
+
 
     var formData = new FormData();
     formData.append('name', name);
@@ -11,9 +14,16 @@ function test() {
     formData.append('password', password);
     formData.append('phone', phone);
     formData.append('address', address);
-    formData.append('description', "Bom rapaz");
-    formData.append('photo', "ee");
+    formData.append('description', 'aNAL');
+    formData.append('photo', 'aNALDD');
     
+    console.log(name);
+    console.log(email);
+    console.log(phone);
+    console.log(address);
+    console.log(password);
+    console.log(description);
+    console.log(photo);
     
 
     fetch('http://localhost:3000/users/create', {
