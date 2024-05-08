@@ -1,4 +1,5 @@
-function test() {
+// Function that regist the user on website, sending user informations to data base
+function userRegist() {
     var name = document.getElementById("name").value;
     var address = document.getElementById("adress").value;
     var phone = document.getElementById("phone").value;
