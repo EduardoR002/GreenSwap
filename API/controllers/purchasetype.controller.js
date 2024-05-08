@@ -3,18 +3,18 @@ const models = require('../models');
 // Function to create a type purchase
 function createTypePurchase(req, res){
     const purchaseType = {
-        typepurchase: req.body.typepurchase
+        type: req.body.type
     }
 
     models.purchasetype.findOne({
         where: {
             [models.Sequelize.Op.or]: [{
-                typepurchase: req.body.typepurchase
+                type: req.body.type
             }]
         }
     }).then(existingType => {
         if (existingType) {
-            if (existingType.typepurchase === req.body.typepurchase) {
+            if (existingType.type === req.body.type) {
                 return res.status(409).json({
                     message: "Type purchase already exists"
                 });
@@ -24,7 +24,7 @@ function createTypePurchase(req, res){
             .then(result => {
                 res.status(200).json({
                     message: "Type purchase created successfully",
-                    typepurchase: result
+                    type: result
                 });
             }).catch(error => {
                 res.status(500).json({
@@ -64,12 +64,12 @@ function getAllTypes(req, res){
 
 // Function to edit a type purchase
 function editTypePurchase(req, res){
-    const idtypepurchase = req.params.idtypepurchase;
+    const idtype = req.params.idtype;
     const updatedTypeData = req.body;
 
-    models.purchasetype.findByPk(idtypepurchase)
-    .then(typepurchase => {
-        if (!typepurchase) {
+    models.purchasetype.findByPk(idtype)
+    .then(type => {
+        if (!type) {
             return res.status(404).json({
                 message: "Type purchase not found"
             });
@@ -77,7 +77,7 @@ function editTypePurchase(req, res){
         models.purchasetype.findOne({
             where: {
                 [models.Sequelize.Op.or]: [{
-                    typepurchase: updatedTypeData.typepurchase
+                    type: updatedTypeData.type
                 }]
             }
         }).then(existingType => {
@@ -86,12 +86,12 @@ function editTypePurchase(req, res){
                     message: "Type purchase already exists"
                 });
             }
-            Object.assign(typepurchase, updatedTypeData);
-            return typepurchase.save();
+            Object.assign(type, updatedTypeData);
+            return type.save();
         }).then(updatedTypeData => {
             res.status(200).json({
                 message: "Type purchase updated successfully",
-                typepurchase: updatedTypeData
+                type: updatedTypeData
             });
         }).catch(error => {
             res.status(500).json({
