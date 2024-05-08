@@ -1,31 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign-In</title>
+    <title>Login</title>
+    <script src="../JS/logIn.js"></script>
     <link rel="stylesheet" href="../CSS/logIn.css">
 </head>
 
 <body>
     
-    <div  class ="icon">
-        <img src="../images/GreenSwap.png" style="width: 10%; height: 10%;"></a></div>
+    <!-- Clickable icon that takes the user to the home page -->
+    <div  class ="iconDiv">
+
+        <a href="home.html">
+        <img src="../images/GreenSwap.png" style="width: 10%; height: 10%;" class="icon">
+        </a>
+        
     </div>
     
+    <!-- Text inputs for user username and password for login on website -->
     <div class="main">
 
         <label for="email">Email:</label>
-        <input type="text" id="email"><br><br>
+        <input type="text" id="email" class="textBox"><br><br>
     
         <label for="password">Password:</label>
-        <input type="password" id="password"><br><br>
+        <input type="password" id="password" class="textBox"><br><br>
 
     </div>
 
+    <!-- Link to user go to regist page, and create an account -->
+    <div class="create">
+        <p><b>Not registered? <a href="userRegist.html">Create an account</a></b></p>
+    </div>
+
+    <!-- Button that login the user on website-->
     </div>
         <div class="button-container">
-        <button>Sign-In</button>
+        <button onclick="login()">Login</button>
     </div>
+
 </body>
 </html>

@@ -1,43 +1,37 @@
-/*Style for the body of the page*/
 body {
     background-color: rgb(211, 246, 211);
   }
 
-/* Style for personalize links */
 a {
-    text-decoration: none; /* Remove the underline */
-    color: black /* Change the color of clickable text */
+    text-decoration: none;
+    color: black 
 }
 
-
 .container {
-  background-color: rgb(32, 170, 92); /* cor de fundo */
-  border: 5px solid black; /* borda */
-  border-radius: 10px; /* bordas arredondadas */
-  width: 75%;
-  padding: 10px; 
+  background-color: #3f9e42;;
+  border: 5px solid black;
+  border-radius: 10px;
+  margin: 0 auto;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.5%;
+  }
+
+.teste{
   display: flex;
   justify-content: center;
-  }
+}
 
-  .teste{
-    display: flex;
-    justify-content: center;
-  }
-
-  .container > *{
-
-  }
-
-    .item {
-        font-family: Arial, sans-serif;
-        font-weight: bold;
-        display: inline-block;
-        margin-right: 5.8%;
-        transition: transform 0.3s ease; /* Adiciona uma transição suave ao tamanho do botão */
-    }
+.item {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
       
-    .item:hover {
-        transform: scale(1.1); /* Aumenta ligeiramente o tamanho do botão ao passar o mouse sobre ele */
-    }
+.item:hover {
+  transform: scale(1.1);
+}
 

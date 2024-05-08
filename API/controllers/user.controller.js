@@ -1,17 +1,25 @@
-const { where } = require('sequelize');
 const models = require('../models')
 
 // Function that create a new User
 function createUser(req, res) {
-    const user = {
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        phone: req.body.phone,
-        address: req.body.address,
-        description: req.body.description,
-        photo: req.body.photo
+    const { name, email, password, phone, address, description, photo } = req.body;
+
+    // Check if any field is empty
+    if (!name || !email || !password || !phone || !address) {
+        return res.status(422).json({
+            message: "All fields are required"
+        });
     }
+
+    const user = {
+        name,
+        email,
+        password,
+        phone,
+        address,
+        description,
+        photo
+    };
 
     // Verify if the phone has 9 digits
     if (user.phone.length !== 9 || isNaN(user.phone)) {
@@ -23,24 +31,21 @@ function createUser(req, res) {
     // verify if email and phone are unique
     models.user.findOne({
         where: {
-            [models.Sequelize.Op.or]: [{
-                    email: req.body.email
-                },
-                {
-                    phone: req.body.phone
-                }
+            [models.Sequelize.Op.or]: [
+                { email },
+                { phone }
             ]
         }
     }).then(existingUser => {
         if (existingUser) {
             // If the email already exists, returns error 409
-            if (existingUser.email === req.body.email) {
+            if (existingUser.email === email) {
                 return res.status(409).json({
                     message: "Email already exists"
                 });
             }
             // If the phone already exists, returns error 409
-            else if (existingUser.phone === req.body.phone) {
+            else if (existingUser.phone === phone) {
                 return res.status(409).json({
                     message: "Phone number already exists"
                 });
@@ -66,6 +71,7 @@ function createUser(req, res) {
         });
     });
 }
+
 
 // Function used to get all data of one user
 function getUser(req, res){
@@ -226,10 +232,45 @@ function editUser(req, res){
     });
 }
 
+// Function to validate login
+function loginUser(req, res) {
+    const { email, password } = req.body;
+
+    // Find user by email
+    models.user.findOne({ where: { email: email } })
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({
+                    message: "User not found"
+                });
+            }
+
+            // Check if password matches
+            if (password !== user.password) {
+                return res.status(401).json({
+                    message: "Incorrect password"
+                });
+            }
+            // If login successful, you may choose to return some user data or a token
+            // For simplicity, returning a success message here
+            res.status(200).json({
+                message: "Login successful",
+                user: user
+            });
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: "Something went wrong",
+                error: error
+            });
+        });
+}
+
 module.exports = {
     createUser: createUser,
     getUser: getUser,
     getAllUsers: getAllUsers,
     deleteUser: deleteUser,
-    editUser: editUser
+    editUser: editUser,
+    loginUser: loginUser
 }

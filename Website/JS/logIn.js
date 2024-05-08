@@ -1,25 +1,18 @@
-// Function that regist the user on website, sending user informations to data base
-function userRegist() {
-    var name = document.getElementById("name").value;
-    var address = document.getElementById("adress").value;
-    var phone = document.getElementById("phone").value;
+//Function that will login the user on the website
+function login() {
+
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
-    var description = "test";
 
 
     var userData = {
-        name: name,
         email: email,
         password: password,
-        phone: phone,
-        address: address,
-        description: description // Como está fixo em "test", não precisa ser enviado
     };
     
     console.log(userData);
 
-    fetch('http://localhost:3000/users/create', {
+   /* fetch('http://localhost:3000/users/create', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -33,4 +26,6 @@ function userRegist() {
     .catch(error => {
         console.error('Error:', error);
     });
+
+    */
 }
