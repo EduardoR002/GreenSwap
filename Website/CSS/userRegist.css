@@ -2,6 +2,7 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
+    overflow: overlay;
 }
 
 #bg {
@@ -15,6 +16,16 @@ body, html {
     filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeGaussianBlur stdDeviation='4' result='b'/%3E%3CfeMorphology operator='dilate' radius='4'/%3E %3CfeMerge%3E%3CfeMergeNode/%3E%3CfeMergeNode in='b'/%3E%3C/feMerge%3E%3C/filter%3E %3C/svg%3E#a");
     z-index: -1;
 }
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #01283796;
+    border-radius: 15px;
+    border: 3px ;
+  }
 
 .iconDiv {
     text-align: center;
@@ -34,6 +45,41 @@ body, html {
     border: 5px solid #012837;
     font-size: 150%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.fa {
+    position: relative;
+    display: inline-block;
+}
+
+.fa .fa-text {
+    visibility: hidden;
+    width: 120px;
+    background-color: #3a985b;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.fa .fa-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #3a985b transparent transparent transparent;
+}
+
+.fa:hover .fa-text {
+    visibility: visible;
 }
 
 label {
