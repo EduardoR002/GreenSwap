@@ -54,24 +54,25 @@ body, html {
 
 .fa .fa-text {
     visibility: hidden;
-    width: 120px;
+    width: 150px;
     background-color: #3a985b;
     color: #fff;
     text-align: center;
     border-radius: 6px;
-    padding: 5px 5px;
+    padding: 5px 10px;
     position: absolute;
     z-index: 1;
     bottom: 150%;
     left: 50%;
     margin-left: -60px;
+    font-family: "Poppins", sans-serif;
 }
 
 .fa .fa-text::after {
     content: "";
     position: absolute;
     top: 100%;
-    left: 50%;
+    left: 36%;
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
