@@ -10,7 +10,7 @@ body, html {
 
 #bg {
     position: fixed;
-    width: 100%;
+    width: 110%;
     height: 100%;
     background-image: linear-gradient(to bottom, rgba(3, 83, 203, 0.3),rgba(2, 107, 46, 0.5)),url(../images/green-bg1.jpg);
     background-repeat: no-repeat;
