@@ -9,6 +9,8 @@ const usersRoute = require('./routes/users.js');
 const tproductRoute = require('./routes/tproduct.js');
 const tchangeRoute = require('./routes/tchange.js');
 const tpurchaseRoute = require('./routes/tpurchase.js');
+const tproposalRoute = require('./routes/proposaltype.js');
+
 
 
 
@@ -28,6 +30,8 @@ app.use("/users", usersRoute);
 app.use("/tproduct", tproductRoute);
 app.use("/tchange", tchangeRoute);
 app.use("/tpurchase", tpurchaseRoute);
+app.use("/tproposal", tproposalRoute);
+
 
 
 
