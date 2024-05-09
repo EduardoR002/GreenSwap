@@ -1,5 +1,5 @@
 // Function that regist the user on website, sending user informations to data base
-function userRegist() {
+function register() {
     var name = document.getElementById("name").value;
     var address = document.getElementById("adress").value;
     var phone = document.getElementById("phone").value;
@@ -33,4 +33,12 @@ function userRegist() {
     .catch(error => {
         console.error('Error:', error);
     });
+}
+
+function showImageName(sid,did){
+    let fileInput = document.getElementById(sid).files;
+    let text = document.getElementById(did);
+
+    text.textContent = fileInput[0].name;
+    text.style.color = "black";
 }
