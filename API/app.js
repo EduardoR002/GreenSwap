@@ -12,6 +12,8 @@ const tpurchaseRoute = require('./routes/tpurchase.js');
 const tproposalRoute = require('./routes/proposaltype.js');
 const proposalstateRoute = require('./routes/proposalstate.js');
 const purchasetateRoute = require('./routes/purchasestate.js');
+const requestsetateRoute = require('./routes/requeststate.js');
+
 
 
 app.use(bodyParser.json());
@@ -32,8 +34,7 @@ app.use("/tpurchase", tpurchaseRoute);
 app.use("/tproposal", tproposalRoute);
 app.use("/proposalstate", proposalstateRoute);
 app.use("/purchasestate", purchasetateRoute);
-
-
+app.use("/requestsetate", requestsetateRoute);
 
 
 
