@@ -16,7 +16,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     token: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING(255),
       allowNull: false
     },
     expires_at: {
