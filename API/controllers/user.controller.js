@@ -1,4 +1,6 @@
-const models = require('../models')
+const models = require('../models');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 // Function that create a new User
 function createUser(req, res) {
@@ -232,7 +234,6 @@ function editUser(req, res){
     });
 }
 
-// Function to validate login
 function loginUser(req, res) {
     const { email, password } = req.body;
 
@@ -246,16 +247,32 @@ function loginUser(req, res) {
             }
 
             // Check if password matches
-            if (password !== user.password) {
-                return res.status(401).json({
-                    message: "Incorrect password"
+            bcrypt.compare(password, user.password, (err, result) => {
+                if (err) {
+                    return res.status(500).json({
+                        message: "Something went wrong",
+                        error: err
+                    });
+                }
+                if (!result) {
+                    return res.status(401).json({
+                        message: "Incorrect password"
+                    });
+                }
+
+                // If password matches, generate JWT token
+                const token = jwt.sign(
+                    { email: user.email, userId: user.userId }, // You can include any additional user data in the payload
+                    '0f1ab83a576c30f57aa5c33de4009cc923923ac041f6f63af8daa1a5ad53254a', // Change to your actual secret key
+                    { expiresIn: '1h' } // Optional: Token expiration time
+                );
+
+                // Return success message along with the token
+                res.status(200).json({
+                    message: "Login successful",
+                    token: token,
+                    user: user
                 });
-            }
-            // If login successful, you may choose to return some user data or a token
-            // For simplicity, returning a success message here
-            res.status(200).json({
-                message: "Login successful",
-                user: user
             });
         })
         .catch(error => {

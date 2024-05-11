@@ -13,6 +13,7 @@ var _requestseller = require("./requestseller");
 var _requeststate = require("./requeststate");
 var _seller = require("./seller");
 var _stockchanges = require("./stockchanges");
+var _tokens = require("./tokens");
 var _typechange = require("./typechange");
 var _typenotification = require("./typenotification");
 var _typeproduct = require("./typeproduct");
@@ -33,6 +34,7 @@ function initModels(sequelize) {
   var requeststate = _requeststate(sequelize, DataTypes);
   var seller = _seller(sequelize, DataTypes);
   var stockchanges = _stockchanges(sequelize, DataTypes);
+  var tokens = _tokens(sequelize, DataTypes);
   var typechange = _typechange(sequelize, DataTypes);
   var typenotification = _typenotification(sequelize, DataTypes);
   var typeproduct = _typeproduct(sequelize, DataTypes);
@@ -82,6 +84,8 @@ function initModels(sequelize) {
   user.hasMany(purchase, { as: "purchases", foreignKey: "iduser"});
   requestseller.belongsTo(user, { as: "iduser_user", foreignKey: "iduser"});
   user.hasMany(requestseller, { as: "requestsellers", foreignKey: "iduser"});
+  tokens.belongsTo(user, { as: "user", foreignKey: "user_id"});
+  user.hasMany(tokens, { as: "tokens", foreignKey: "user_id"});
 
   return {
     certificate,
@@ -98,6 +102,7 @@ function initModels(sequelize) {
     requeststate,
     seller,
     stockchanges,
+    tokens,
     typechange,
     typenotification,
     typeproduct,

@@ -49,7 +49,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     iduser: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'user',
         key: 'idUser'
