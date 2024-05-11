@@ -246,7 +246,7 @@ function editUser(req, res){
     });
 }
 
-function loginUser(req, res) {
+async function loginUser(req, res) {
     const { email, password } = req.body;
 
     // Find user by email
@@ -260,21 +260,20 @@ function loginUser(req, res) {
 
             // Check if password matches
             bcrypt.compare(password, user.password)
-                .then(match => {
+                .then(async match => {
                     if (!match) {
                         return res.status(401).json({
                             message: "Incorrect password"
                         });
                     }
 
-                    tokensController.createToken(user.email, user.userId)
-                    .then(token => {
-                        res.status(200).json({
-                            message: "Login successful",
-                            token: token,
-                            user: user
-                        });
-                    })
+                    const token = await tokensController.createToken(user.email, user.userId)
+                    
+                    res.status(200).json({
+                        message: "Login successful",
+                        token: token,
+                        user: user
+                    });
                     
                 })
                 .catch(error => {

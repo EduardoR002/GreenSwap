@@ -2,7 +2,7 @@ const models = require('../models');
 const jwt = require('jsonwebtoken');
 
 // Função utilizada para criar um token
-function createToken(email, userId) {
+async function createToken(email, userId) {
     // Gerar token JWT
     const token = jwt.sign(
         { email: email, userId: userId },
