@@ -1,9 +1,10 @@
 //Navigation Script Topper
     function navigationTab()
     {
+        var navbar_div = document.getElementById('navigation');
         fetch('navbar.html')
         .then(response => response.text())
         .then(html => {
-        document.getElementById('navigation').innerHTML = html;
+        navbar_div.innerHTML = html
         });
     }
