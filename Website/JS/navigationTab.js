@@ -8,5 +8,6 @@
         navbar_div.innerHTML = html
         });
 
- 
+        //Space OUT of the bar that is occupied by the icon
+        navbar_div.style.marginBottom = "30px";
     }
