@@ -1,10 +1,8 @@
 body, html{
-    display: flex;
     margin: 0;
     padding: 0;
     height: 100%;
-    width: 100%;
-    flex-direction: column;
+    width: 100%; 
 }
 
 .navbar-container{
