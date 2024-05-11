@@ -1,45 +1,13 @@
-h1 {
-    font-weight: bold;
-    color: white; /* cor do texto */
-    font-size: 250%; /* tamanho do texto */
-    font-family: Helvética; /* fonte do texto */
-}
 
-p {
-    font-weight: bold;
-    font-size: 140%; /* tamanho do texto */
-    font-family: Arial, Helvetica, sans-serif; /* fonte do texto */
+
+.cont {
+    margin-left: 2%;
+    margin-right: 2%;
+    width: 93%;
+    height: 65%;
+    padding: 20px;
+    border: 5px solid #042C3B;
     text-align: justify;
-}
-
-div.a {
-    background-color: burlywood;
-    width: 14.3%; /* largura da div */
-    border-radius: 10px; /* bordas arredondadas */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* sombra */
-}
-
-div.b {
-    
-    background-color: burlywood;
-    width: 10.9%;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-div.c {
-    
-    background-color: burlywood;
-    width: 12%; /* largura da div */
-    border-radius: 10px; /* bordas arredondadas */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* sombra */
-}
-
-
-div.d {
-    height: 50px; /* Altura da div */
-    width: 50%; /* Largura da div */
-    float: right; /* Alinha a div à direita */
-    margin-top: -270px; /* Espaço superior */
-    margin-right: 90px; /* Espaço direito */
+    border-radius: 8px;
+    background-color: #4CCC7B;
 }
