@@ -1,6 +1,7 @@
 const models = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { createToken } = require('./tokens.controller.js')
 
 // Function that create a new User
 function createUser(req, res) {
@@ -198,12 +199,12 @@ function editUser(req, res){
                 }
             }).then(existingUser => {
                 if (existingUser) {
-                    if (existingUser.email === updatedUserData.email && existingUser.id !== userId) {
+                    if (existingUser.email === updatedUserData.email && existingUser.userId !== userId) {
                         return res.status(409).json({
                             message: "Email already exists"
                         });
                     }
-                    if (existingUser.phone === updatedUserData.phone && existingUser.id !== userId) {
+                    if (existingUser.phone === updatedUserData.phone && existingUser.userId !== userId) {
                         return res.status(409).json({
                             message: "Phone already exists"
                         });
@@ -246,7 +247,7 @@ function editUser(req, res){
     });
 }
 
-async function loginUser(req, res) {
+function loginUser(req, res) {
     const { email, password } = req.body;
 
     // Find user by email
@@ -260,20 +261,21 @@ async function loginUser(req, res) {
 
             // Check if password matches
             bcrypt.compare(password, user.password)
-                .then(async match => {
+                .then(match => {
                     if (!match) {
                         return res.status(401).json({
                             message: "Incorrect password"
                         });
                     }
-
-                    const token = await tokensController.createToken(user.email, user.userId)
-                    
-                    res.status(200).json({
-                        message: "Login successful",
-                        token: token,
-                        user: user
-                    });
+                    console.log(user.idUser)
+                    createToken(user.email, user.idUser)
+                    .then(token => {
+                        res.status(200).json({
+                            message: "Login successful",
+                            token: token,
+                            user: user
+                        });
+                    })
                     
                 })
                 .catch(error => {
