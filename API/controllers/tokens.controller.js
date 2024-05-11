@@ -18,7 +18,7 @@ function createToken(email, userId) {
         }).then(() => {
             resolve(token); // Resolve a promessa com o token gerado
         }).catch(error => {
-            reject(new Error('Erro ao criar token: ' + error.message)); // Rejeita a promessa com o erro
+            reject(new Error('Error at creating token: ' + error.message)); // Rejeita a promessa com o erro
         });
     });
 }
@@ -33,13 +33,13 @@ async function renewToken(req, res){
             // Atualize o token, por exemplo, estendendo sua expiração
             token.expiresAt = new Date(Date.now() + 3600000); // Estende por 1 hora
             await token.save();
-            return res.json({ message: "Token renovado com sucesso" });
+            return res.json({ message: "Token renewed with success" });
         } else {
-            return res.status(404).json({ message: "Token não encontrado" });
+            return res.status(404).json({ message: "Token not founded" });
         }
     } catch (error) {
-        console.error("Erro ao renovar token:", error);
-        return res.status(500).json({ message: "Erro ao renovar token" });
+        console.error("Error at renew token:", error);
+        return res.status(500).json({ message: "Error at renew token: "});
     }
 }
 
@@ -56,29 +56,37 @@ async function revokeExpiredOrUnrenewedTokens() {
                 token.revokedAt = currentTime.getTime()
                 token.revoked = true;
                 await token.save();
-                console.log("Token revogado:", token.token);
+                console.log("Token revoked:", token.token);
             }
         }
 
-        console.log("Revogação de tokens concluída.");
+        console.log("Token revocation completed.");
     } catch (error) {
-        console.error("Erro ao revogar tokens:", error);
+        console.error("Error at token revocation:", error);
+    }
+}
+
+async function removeRevokedTokens(){
+    try {
+        const tokens = await models.token.findAll();
+
+        const currentTime = new Date();
+        const revokedTimeThreshold = new Date(currentTime.getTime() - (6 * 60 * 60 * 1000));
+
+        for (const token of tokens) {
+            if (token.revoked && token.revokedAt < revokedTimeThreshold) {
+                await token.destroy();
+                console.log("Revoked Token removed: ", token.token);
+            }
+            console.log("Removal of revoked tokens completed.");
+        }
+    } catch (error) {
+        
     }
 }
 
 setInterval(revokeExpiredOrUnrenewedTokens, 60000);
-
-/*function verifyTokenUnique(email, userId){
-    models.token.findOne({where: { userId  : userId } })
-    .then(token => {
-        if (!token || token.) {
-            createToken(email, userId);
-        }
-        else {
-            renewToken()
-        }
-    })
-}*/
+setInterval(removeRevokedTokens, 60000);
 
 module.exports = {
     createToken: createToken
