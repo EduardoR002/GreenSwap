@@ -1,13 +1,13 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('tokens', {
+  return sequelize.define('token', {
     idtoken: {
       autoIncrement: true,
-      type: DataTypes.BIGINT.UNSIGNED,
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    user_id: {
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -16,21 +16,22 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     token: {
-      type: DataTypes.STRING(255),
-      allowNull: false
+      type: DataTypes.STRING(100),
+      allowNull: false,
+      unique: "token_UNIQUE"
     },
-    expires_at: {
+    revokedAt: {
       type: DataTypes.DATE,
       allowNull: true
     },
     revoked: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.TINYINT,
       allowNull: true,
       defaultValue: 0
     }
   }, {
     sequelize,
-    tableName: 'tokens',
+    tableName: 'token',
     timestamps: true,
     indexes: [
       {
@@ -42,18 +43,18 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "idtoken",
+        name: "token_UNIQUE",
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "idtoken" },
+          { name: "token" },
         ]
       },
       {
-        name: "user_id",
+        name: "tokenuser_idx",
         using: "BTREE",
         fields: [
-          { name: "user_id" },
+          { name: "userId" },
         ]
       },
     ]

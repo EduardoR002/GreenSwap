@@ -12,9 +12,9 @@ function createToken(email, userId) {
 
     // Inserir dados do token na tabela de tokens e retornar uma promessa
     return new Promise((resolve, reject) => {
-        models.tokens.create({
-            user_id: userId,
-            token: token
+        models.token.create({
+            userId: userId,
+            token: token,
             // Outros campos opcionais, como expires_at, revoked, etc., podem ser adicionados aqui conforme necessário
         }).then(() => {
             resolve(token); // Resolve a promessa com o token gerado
