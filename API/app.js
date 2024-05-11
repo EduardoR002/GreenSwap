@@ -1,5 +1,4 @@
 const express = require('express');
-
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -13,6 +12,7 @@ const tproposalRoute = require('./routes/proposaltype.js');
 const proposalstateRoute = require('./routes/proposalstate.js');
 const purchasetateRoute = require('./routes/purchasestate.js');
 const requestsetateRoute = require('./routes/requeststate.js');
+const tokenRoute = require('./routes/tokens.js');
 
 
 
@@ -35,6 +35,7 @@ app.use("/tproposal", tproposalRoute);
 app.use("/proposalstate", proposalstateRoute);
 app.use("/purchasestate", purchasetateRoute);
 app.use("/requestsetate", requestsetateRoute);
+app.use("/tokens", tokenRoute);
 
 
 

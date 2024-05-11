@@ -1,4 +1,6 @@
-const models = require('../models')
+const models = require('../models');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 // Function that create a new User
 function createUser(req, res) {
@@ -14,60 +16,72 @@ function createUser(req, res) {
     const user = {
         name,
         email,
-        password,
+        password: '',
         phone,
         address,
         description,
         photo
     };
 
-    // Verify if the phone has 9 digits
-    if (user.phone.length !== 9 || isNaN(user.phone)) {
-        return res.status(422).json({
-            message: "Phone number must be 9 digits long"
-        });
-    }
-
-    // verify if email and phone are unique
-    models.user.findOne({
-        where: {
-            [models.Sequelize.Op.or]: [
-                { email },
-                { phone }
-            ]
-        }
-    }).then(existingUser => {
-        if (existingUser) {
-            // If the email already exists, returns error 409
-            if (existingUser.email === email) {
-                return res.status(409).json({
-                    message: "Email already exists"
-                });
-            }
-            // If the phone already exists, returns error 409
-            else if (existingUser.phone === phone) {
-                return res.status(409).json({
-                    message: "Phone number already exists"
-                });
-            }
-        } else {
-            // If the email and the phone are new in the database, then proceed to create a new user
-            models.user.create(user).then(result => {
-                res.status(200).json({
-                    message: "User created successfully",
-                    user: result
-                });
-            }).catch(error => {
-                res.status(500).json({
-                    message: "Something went wrong",
-                    error: error
-                });
+    // Hash da senha usando bcrypt
+    bcrypt.hash(password, 10, (err, hashedPassword) => {
+        if (err) {
+            return res.status(500).json({
+                message: "Error hashing password",
+                error: err
             });
         }
-    }).catch(error => {
-        res.status(500).json({
-            message: "Something went wrong",
-            error: error
+        
+        user.password = hashedPassword;
+
+        // Verify if the phone has 9 digits
+        if (user.phone.length !== 9 || isNaN(user.phone)) {
+            return res.status(422).json({
+                message: "Phone number must be 9 digits long"
+            });
+        }
+
+        // verify if email and phone are unique
+        models.user.findOne({
+            where: {
+                [models.Sequelize.Op.or]: [
+                    { email },
+                    { phone }
+                ]
+            }
+        }).then(existingUser => {
+            if (existingUser) {
+                // If the email already exists, returns error 409
+                if (existingUser.email === email) {
+                    return res.status(409).json({
+                        message: "Email already exists"
+                    });
+                }
+                // If the phone already exists, returns error 409
+                else if (existingUser.phone === phone) {
+                    return res.status(409).json({
+                        message: "Phone number already exists"
+                    });
+                }
+            } else {
+                // If the email and the phone are new in the database, then proceed to create a new user
+                models.user.create(user).then(result => {
+                    res.status(200).json({
+                        message: "User created successfully",
+                        user: result
+                    });
+                }).catch(error => {
+                    res.status(500).json({
+                        message: "Something went wrong",
+                        error: error
+                    });
+                });
+            }
+        }).catch(error => {
+            res.status(500).json({
+                message: "Something went wrong",
+                error: error
+            });
         });
     });
 }
@@ -232,7 +246,6 @@ function editUser(req, res){
     });
 }
 
-// Function to validate login
 function loginUser(req, res) {
     const { email, password } = req.body;
 
@@ -246,17 +259,30 @@ function loginUser(req, res) {
             }
 
             // Check if password matches
-            if (password !== user.password) {
-                return res.status(401).json({
-                    message: "Incorrect password"
+            bcrypt.compare(password, user.password)
+                .then(match => {
+                    if (!match) {
+                        return res.status(401).json({
+                            message: "Incorrect password"
+                        });
+                    }
+
+                    tokensController.createToken(user.email, user.userId)
+                    .then(token => {
+                        res.status(200).json({
+                            message: "Login successful",
+                            token: token,
+                            user: user
+                        });
+                    })
+                    
+                })
+                .catch(error => {
+                    res.status(500).json({
+                        message: "Something went wrong",
+                        error: error
+                    });
                 });
-            }
-            // If login successful, you may choose to return some user data or a token
-            // For simplicity, returning a success message here
-            res.status(200).json({
-                message: "Login successful",
-                user: user
-            });
         })
         .catch(error => {
             res.status(500).json({
