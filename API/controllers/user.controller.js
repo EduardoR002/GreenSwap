@@ -254,9 +254,25 @@ function loginUser(req, res) {
     models.user.findOne({ where: { email: email } })
         .then(user => {
             if (!user) {
-                return res.status(404).json({
-                    message: "User not found"
-                });
+                models.certifier.findeOne({ where: { email: email } })
+                .then(certifier => {
+                    if (!certifier) {
+                        return res.status(404).json({
+                            message: "User not found"
+                        });   
+                    }
+
+                    bcrypt.compare(password, certifier.password)
+                        .then(match => {
+                            if (!match) {
+                                return res.status(401).json({
+                                    message: "Incorrect password"
+                                });
+                            }
+                            createToken(certifier.email, user.idUser)
+                        })
+                })
+                
             }
 
             // Check if password matches
@@ -267,7 +283,6 @@ function loginUser(req, res) {
                             message: "Incorrect password"
                         });
                     }
-                    console.log(user.idUser)
                     createToken(user.email, user.idUser)
                     .then(token => {
                         res.cookies('token', token, {

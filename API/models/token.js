@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'user',
         key: 'idUser'
@@ -28,6 +28,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TINYINT,
       allowNull: true,
       defaultValue: 0
+    },
+    idcertifier: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'certifier',
+        key: 'idcertifier'
+      }
     }
   }, {
     sequelize,
@@ -55,6 +63,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "userId" },
+        ]
+      },
+      {
+        name: "tokencertifier_idx",
+        using: "BTREE",
+        fields: [
+          { name: "idcertifier"},
         ]
       },
     ]
