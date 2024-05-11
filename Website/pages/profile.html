@@ -4,28 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Page</title>
-    <link rel="stylesheet" href="../CSS/styles.css">
-    <link rel="stylesheet" href="../CSS/navegation.css">
+    <title>Profile</title>
     <link rel="stylesheet" href="../CSS/profile.css">
-    
+    <link rel="stylesheet" href="../CSS/navbar.css">
+    <script src="../JS/navigationTab.js"></script>
 </head>
 
-<body>
-        
+<body onload="navigationTab()">
+
+    
     <!--Navigation Topper-->
     <div id="navigation"></div>
 
-    <!--Navigation Script Topper-->
-    <script>
-        fetch('navigation.html')
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('navigation').innerHTML = html;
-            });
-    </script>
-
-    <div class="contentor">
+    
     <div class="profile">
        
             <img class="profile-pic" src="../images/exemploPerfil.png" alt="Foto de Perfil">
@@ -45,7 +36,7 @@
     <div class="yourProducts">
         <h1>Products</h1>
     </div>
-    </div>
+    
 
 </body>
 </html>
