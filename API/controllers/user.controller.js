@@ -270,6 +270,12 @@ function loginUser(req, res) {
                     console.log(user.idUser)
                     createToken(user.email, user.idUser)
                     .then(token => {
+                        res.cookies('token', token, {
+                            httpOnly: true,
+                            secure: true,
+                            sameSite: 'Strict'
+                        });
+
                         res.status(200).json({
                             message: "Login successful",
                             token: token,
