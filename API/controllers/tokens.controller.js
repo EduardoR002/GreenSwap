@@ -15,7 +15,6 @@ async function createToken(email, userId) {
         models.token.create({
             userId: userId,
             token: token,
-            // Outros campos opcionais, como expires_at, revoked, etc., podem ser adicionados aqui conforme necessário
         }).then(() => {
             resolve(token); // Resolve a promessa com o token gerado
         }).catch(error => {
