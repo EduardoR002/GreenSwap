@@ -7,4 +7,6 @@
         .then(html => {
         navbar_div.innerHTML = html
         });
+
+ 
     }

@@ -39,7 +39,7 @@ body, html{
 }
 
 .tocenter{
-    position: fixed;
+    position: absolute;
     width: 100%;
     height: 100%;
     display: flex;
@@ -47,7 +47,7 @@ body, html{
 }
 
 .navbar-container svg, .icon {
-    position: fixed;
+    position: absolute;
 }
 
 .icon{
