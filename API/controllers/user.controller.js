@@ -16,7 +16,7 @@ function createUser(req, res) {
     const user = {
         name,
         email,
-        password: '', // Vamos gerar um hash da senha
+        password: '',
         phone,
         address,
         description,
@@ -267,17 +267,18 @@ function loginUser(req, res) {
                         });
                     }
 
-                    const token = tokensController.createToken(user.email, user.userId); // Chame o método createToken do controlador de tokens
-
-                    // Return success message along with the token
-                    res.status(200).json({
-                        message: "Login successful",
-                        token: token,
-                        user: user
-                    });
+                    tokensController.createToken(user.email, user.userId)
+                    .then(token => {
+                        res.status(200).json({
+                            message: "Login successful",
+                            token: token,
+                            user: user
+                        });
+                    })
+                    
                 })
                 .catch(error => {
-                    res.status(502).json({
+                    res.status(500).json({
                         message: "Something went wrong",
                         error: error
                     });
