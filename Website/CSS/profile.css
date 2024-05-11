@@ -1,23 +1,23 @@
 
 .profile {
-    width: 20%;
-    height: 80%;
+    background-color: #4CCC7B;
+    width: 24%;
+    height: 100%;
     margin: 20px 0;
-    background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     float: left;
-    border: 4px solid rgb(0, 151, 0);
+    border: 5px solid #042C3B;
 }
 
 .profile-pic {
     display: block;
     margin: 0 auto;
-    width: 60%;
-    height: 50%;
-    border-radius: 50%;
+    width: 50%;
+    height: 40%;
+    border-radius: 10%;
     object-fit: cover;
-    border: 5px solid  green;
+    border: 3px solid #042C3B;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 .profile-info {
