@@ -6,11 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Page</title>
     <link rel="stylesheet" href="../CSS/styles.css">
-    <link rel="stylesheet" href="../CSS/navigation.css">
+    <link rel="stylesheet" href="../CSS/navegation.css">
+    <link rel="stylesheet" href="../CSS/profile.css">
+    
 </head>
 
 <body>
-    
+        
+    <!--Navigation Topper-->
+    <div id="navigation"></div>
+
     <!--Navigation Script Topper-->
     <script>
         fetch('navigation.html')
@@ -19,9 +24,28 @@
                 document.getElementById('navigation').innerHTML = html;
             });
     </script>
-    
-    <!--Navigation Topper-->
-    <div id="navigation"></div>
+
+    <div class="contentor">
+    <div class="profile">
+       
+            <img class="profile-pic" src="../images/exemploPerfil.png" alt="Foto de Perfil">
+       
+        <div class="profile-info">
+        <label for="nome">Name:</label>
+        <p id="nome">Pedro Daniel Fernandes Rei</p>
+        <label for="data-nascimento">Birth Date:</label>
+        <p id="data-nascimento">dd/mm/aaaa</p>
+        <label for="morada">Adress:</label>
+        <p id="morada">Ferreiros, Braga</p>
+        <label for="biografia">Bio:</label>
+        <p id="biografia">Adoro dar passeios longos na praia e comer couves verdes e frutas</p>
+        </div>
+    </div>
+
+    <div class="yourProducts">
+        <h1>Products</h1>
+    </div>
+    </div>
 
 </body>
 </html>
