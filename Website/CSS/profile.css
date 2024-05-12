@@ -74,6 +74,7 @@ label {
 
 .column:hover {
     transform: scale(1.1);
+}
 
 h1{
     font-family: "Poppins", sans-serif;
