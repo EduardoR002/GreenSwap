@@ -1,5 +1,6 @@
 
 .profile {
+    background-image: url('../images/profileBk.png');
     margin-left: 2%; 
     background-color: #4CCC7B;
     width: 24%;
@@ -70,6 +71,9 @@ label {
     height: auto;
     cursor: pointer;
 }
+
+.column:hover {
+    transform: scale(1.1);
 
 h1{
     font-family: "Poppins", sans-serif;
