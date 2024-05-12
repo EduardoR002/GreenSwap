@@ -3,25 +3,37 @@ const jwt = require('jsonwebtoken');
 
 // Function used to create an token for a role 'user' or 'seller'
 function createTokenUser(email, userId, role) {
-    // Gerar token JWT
+    // Generate JWT token
     const token = jwt.sign(
         { email: email, userId: userId },
         '0f1ab83a576c30f57aa5c33de4009cc923923ac041f6f63af8daa1a5ad53254a',
         { expiresIn: '1h' }
     );
 
-    // Inserir dados do token na tabela de tokens e retornar uma promessa
-    return new Promise((resolve, reject) => {
-        models.token.create({
-            userId: userId,
-            token: token,
-            role: role
-        }).then(() => {
-            resolve(token); // Resolve a promessa com o token gerado
-        }).catch(error => {
-            reject(new Error('Error at creating token: ' + error.message)); // Rejeita a promessa com o erro
+    // Check if a token already exists for the user
+    return models.token.findOne({ where: { userId: userId } })
+        .then(existingToken => {
+            if (existingToken) {
+                // Update the existing token
+                existingToken.token = token;
+                existingToken.role = role;
+                existingToken.revoked = false;
+                existingToken.revokedAt = null;
+                return existingToken.save() // Save the updated token
+                    .then(() => token); // Resolve the promise with the new token
+            } else {
+                // Create a new token
+                return models.token.create({
+                    userId: userId,
+                    token: token,
+                    role: role
+                })
+                .then(() => token); // Resolve the promise with the new token
+            }
+        })
+        .catch(error => {
+            throw new Error('Error at creating/updating token: ' + error.message);
         });
-    });
 }
 
 function createTokenCertifier(email, idcertifier, role) {
@@ -31,8 +43,6 @@ function createTokenCertifier(email, idcertifier, role) {
         '0f1ab83a576c30f57aa5c33de4009cc923923ac041f6f63af8daa1a5ad53254a',
         { expiresIn: '1h' }
     );
-
-    models.token.findOne({ where: {userId: }})
 
     // Inserir dados do token na tabela de tokens e retornar uma promessa
     return new Promise((resolve, reject) => {
