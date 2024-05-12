@@ -1,7 +1,8 @@
 const models = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { createToken } = require('./tokens.controller.js')
+const { createTokenCertifier, createTokenUser } = require('./tokens.controller.js');
+const token = require('../models/token.js');
 
 // Function that create a new User
 function createUser(req, res) {
@@ -199,12 +200,12 @@ function editUser(req, res){
                 }
             }).then(existingUser => {
                 if (existingUser) {
-                    if (existingUser.email === updatedUserData.email && existingUser.userId !== userId) {
+                    if (existingUser.email === updatedUserData.email && existingUser.idUser !== userId) {
                         return res.status(409).json({
                             message: "Email already exists"
                         });
                     }
-                    if (existingUser.phone === updatedUserData.phone && existingUser.userId !== userId) {
+                    if (existingUser.phone === updatedUserData.phone && existingUser.idUser !== userId) {
                         return res.status(409).json({
                             message: "Phone already exists"
                         });
@@ -254,60 +255,121 @@ function loginUser(req, res) {
     models.user.findOne({ where: { email: email } })
         .then(user => {
             if (!user) {
-                models.certifier.findeOne({ where: { email: email } })
-                .then(certifier => {
-                    if (!certifier) {
-                        return res.status(404).json({
-                            message: "User not found"
-                        });   
-                    }
-
-                    bcrypt.compare(password, certifier.password)
-                        .then(match => {
-                            if (!match) {
-                                return res.status(401).json({
-                                    message: "Incorrect password"
+                // User not found, check certifier
+                models.certifier.findOne({ where: { email: email } })
+                    .then(certifier => {
+                        if (!certifier) {
+                            // Neither user nor certifier found
+                            return res.status(404).json({
+                                message: "User not found"
+                            });
+                        }
+                        // Certifier found, check password
+                        if (password !== certifier.password) {
+                            return res.status(401).json({
+                                message: "Incorrect password"
+                            });
+                        }
+                        // Password matched, generate token and send response
+                        createTokenCertifier(certifier.email, certifier.idcertifier, 'certifier')
+                            .then(token => {
+                                res.cookie('token', token, {
+                                    httpOnly: true,
+                                    secure: true,
+                                    sameSite: 'Strict'
                                 });
-                            }
-                            createToken(certifier.email, user.idUser)
-                        })
-                })
-                
-            }
-
-            // Check if password matches
-            bcrypt.compare(password, user.password)
-                .then(match => {
-                    if (!match) {
-                        return res.status(401).json({
-                            message: "Incorrect password"
-                        });
-                    }
-                    createToken(user.email, user.idUser)
-                    .then(token => {
-                        res.cookies('token', token, {
-                            httpOnly: true,
-                            secure: true,
-                            sameSite: 'Strict'
-                        });
-
-                        res.status(200).json({
-                            message: "Login successful",
-                            token: token,
-                            user: user
-                        });
+                                return res.status(200).json({
+                                    message: "Login successful",
+                                    token: token,
+                                    user: certifier
+                                });
+                            })
+                            .catch(error => {
+                                return res.status(500).json({
+                                    message: "Something went wrong",
+                                    error: error
+                                });
+                            });
                     })
-                    
-                })
-                .catch(error => {
-                    res.status(500).json({
-                        message: "Something went wrong",
-                        error: error
+                    .catch(error => {
+                        return res.status(500).json({
+                            message: "Something went wrong",
+                            error: error
+                        });
                     });
-                });
+            } else {
+                // User found, check password
+                bcrypt.compare(password, user.password)
+                    .then(match => {
+                        if (!match) {
+                            return res.status(401).json({
+                                message: "Incorrect password"
+                            });
+                        }
+                        // Password matched, find seller
+                        models.seller.findOne({ where: { userId: user.idUser}})
+                            .then(seller => {
+                                // Check if user is also a seller
+                                if (!seller) {
+                                    createTokenUser(user.email, user.idUser, 'user')
+                                        .then(token => {
+                                            res.cookie('token', token, {
+                                                httpOnly: true,
+                                                secure: true,
+                                                sameSite: 'Strict'
+                                            });
+                                            return res.status(200).json({
+                                                message: "Login successful",
+                                                token: token,
+                                                user: user
+                                            });
+                                        })
+                                        .catch(error => {
+                                            return res.status(500).json({
+                                                message: "Something went wrong",
+                                                error: error
+                                            });
+                                        });
+                                } else {
+                                    // User is also a seller, generate seller token and send response
+                                    createTokenUser(user.email, user.idUser, 'seller')
+                                        .then(token => {
+                                            res.cookie('token', token, {
+                                                httpOnly: true,
+                                                secure: true,
+                                                sameSite: 'Strict'
+                                            });
+                                            return res.status(200).json({
+                                                message: "Login successful",
+                                                token: token,
+                                                user: user
+                                            });
+                                        })
+                                        .catch(error => {
+                                            return res.status(500).json({
+                                                message: "Something went wrong",
+                                                error: error
+                                            });
+                                        });
+                                }
+                            })
+                            .catch(error => {
+                                return res.status(500).json({
+                                    message: "Something went wrong",
+                                    error: error
+                                });
+                            });
+                    })
+                    .catch(error => {
+                        return res.status(500).json({
+                            message: "Something went wrong",
+                            error: error
+                        });
+                    });
+            }
         })
         .catch(error => {
-            res.status(500).json({
+            return res.status(500).json({
                 message: "Something went wrong",
                 error: error
             });

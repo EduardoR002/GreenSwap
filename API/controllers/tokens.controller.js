@@ -1,8 +1,8 @@
 const models = require('../models');
 const jwt = require('jsonwebtoken');
 
-// Função utilizada para criar um token
-function createToken(email, userId) {
+// Function used to create an token for a role 'user' or 'seller'
+function createTokenUser(email, userId, role) {
     // Gerar token JWT
     const token = jwt.sign(
         { email: email, userId: userId },
@@ -15,6 +15,31 @@ function createToken(email, userId) {
         models.token.create({
             userId: userId,
             token: token,
+            role: role
+        }).then(() => {
+            resolve(token); // Resolve a promessa com o token gerado
+        }).catch(error => {
+            reject(new Error('Error at creating token: ' + error.message)); // Rejeita a promessa com o erro
+        });
+    });
+}
+
+function createTokenCertifier(email, idcertifier, role) {
+    // Gerar token JWT
+    const token = jwt.sign(
+        { email: email, idcertifier: idcertifier },
+        '0f1ab83a576c30f57aa5c33de4009cc923923ac041f6f63af8daa1a5ad53254a',
+        { expiresIn: '1h' }
+    );
+
+    models.token.findOne({ where: {userId: }})
+
+    // Inserir dados do token na tabela de tokens e retornar uma promessa
+    return new Promise((resolve, reject) => {
+        models.token.create({
+            token: token,
+            idcertifier: idcertifier,
+            role: role
         }).then(() => {
             resolve(token); // Resolve a promessa com o token gerado
         }).catch(error => {
@@ -89,5 +114,6 @@ setInterval(revokeExpiredOrUnrenewedTokens, 60000);
 setInterval(removeRevokedTokens, 60000);
 
 module.exports = {
-    createToken: createToken
+    createTokenUser: createTokenUser,
+    createTokenCertifier: createTokenCertifier
 };

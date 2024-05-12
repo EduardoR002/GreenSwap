@@ -36,6 +36,10 @@ module.exports = function(sequelize, DataTypes) {
         model: 'certifier',
         key: 'idcertifier'
       }
+    },
+    role: {
+      type: DataTypes.STRING(45),
+      allowNull: false
     }
   }, {
     sequelize,

@@ -22,6 +22,10 @@ module.exports = function(sequelize, DataTypes) {
         model: 'certificate',
         key: 'idcertificate'
       }
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     }
   }, {
     sequelize,
