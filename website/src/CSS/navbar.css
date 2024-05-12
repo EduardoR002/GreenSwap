@@ -1,0 +1,85 @@
+body, html{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%; 
+}
+
+.navbar-container{
+    display: flex;
+    width: 100%;
+    height: 145px;
+    border-bottom: 8px solid #042C3B;
+    background: linear-gradient(269deg, #04B204 0%, #4CCC7B 49.34%, #04B204 100%);
+}
+
+.full-section-container{
+    width: 100%;
+    display: flex;
+}
+
+.left-section-container, .right-section-container{
+    justify-content: space-around;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    z-index: 3;
+}
+
+.left-section-container{
+    margin-left: 30px;
+    margin-right: 150px;
+}
+
+.right-section-container{
+    margin-left: 150px;
+    margin-right: 30px;
+}
+
+.tocenter{
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-container svg, .icon {
+    position: absolute;
+}
+
+.icon{
+    width: 150px;
+    height: 133px;
+    position: relative;
+    margin-top: 5px;
+    transition: transform 0.3s ease;
+}
+
+.icon:hover{
+    transform: scale(1.06);
+}
+
+.section a, a:visited{
+    text-decoration: none;
+    font-size: 36px;
+    color: #042C3B;
+    font-weight: 600;
+}
+
+/*Fonts & Icons*/
+.poppins-regular {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.material-symbols-outlined{
+    color: #042C3B;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.navbar-symbols{
+    font-size: 50px;
+    transform: scale(1.8);
+}
