@@ -3,7 +3,7 @@
     margin-left: 2%; 
     background-color: #4CCC7B;
     width: 24%;
-    height: 60%;
+    height: 68%;
     padding: 20px;
     border-radius: 8px;
     float: left;
@@ -28,12 +28,18 @@
 }
 .profile-info p {
     margin: 5px 0;
+    font-family: "Poppins", sans-serif;
+}
+
+label {
+    font-weight: bold;
+    font-family: "Poppins", sans-serif;
 }
 
 .yourProducts {
     margin-right: 2%; 
-    width: 62%;
-    height:60%;
+    width: 64%;
+    height:68%;
     background-color: #4CCC7B;
     padding: 20px;
     border-radius: 8px;
@@ -41,7 +47,34 @@
     border: 5px solid #042C3B;
 }
 
+.yourProducts {
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    font-style: normal;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.column {
+    flex: 1;
+}
+
+.column img {
+    border-radius: 10%;
+    border: 3px solid #042C3B;
+    max-width: 70%;
+    height: auto;
+    cursor: pointer;
+}
+
 h1{
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+    font-size: 250%;
     text-align: center;
     color: #042C3B;;
 }
