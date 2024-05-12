@@ -5,9 +5,9 @@ function createRequestSeller(req, res) {
     const { nif, description, photo, idstate, iduser } = req.body;
 
     // Check if nif, idstate, and iduser are empty
-    if (!nif || !idstate || !iduser) {
+    if (!nif || !description|| !idstate || !iduser) {
         return res.status(422).json({
-            message: "Nif, IdState, and IdUser are necessary"
+            message: "Description, Nif, IdState, and IdUser are necessary"
         });
     }
 
