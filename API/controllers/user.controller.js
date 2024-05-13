@@ -5,10 +5,9 @@ const { createTokenCertifier, createTokenUser } = require('./tokens.controller.j
 const token = require('../models/token.js');
 
 // Function that create a new User
-function createUser(req, res) {
+async function createUser(req, res) {
     const { name, email, password, phone, address, description, photo } = req.body;
 
-    // Check if any field is empty
     if (!name || !email || !password || !phone || !address) {
         return res.status(422).json({
             message: "All fields are required"
@@ -25,67 +24,48 @@ function createUser(req, res) {
         photo
     };
 
-    // Hash da senha usando bcrypt
-    bcrypt.hash(password, 10, (err, hashedPassword) => {
-        if (err) {
-            return res.status(500).json({
-                message: "Error hashing password",
-                error: err
-            });
-        }
-        
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
         user.password = hashedPassword;
 
-        // Verify if the phone has 9 digits
         if (user.phone.length !== 9 || isNaN(user.phone)) {
             return res.status(422).json({
                 message: "Phone number must be 9 digits long"
             });
         }
 
-        // verify if email and phone are unique
-        models.user.findOne({
+        const existingUser = await models.user.findOne({
             where: {
                 [models.Sequelize.Op.or]: [
                     { email },
                     { phone }
                 ]
             }
-        }).then(existingUser => {
-            if (existingUser) {
-                // If the email already exists, returns error 409
-                if (existingUser.email === email) {
-                    return res.status(409).json({
-                        message: "Email already exists"
-                    });
-                }
-                // If the phone already exists, returns error 409
-                else if (existingUser.phone === phone) {
-                    return res.status(409).json({
-                        message: "Phone number already exists"
-                    });
-                }
-            } else {
-                // If the email and the phone are new in the database, then proceed to create a new user
-                models.user.create(user).then(result => {
-                    res.status(200).json({
-                        message: "User created successfully",
-                        user: result
-                    });
-                }).catch(error => {
-                    res.status(500).json({
-                        message: "Something went wrong",
-                        error: error
-                    });
+        });
+
+        if (existingUser) {
+            if (existingUser.email === email) {
+                return res.status(409).json({
+                    message: "Email already exists"
+                });
+            } else if (existingUser.phone === phone) {
+                return res.status(409).json({
+                    message: "Phone number already exists"
                 });
             }
-        }).catch(error => {
-            res.status(500).json({
-                message: "Something went wrong",
-                error: error
+        } else {
+            const result = await models.user.create(user);
+            return res.status(200).json({
+                message: "User created successfully",
+                user: result
             });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: "Something went wrong",
+            error: error
         });
-    });
+    }
 }
 
 
