@@ -1,10 +1,10 @@
 const models = require('../models');
 
-// Função assíncrona para criar um novo vendedor
+// Function  to create a new seller
 async function createSeller(req, res) {
     const { idrequest, idcertificate, userId } = req.body;
 
-    // Verifica se algum campo está vazio
+    // Check if any field is empty
     if (!idrequest || !idcertificate || !userId) {
         return res.status(422).json({
             message: "All fields are required"
@@ -12,7 +12,7 @@ async function createSeller(req, res) {
     }
 
     try {
-        // Verifica se o requestseller e o certificado existem
+        // Check if the request seller and the certificate exist
         const [requestSeller, certificate] = await Promise.all([
             models.requestseller.findByPk(idrequest),
             models.certificate.findByPk(idcertificate)
@@ -43,7 +43,7 @@ async function createSeller(req, res) {
     }
 }
 
-// Função assíncrona para obter um único vendedor pelo seu ID
+// Function to get a single seller by their ID
 async function getSeller(req, res) {
     const sellerId = req.params.sellerId;
 
@@ -66,7 +66,7 @@ async function getSeller(req, res) {
     }
 }
 
-// Função assíncrona para obter todos os vendedores
+/// Function  to get all sellers
 async function getAllSellers(req, res) {
     try {
         const sellers = await models.seller.findAll();
@@ -87,12 +87,12 @@ async function getAllSellers(req, res) {
     }
 }
 
-// Função assíncrona para editar os dados de um vendedor
+// Function to edit seller data
 async function editSeller(req, res) {
     const sellerId = req.params.sellerId;
     const updatedSellerData = req.body;
 
-    // Verifica se algum campo está vazio
+    // Check if any field is empty
     if (!updatedSellerData.idrequest || !updatedSellerData.idcertificate || !updatedSellerData.userId) {
         return res.status(422).json({
             message: "All fields are required"
@@ -100,17 +100,11 @@ async function editSeller(req, res) {
     }
 
     try {
-        // Verifica se o requestseller e o certificado existem
+         // Check if the request seller and the certificate exist
         const [requestSeller, certificate] = await Promise.all([
             models.requestseller.findByPk(updatedSellerData.idrequest),
             models.certificate.findByPk(updatedSellerData.idcertificate)
         ]);
-
-        if (!requestSeller || !certificate) {
-            return res.status(404).json({
-                message: "Request Seller or Certificate not found"
-            });
-        }
 
         const seller = await models.seller.findByPk(sellerId);
         if (!seller) {
@@ -119,13 +113,19 @@ async function editSeller(req, res) {
             });
         }
 
-        // Verifica se algum dado está sendo atualizado
+        if (!requestSeller || !certificate) {
+            return res.status(404).json({
+                message: "Request Seller or Certificate not found"
+            });
+        }
+
+        // Check if any data is being updated
         if (
             updatedSellerData.idrequest !== seller.idrequest ||
             updatedSellerData.idcertificate !== seller.idcertificate ||
             updatedSellerData.userId !== seller.userId
         ) {
-            // Se sim, atualiza o vendedor
+             // If yes, update the seller
             Object.assign(seller, updatedSellerData);
             const updatedSeller = await seller.save();
             res.status(200).json({
@@ -133,7 +133,7 @@ async function editSeller(req, res) {
                 seller: updatedSeller
             });
         } else {
-            // Se nenhum dado estiver sendo atualizado, retorna uma mensagem de sucesso
+            // If no data is being updated, return a success message
             res.status(200).json({
                 message: "No changes detected, seller remains unchanged",
                 seller: seller
