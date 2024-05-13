@@ -68,8 +68,6 @@ async function createUser(req, res) {
     }
 }
 
-
-// Function used to get all data of one user
 // Function used to get all data of one user
 async function getUser(req, res){
     try {
