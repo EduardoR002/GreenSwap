@@ -241,6 +241,7 @@ async function loginUser(req, res) {
 
             // Password matched, generate token and send response
             const token = await createTokenCertifier(certifier.email, certifier.idcertifier, 'certifier');
+            
             res.cookie('token', token, {
                 httpOnly: true,
                 secure: true,

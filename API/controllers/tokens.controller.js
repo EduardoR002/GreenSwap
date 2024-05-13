@@ -58,7 +58,7 @@ async function createTokenCertifier(email, idcertifier, role) {
         } else {
             // Create a new token
             await models.token.create({
-                userId: userId,
+                idcertifier: idcertifier,
                 token: token,
                 role: role
             });

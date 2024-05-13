@@ -496,7 +496,14 @@ describe('loginUser function', () => {
         };
 
         models.user.findOne.mockResolvedValue(null);
-        models.certifier.findOne.mockResolvedValue(mockCertifier);
+
+        const findOneMock = jest.fn();
+
+        models.user.findOne = findOneMock;
+
+        const originalFindOne = findOneMock.mockImplementation(() => {
+            return mockCertifier;
+        })
 
         const req = {
             body: {
@@ -512,6 +519,7 @@ describe('loginUser function', () => {
 
         await loginUser(req, res);
 
+        expect(originalFindOne).toHaveBeenCalled();
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({
             message: 'Login successful',
@@ -525,7 +533,7 @@ describe('loginUser function', () => {
         });
     });
 
-    /*it('should return 401 for user login with incorrect password', async () => {
+    it('should return 401 for user login with incorrect password', async () => {
 
         models.user.findOne.mockResolvedValue({
             idUser: 1,
@@ -572,5 +580,5 @@ describe('loginUser function', () => {
         expect(res.json).toHaveBeenCalledWith({
             message: 'User not found'
         });
-    });*/
+    });
 })
