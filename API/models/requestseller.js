@@ -18,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     photo: {
       type: DataTypes.BLOB,
-      allowNull: false
+      allowNull: true
     },
     idstate: {
       type: DataTypes.INTEGER,
