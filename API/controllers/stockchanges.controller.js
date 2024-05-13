@@ -6,16 +6,19 @@ const productController = require('./product.controller');
 async function createStockChange(req, res) {
     const { quantity, idtypechange, idproduct } = req.body;
 
-    // Check if any field is empty
-    if (!quantity || !idtypechange || !idproduct) {
+    // Check if quantity is less than or equal to zero
+    if (quantity <= 0) {
+        console.log("Quantity is less than or equal to zero");
         return res.status(422).json({
-            message: "All fields are required"
+            message: "Quantity must be greater than zero"
         });
     }
 
-    if (quantity <= 0) {
+    // Check if any other field is empty
+    if (!idtypechange || !idproduct) {
+        console.log("Some fields are empty");
         return res.status(422).json({
-            message: "Quantity must be greater than zero"
+            message: "All fields are required"
         });
     }
 
@@ -27,6 +30,7 @@ async function createStockChange(req, res) {
         ]);
 
         if (!typeChange || !product) {
+            console.log("Typechange or Product not found");
             return res.status(404).json({
                 message: "Typechange or Product not found"
             });
@@ -35,8 +39,10 @@ async function createStockChange(req, res) {
         // Adjust the product's stock based on the type of change
         let updatedStock = product.stock;
         if (typeChange.typechange === 'add') {
+            console.log("Adjusting stock for addition.");
             updatedStock += quantity;
         } else if (typeChange.typechange === 'remove') {
+            console.log("Adjusting stock for removal.");
             if (quantity > product.stock) {
                 return res.status(422).json({
                     message: "Insufficient stock to perform the operation"
@@ -44,6 +50,7 @@ async function createStockChange(req, res) {
             }
             updatedStock -= quantity;
         } else {
+            console.log("Invalid type of change:", typeChange.typechange);
             return res.status(422).json({
                 message: "Invalid type of change"
             });
@@ -58,21 +65,22 @@ async function createStockChange(req, res) {
             idtypechange,
             idproduct
         };
+        console.log("Creating new stock change:", newStockChange);
         const createdStockChange = await models.stockchanges.create(newStockChange);
 
+        console.log("Stock change created successfully:", createdStockChange);
         res.status(200).json({
             message: "Stock change created successfully",
             stockChange: createdStockChange
         });
     } catch (error) {
+        console.error("Error occurred while creating stock change:", error);
         res.status(500).json({
             message: "Something went wrong",
             error: error.message
         });
     }
 }
-
-
 // Function to get all stock changes
 async function getAllStockChanges(req, res) {
     try {
