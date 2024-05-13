@@ -1,4 +1,4 @@
-body, html {
+body {
     display: flex;
     margin: 0;
     padding: 0;
@@ -12,7 +12,7 @@ body, html {
     position: fixed;
     width: 110%;
     height: 100%;
-    background-image: linear-gradient(to bottom, rgba(3, 83, 203, 0.3),rgba(2, 107, 46, 0.5)),url(../images/green-bg1.jpg);
+    background-image: linear-gradient(to bottom, rgba(3, 83, 203, 0.3),rgba(2, 107, 46, 0.5)), url(../images/green-bg1.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -24,14 +24,13 @@ body, html {
     display: flex; 
     width: 60%;
     height: 70%;
-    background-color: none;
     text-align: center;
     margin: 0 auto;
     border-radius: 20px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.formDiv{
+.formDiv {
     display: flex;
     flex-direction: column;
     gap: 25px;
@@ -44,7 +43,7 @@ body, html {
     border-bottom-right-radius: 20px;
 }
 
-.iconDiv{
+.iconDiv {
     width: 50%;
     display: flex;
     justify-content: center;
@@ -57,9 +56,9 @@ body, html {
     border-bottom-left-radius: 20px;
 }
 
-.input-box{
+.input-box {
     width: 70%;
-    height: 10%;
+    height: auto;
     border: 0;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.07);
@@ -68,29 +67,28 @@ body, html {
     align-items: center;
 }
 
-.input-icon{
+.input-icon {
     margin-right: 10px;
     width: 15%;
 }
 
-input{
-    margin-right: 15%;
+input {
+    margin-right: 15px;
     border: 0;
-    width: 85%;
-    height: 90%;
-    font-size: 115%
+    width: calc(100% - 15px); /* Subtrai a margem direita para manter o tamanho total */
+    font-size: 115%;
 }
 
-input:focus{
+input:focus {
     outline: 0;
 }
 
-.greetings{
+.greetings {
     font-size: 300%;
     margin-top: 30px;
 }
 
-button{
+button {
     font-family: Arial, sans-serif;
     padding: 5px 20px;
     font-size: 130%;
@@ -108,7 +106,7 @@ button:hover {
     background-color: #011c25;
 }
 
-.icon{
+.icon {
     transition: transform 0.3s ease;
 }
 
@@ -116,18 +114,18 @@ button:hover {
     transform: scale(1.1);
 }
 
-::placeholder{
+::placeholder {
     color: #8e8e8e;
 }
 
-/*Fontes*/
+/* Fontes */
 .poppins-regular {
     font-family: "Poppins", sans-serif;
     font-weight: 400;
     font-style: normal;
 }
-  
-.material-symbols-outlined{
+
+.material-symbols-outlined {
     color: #767676;
     margin-left: 15px;
     margin-right: 15px;
