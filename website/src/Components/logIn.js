@@ -1,4 +1,5 @@
 import '../CSS/logIn.css';
+import GreenSwap from '../images/GreenSwap.png';
 
 function Login() {
     // Função para lidar com o clique no botão de login
@@ -15,7 +16,7 @@ function Login() {
                 {/* Ícone clicável que leva o usuário para a página inicial */}
                 <div className="iconDiv">
                     <a href="home.html">
-                        <img src="../images/GreenSwap.png" style={{ width: '60%', height: '60%' }} className="icon" alt="GreenSwap Icon" />
+                    <img src={GreenSwap} style={{ width: '60%', height: '60%' }} className="icon" alt="GreenSwap Icon" />
                     </a>
                 </div>
 
