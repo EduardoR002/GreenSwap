@@ -1,7 +1,9 @@
 const models = require('../models');
+const productController = require('./product.controller');
+
 
 // Function to create a new stock change
-function createStockChange(req, res) {
+async function createStockChange(req, res) {
     const { quantity, idtypechange, idproduct } = req.body;
 
     // Check if any field is empty
@@ -11,76 +13,89 @@ function createStockChange(req, res) {
         });
     }
 
-    if(quantity <= 0){
+    if (quantity <= 0) {
         return res.status(422).json({
             message: "Quantity must be greater than zero"
         });
     }
 
-    const newStockChange = {
-        quantity,
-        idtypechange,
-        idproduct
-    };
+    try {
+        // Check if the referenced typechange and idproduct exist
+        const [typeChange, product] = await Promise.all([
+            models.typechange.findByPk(idtypechange),
+            models.product.findByPk(idproduct)
+        ]);
 
-    // Check if the referenced typechange and idproduct exist
-    Promise.all([
-        models.typechange.findByPk(idtypechange),
-        models.product.findByPk(idproduct)
-    ])
-        .then(([typeChange, product]) => {
-            if (!typeChange || !product) {
-                return res.status(404).json({
-                    message: "Typechange or Product not found"
+        if (!typeChange || !product) {
+            return res.status(404).json({
+                message: "Typechange or Product not found"
+            });
+        }
+
+        // Adjust the product's stock based on the type of change
+        let updatedStock = product.stock;
+        if (typeChange.typechange === 'add') {
+            updatedStock += quantity;
+        } else if (typeChange.typechange === 'remove') {
+            if (quantity > product.stock) {
+                return res.status(422).json({
+                    message: "Insufficient stock to perform the operation"
                 });
             }
-
-            // Create the stock change
-            models.stockchanges.create(newStockChange)
-                .then(createdStockChange => {
-                    res.status(200).json({
-                        message: "Stock change created successfully",
-                        stockChange: createdStockChange
-                    });
-                })
-                .catch(error => {
-                    res.status(500).json({
-                        message: "Something went wrong",
-                        error: error
-                    });
-                });
-        })
-        .catch(error => {
-            res.status(500).json({
-                message: "Something went wrong",
-                error: error
+            updatedStock -= quantity;
+        } else {
+            return res.status(422).json({
+                message: "Invalid type of change"
             });
+        }
+
+        // Update the product's stock
+        await productController.editProductStock(idproduct, updatedStock);
+
+        // Create the stock change
+        const newStockChange = {
+            quantity,
+            idtypechange,
+            idproduct
+        };
+        const createdStockChange = await models.stockchanges.create(newStockChange);
+
+        res.status(200).json({
+            message: "Stock change created successfully",
+            stockChange: createdStockChange
         });
+    } catch (error) {
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error.message
+        });
+    }
 }
+
+
 // Function to get all stock changes
-function getAllStockChanges(req, res) {
-    models.stockchanges.findAll()
-        .then(stockChanges => {
-            if (!stockChanges || stockChanges.length === 0) {
-                return res.status(404).json({
-                    message: "No stock changes found"
-                });
-            }
-            res.status(200).json({
-                message: "Stock changes found successfully",
-                stockChanges: stockChanges
+async function getAllStockChanges(req, res) {
+    try {
+        const stockChanges = await models.stockchanges.findAll();
+        if (!stockChanges || stockChanges.length === 0) {
+            return res.status(404).json({
+                message: "No stock changes found"
             });
-        })
-        .catch(error => {
-            res.status(500).json({
-                message: "Something went wrong",
-                error: error
-            });
+        }
+        res.status(200).json({
+            message: "Stock changes found successfully",
+            stockChanges: stockChanges
         });
+    } catch (error) {
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error.message
+        });
+    }
 }
 
 // Function used to edit data of one stock change
-function editChangeStock(req, res) {
+async function editChangeStock(req, res) {
     const stockChangeId = req.params.stockChangeId;
     const updatedStockChangeData = req.body;
 
@@ -98,49 +113,40 @@ function editChangeStock(req, res) {
         });
     }
 
-    models.stockchanges.findByPk(stockChangeId)
-        .then(stockChange => {
-            if (!stockChange) {
-                return res.status(404).json({
-                    message: "Stock change not found"
-                });
-            }
-
-            // Check if any data is being updated
-            if (
-                updatedStockChangeData.quantity !== stockChange.quantity ||
-                updatedStockChangeData.idtypechange !== stockChange.idtypechange ||
-                updatedStockChangeData.idproduct !== stockChange.idproduct
-            ) {
-                // If so, update the stock change
-                Object.assign(stockChange, updatedStockChangeData);
-                return stockChange.save()
-                    .then(updatedStockChange => {
-                        res.status(200).json({
-                            message: "Stock change updated successfully",
-                            stockChange: updatedStockChange
-                        });
-                    })
-                    .catch(error => {
-                        res.status(500).json({
-                            message: "Something went wrong",
-                            error: error
-                        });
-                    });
-            } else {
-                // If no data is being updated, return a success message
-                res.status(200).json({
-                    message: "No changes detected, stock change remains unchanged",
-                    stockChange: stockChange
-                });
-            }
-        })
-        .catch(error => {
-            res.status(500).json({
-                message: "Something went wrong",
-                error: error
+    try {
+        const stockChange = await models.stockchanges.findByPk(stockChangeId);
+        if (!stockChange) {
+            return res.status(404).json({
+                message: "Stock change not found"
             });
+        }
+
+        // Check if any data is being updated
+        if (
+            updatedStockChangeData.quantity !== stockChange.quantity ||
+            updatedStockChangeData.idtypechange !== stockChange.idtypechange ||
+            updatedStockChangeData.idproduct !== stockChange.idproduct
+        ) {
+            // If so, update the stock change
+            Object.assign(stockChange, updatedStockChangeData);
+            const updatedStockChange = await stockChange.save();
+            res.status(200).json({
+                message: "Stock change updated successfully",
+                stockChange: updatedStockChange
+            });
+        } else {
+            // If no data is being updated, return a success message
+            res.status(200).json({
+                message: "No changes detected, stock change remains unchanged",
+                stockChange: stockChange
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error.message
         });
+    }
 }
 
 module.exports = {

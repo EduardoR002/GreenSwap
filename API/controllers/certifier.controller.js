@@ -1,13 +1,13 @@
 const models = require('../models');
 
-// Function that create a new certifier
-function createCertifier(req, res) {
+// Função para criar um novo certificador
+async function createCertifier(req, res) {
     const { name, email, password } = req.body;
 
-    // Check if any field is empty
+    // Verifica se algum campo está vazio
     if (!name || !email || !password) {
         return res.status(422).json({
-            message: "All fields are required"
+            message: "Todos os campos são obrigatórios"
         });
     }
 
@@ -17,154 +17,121 @@ function createCertifier(req, res) {
         password,
     };
 
-    // verify if email is unique
-    models.certifier.findOne({
-        where: {
-            email
-        }
-    }).then(existingCertifier => {
+    try {
+        // Verifica se o email é único
+        const existingCertifier = await models.certifier.findOne({
+            where: {
+                email
+            }
+        });
+
         if (existingCertifier) {
-            // If the email already exists, returns error 409
+            // Se o email já existir, retorna erro 409
             return res.status(409).json({
-                message: "Email already exists"
+                message: "Email já existe"
             });
         } else {
-            // If the email is new in the database, then proceed to create a new Certifier
-            models.certifier.create(certifier).then(result => {
-                res.status(200).json({
-                    message: "Certifier created successfully",
-                    certifier: result
-                });
-            }).catch(error => {
-                res.status(500).json({
-                    message: "Something went wrong",
-                    error: error
-                });
+            // Se o email for novo no banco de dados, então prossiga para criar um novo Certificador
+            const result = await models.certifier.create(certifier);
+            return res.status(200).json({
+                message: "Certificador criado com sucesso",
+                certifier: result
             });
         }
-    }).catch(error => {
-        res.status(500).json({
-            message: "Something went wrong",
+    } catch (error) {
+        return res.status(500).json({
+            message: "Algo deu errado",
             error: error
         });
-    });
+    }
 }
 
-
-// Function used to get all data of one Certifier
-function getCertifier(req, res){
+// Função para obter todos os dados de um Certificador
+async function getCertifier(req, res) {
     const idCertifier = req.params.certifierId;
-    models.certifier.findOne({ where: { idCertifier: idCertifier } })
-        .then(certifier => {
-            if (!certifier) {
-                return res.status(404).json({
-                    message: "Certifier not found"
-                });
-            }
-            
-            res.status(200).json({
-                message: "Certifier found successfully",
-                certifier: certifier
-            });
-        })
-        .catch(error => {
-            res.status(500).json({
-                message: "Something went wrong",
-                error: error
-            });
-        });
-}
-
-// Function used to get all certifiers data
-function getAllCertifiers(req, res){
-    models.certifier.findAll()
-    .then(certifiers => {
-        if(!certifiers || certifiers.length === 0) {
+    try {
+        const certifier = await models.certifier.findOne({ where: { idCertifier: idCertifier } });
+        if (!certifier) {
             return res.status(404).json({
-                message: "No certifiers found"
+                message: "Certificador não encontrado"
             });
         }
-        res.status(200).json({
-            message: "certifiers found successfully",
+        
+        return res.status(200).json({
+            message: "Certificador encontrado com sucesso",
+            certifier: certifier
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Algo deu errado",
+            error: error
+        });
+    }
+}
+
+// Função para obter todos os dados dos certificadores
+async function getAllCertifiers(req, res) {
+    try {
+        const certifiers = await models.certifier.findAll();
+        if (!certifiers || certifiers.length === 0) {
+            return res.status(404).json({
+                message: "Nenhum certificador encontrado"
+            });
+        }
+        return res.status(200).json({
+            message: "Certificadores encontrados com sucesso",
             certifiers: certifiers
         });
-    })
-    .catch(error => {
-        res.status(500).json({
-            message: "Something went wrong",
+    } catch (error) {
+        return res.status(500).json({
+            message: "Algo deu errado",
             error: error
         });
-    });
+    }
 }
 
-// Function used to edit data from one certifier
-function editCertifier(req, res) {
+// Função para editar dados de um certificador
+async function editCertifier(req, res) {
     const certifierId = req.params.certifierId;
     const updatedCertifierData = req.body;
 
-    models.certifier.findByPk(certifierId)
-    .then(certifier => {
+    try {
+        const certifier = await models.certifier.findByPk(certifierId);
         if (!certifier) {
             return res.status(404).json({
-                message: "Certifier not found"
+                message: "Certificador não encontrado"
             });
         }
 
-        // Check if email  is being updated
-        if (
-            updatedCertifierData.email !== certifier.email 
-        ) {
-            // If so, check if the new email  already exists
-            models.certifier.findOne({
+        // Verifica se o email está sendo atualizado
+        if (updatedCertifierData.email !== certifier.email) {
+            // Se sim, verifica se o novo email já existe
+            const existingCertifier = await models.certifier.findOne({
                 where: {
                     [models.Sequelize.Op.or]: [{
-                            email: updatedCertifierData.email
-                        }
-                    ]
+                        email: updatedCertifierData.email
+                    }]
                 }
-            }).then(existingCertifier => {
-                if (existingCertifier) {
-                    if (existingCertifier.email === updatedCertifierData.email && existingCertifier.idcertifier !== certifierId) {
-                        return res.status(409).json({
-                            message: "Email already exists"
-                        });
-                    }
-                }
-                // If no conflict, update the certifier
-                Object.assign(certifier, updatedCertifierData);
-                return certifier.save();
-            }).then(updatedCertifier => {
-                res.status(200).json({
-                    message: "Certifier updated successfully",
-                    certifier: updatedCertifier
-                });
-            }).catch(error => {
-                res.status(500).json({
-                    message: "Something went wrong",
-                    error: error
-                });
             });
-        } else {
-            // If email is not being updated, simply update the certifier
-            Object.assign(certifier, updatedCertifierData);
-            return certifier.save().then(updatedCertifier => {
-                res.status(200).json({
-                    message: "Certifier updated successfully",
-                    certifier: updatedCertifier
+            if (existingCertifier && existingCertifier.idcertifier !== certifierId) {
+                return res.status(409).json({
+                    message: "Email já existe"
                 });
-            }).catch(error => {
-                res.status(500).json({
-                    message: "Something went wrong",
-                    error: error
-                });
-            });
+            }
         }
-    }).catch(error => {
-        res.status(500).json({
-            message: "Something went wrong",
+        // Se não houver conflito, atualiza o certificador
+        Object.assign(certifier, updatedCertifierData);
+        const updatedCertifier = await certifier.save();
+        return res.status(200).json({
+            message: "Certificador atualizado com sucesso",
+            certifier: updatedCertifier
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Algo deu errado",
             error: error
         });
-    });
+    }
 }
 
 

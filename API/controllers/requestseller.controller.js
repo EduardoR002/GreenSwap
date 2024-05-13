@@ -1,7 +1,7 @@
 const models = require('../models');
 
-// Function used to create a request to be a seller
-function createRequestSeller(req, res) {
+// Função assíncrona para criar uma solicitação para ser vendedor
+async function createRequestSeller(req, res) {
     const { nif, description, photo, idstate, iduser } = req.body;
 
     // Check if nif, idstate, and iduser are empty
@@ -19,77 +19,59 @@ function createRequestSeller(req, res) {
         iduser
     };
 
-    // Check if the user ID exists in the user table
-    models.user.findByPk(iduser)
-        .then(user => {
-            if (!user) {
-                return res.status(404).json({
-                    message: "User not found"
-                });
-            }
-            
-            // Check if the request state ID exists in the requeststate table
-            models.requeststate.findByPk(idstate)
-                .then(requestState => {
-                    if (!requestState) {
-                        return res.status(404).json({
-                            message: "Request state not found"
-                        });
-                    }
-
-                    // Create the request seller
-                    models.requestseller.create(newRequestSeller)
-                        .then(createdRequestSeller => {
-                            res.status(200).json({
-                                message: "Request seller created successfully",
-                                requestSeller: createdRequestSeller
-                            });
-                        })
-                        .catch(error => {
-                            res.status(500).json({
-                                message: "Something went wrong",
-                                error: error
-                            });
-                        });
-                })
-                .catch(error => {
-                    res.status(500).json({
-                        message: "Something went wrong",
-                        error: error
-                    });
-                });
-        })
-        .catch(error => {
-            res.status(500).json({
-                message: "Something went wrong",
-                error: error
+    try {
+        // Check if the user ID exists in the user table
+        const user = await models.user.findByPk(iduser);
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
             });
+        }
+
+        // Check if the request state ID exists in the requeststate table
+        const requestState = await models.requeststate.findByPk(idstate);
+        if (!requestState) {
+            return res.status(404).json({
+                message: "Request state not found"
+            });
+        }
+
+        // Create the request seller
+        const createdRequestSeller = await models.requestseller.create(newRequestSeller);
+        res.status(200).json({
+            message: "Request seller created successfully",
+            requestSeller: createdRequestSeller
         });
+    } catch (error) {
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error.message
+        });
+    }
 }
 
-// Function to get all requests
-function getAllRequestSellers(req, res) {
-    models.requestseller.findAll()
-        .then(requestSellers => {
-            if (!requestSellers || requestSellers.length === 0) {
-                return res.status(404).json({
-                    message: "No request sellers found"
-                });
-            }
-            res.status(200).json({
-                message: "Request sellers found successfully",
-                requestSellers: requestSellers
+// Função assíncrona para obter todas as solicitações de vendedores
+async function getAllRequestSellers(req, res) {
+    try {
+        const requestSellers = await models.requestseller.findAll();
+        if (!requestSellers || requestSellers.length === 0) {
+            return res.status(404).json({
+                message: "No request sellers found"
             });
-        })
-        .catch(error => {
-            res.status(500).json({
-                message: "Something went wrong",
-                error: error
-            });
+        }
+        res.status(200).json({
+            message: "Request sellers found successfully",
+            requestSellers: requestSellers
         });
+    } catch (error) {
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error.message
+        });
+    }
 }
 
 module.exports = {
-    createRequestSeller,
-    getAllRequestSellers
+    createRequestSeller: createRequestSeller,
+    getAllRequestSellers: getAllRequestSellers
 };
