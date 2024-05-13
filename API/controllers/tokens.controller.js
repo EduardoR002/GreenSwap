@@ -70,7 +70,7 @@ function createTokenCertifier(email, idcertifier, role) {
             });
 }
 
-async function renewToken(req, res){
+/* async function renewToken(req, res){
     const { userId } = req.body;
     
     try {
@@ -88,7 +88,7 @@ async function renewToken(req, res){
         console.error("Error at renew token:", error);
         return res.status(500).json({ message: "Error at renew token: "});
     }
-}
+} 
 
 // Function that every minute will check all tokens and see if any of them is revoked
 async function revokeExpiredOrUnrenewedTokens() {
@@ -133,7 +133,7 @@ async function removeRevokedTokens(){
 }
 
 setInterval(revokeExpiredOrUnrenewedTokens, 60000);
-setInterval(removeRevokedTokens, 60000);
+setInterval(removeRevokedTokens, 60000); */
 
 module.exports = {
     createTokenUser: createTokenUser,

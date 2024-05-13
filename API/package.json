@@ -4,7 +4,7 @@
   "description": "REST API GreenSwap with Nodejs and Mysql",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --passWithNoTests"
   },
   "author": "",
   "license": "ISC",
@@ -14,5 +14,9 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.9.7",
     "sequelize": "^6.37.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
   }
 }
