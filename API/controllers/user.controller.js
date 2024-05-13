@@ -90,27 +90,34 @@ function createUser(req, res) {
 
 
 // Function used to get all data of one user
-function getUser(req, res){
-    const idUser = req.params.userId;
-    models.user.findOne({ where: { idUser: idUser } })
-        .then(user => {
-            if (!user) {
-                return res.status(404).json({
-                    message: "User not found"
-                });
-            }
-            
-            res.status(200).json({
-                message: "User found successfully",
-                user: user
+// Function used to get all data of one user
+async function getUser(req, res){
+    try {
+        const idUser = req.params.userId;
+        console.log('ID do usuário:', idUser); // Adiciona um log para verificar o ID do usuário
+
+        const user = await models.user.findOne({ where: { idUser: idUser } });
+
+        if (!user) {
+            console.log('Usuário não encontrado'); // Adiciona um log se o usuário não for encontrado
+            return res.status(404).json({
+                message: "User not found"
             });
-        })
-        .catch(error => {
-            res.status(500).json({
-                message: "Something went wrong",
-                error: error
-            });
+        }
+        
+        console.log('Usuário encontrado:', user); // Adiciona um log se o usuário for encontrado
+        res.status(200).json({
+            message: "User found successfully",
+            user: user
         });
+    } catch (error) {
+        console.log('Error:', error);
+        console.log('Erro ao buscar usuário:', error); // Adiciona um log se ocorrer um erro
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error
+        });
+    }
 }
 
 // Function used to get all users data
