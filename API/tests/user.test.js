@@ -442,6 +442,9 @@ describe('editUser function', () => {
 })
 
 describe('loginUser function', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
     it('should return 200 and success message for user login with correct credentials', async () => {
         const mockUser = {
             idUser: 1,
@@ -534,12 +537,14 @@ describe('loginUser function', () => {
     });
 
     it('should return 401 for user login with incorrect password', async () => {
-
-        models.user.findOne.mockResolvedValue({
+        mockedUser = {
             idUser: 1,
             email: 'user@example.com',
             password: await bcrypt.hash('password123', 10)
-        });
+        }
+        
+        models.user.findOne.mockResolvedValue(mockedUser)
+        bcrypt.compare.mockResolvedValue(false)
 
         const req = {
             body: {

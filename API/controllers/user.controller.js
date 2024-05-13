@@ -226,7 +226,6 @@ async function loginUser(req, res) {
 
             if (!certifier) {
                 // Neither user nor certifier found
-                console.log("Certifier")
                 return res.status(404).json({
                     message: "User not found"
                 });
