@@ -16,6 +16,12 @@ const requestsetateRoute = require('./routes/requeststate.js');
 const certifierRoute = require('./routes/certifier.js');
 const certificateRoute = require('./routes/certificate.js');
 const requestsellerRoute = require('./routes/requestseller.js');
+const stockchangeRoute = require('./routes/stockchange.js');
+const productRoute = require('./routes/product.js');
+const sellerRoute = require('./routes/seller.js');
+const proposalRoute = require('./routes/proposal.js');
+const purchaseRoute = require('./routes/purchase.js');
+const notificationRoute = require('./routes/notification.js');
 const tokenRoute = require('./routes/tokens.js');
 
 
@@ -60,6 +66,12 @@ app.use("/requestsetate", requestsetateRoute);
 app.use("/certifier", certifierRoute);
 app.use("/certificate", certificateRoute);
 app.use("/requestseller", requestsellerRoute);
+app.use("/product", productRoute);
+app.use("/changestock", stockchangeRoute);
+app.use("/seller", sellerRoute);
+app.use("/proposal", proposalRoute);
+app.use("/purchase", purchaseRoute);
+app.use("/notification", notificationRoute);
 app.use("/tokens", tokenRoute);
 
 
