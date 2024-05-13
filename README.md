@@ -1,5 +1,8 @@
 # Software Development Project
-* This is a repository created to carry out the project for the curricular unit Software Development Project (Language JavaScript)
+* This is a repository created to carry out the project for the curricular unit Software Development Project;
+* Website -> React (JavaScript,HTML,CSS)
+* API -> Node JS (JavaScript)
+* Data Base -> MySQL 
 
 ## Goals:
 - Develop a solution to a real everyday problem;
