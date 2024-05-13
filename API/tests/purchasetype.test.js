@@ -121,7 +121,7 @@ describe('getAllTypes function', () => {
     });
 
     it('should return 500 if an error occurs during database operation', async () => {
-        const req = {};de
+        const req = {};
         const res = {
             status: jest.fn().mockReturnThis(),
             json: jest.fn()
