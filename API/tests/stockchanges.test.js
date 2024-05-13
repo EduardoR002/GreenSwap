@@ -14,7 +14,7 @@ describe('createStockChange function', () => {
         };
 
         const mockProduct = {
-            id: 32,
+            id: 1,
             name: "Product Example",
             description: "This is an example product",
             price: 10.99,
@@ -25,12 +25,21 @@ describe('createStockChange function', () => {
 
         const mockStockChange = { 
             id: 1,
-            quantity: 50,
+            quantity: 5,
             idtypechange: 1,
             idproduct: 1
         };
 
-        models.typechange.findByPk.mockResolvedValue(mockTypeChange);
+        // Create a mock function using jest.fn()
+        const findByPkMock = jest.fn();
+
+        // Replace the original findByPk function with the mock
+        models.typechange.findByPk = findByPkMock;
+
+        // Now, you can set up the mock implementation
+        const originalFindByPk = findByPkMock.mockImplementation(() => {
+            return mockTypeChange;
+        });
         models.product.findByPk.mockResolvedValue(mockProduct);
         models.stockchanges.create.mockResolvedValue(mockStockChange);
 
@@ -47,6 +56,7 @@ describe('createStockChange function', () => {
         };
         await stockChangeController.createStockChange(req, res);
 
+        expect(originalFindByPk).toHaveBeenCalled();
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({
             message: 'Stock change created successfully',
