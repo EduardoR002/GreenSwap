@@ -2,72 +2,72 @@ const models = require('../models');
 const jwt = require('jsonwebtoken');
 
 // Function used to create an token for a role 'user' or 'seller'
-function createTokenUser(email, userId, role) {
-    // Generate JWT token
-    const token = jwt.sign(
-        { email: email, userId: userId },
-        '0f1ab83a576c30f57aa5c33de4009cc923923ac041f6f63af8daa1a5ad53254a',
-        { expiresIn: '1h' }
-    );
+async function createTokenUser(email, userId, role) {
+    try {
+        // Generate JWT token
+        const token = jwt.sign(
+            { email: email, userId: userId },
+            '0f1ab83a576c30f57aa5c33de4009cc923923ac041f6f63af8daa1a5ad53254a',
+            { expiresIn: '1h' }
+        );
 
-    // Check if a token already exists for the user
-    return models.token.findOne({ where: { userId: userId } })
-        .then(existingToken => {
-            if (existingToken) {
-                // Update the existing token
-                existingToken.token = token;
-                existingToken.role = role;
-                existingToken.revoked = false;
-                existingToken.revokedAt = null;
-                return existingToken.save() // Save the updated token
-                    .then(() => token); // Resolve the promise with the new token
-            } else {
-                // Create a new token
-                return models.token.create({
-                    userId: userId,
-                    token: token,
-                    role: role
-                })
-                .then(() => token); // Resolve the promise with the new token
-            }
-        })
-        .catch(error => {
-            throw new Error('Error at creating/updating token: ' + error.message);
-        });
+        // Check if a token already exists for the user
+        let existingToken = await models.token.findOne({ where: { userId: userId } });
+
+        if (existingToken) {
+            // Update the existing token
+            existingToken.token = token;
+            existingToken.role = role;
+            existingToken.revoked = false;
+            existingToken.revokedAt = null;
+            await existingToken.save(); // Save the updated token
+        } else {
+            // Create a new token
+            await models.token.create({
+                userId: userId,
+                token: token,
+                role: role
+            });
+        }
+
+        return token; // Resolve the promise with the new token
+    } catch (error) {
+        throw new Error('Error at creating/updating token: ' + error.message);
+    }
 }
 
-function createTokenCertifier(email, idcertifier, role) {
+async function createTokenCertifier(email, idcertifier, role) {
+    try {
         // Generate JWT token
         const token = jwt.sign(
             { email: email, idcertifier: idcertifier },
             '0f1ab83a576c30f57aa5c33de4009cc923923ac041f6f63af8daa1a5ad53254a',
             { expiresIn: '1h' }
         );
-    
+
         // Check if a token already exists for the user
-        return models.token.findOne({ where: { idcertifier: idcertifier } })
-            .then(existingToken => {
-                if (existingToken) {
-                    // Update the existing token
-                    existingToken.token = token;
-                    existingToken.role = role;
-                    existingToken.revoked = false;
-                    existingToken.revokedAt = null;
-                    return existingToken.save() // Save the updated token
-                        .then(() => token); // Resolve the promise with the new token
-                } else {
-                    // Create a new token
-                    return models.token.create({
-                        userId: userId,
-                        token: token,
-                        role: role
-                    })
-                    .then(() => token); // Resolve the promise with the new token
-                }
-            })
-            .catch(error => {
-                throw new Error('Error at creating/updating token: ' + error.message);
+        let existingToken = await models.token.findOne({ where: { idcertifier: idcertifier } });
+
+        if (existingToken) {
+            // Update the existing token
+            existingToken.token = token;
+            existingToken.role = role;
+            existingToken.revoked = false;
+            existingToken.revokedAt = null;
+            await existingToken.save(); // Save the updated token
+        } else {
+            // Create a new token
+            await models.token.create({
+                userId: userId,
+                token: token,
+                role: role
             });
+        }
+
+        return token; // Resolve the promise with the new token
+    } catch (error) {
+        throw new Error('Error at creating/updating token: ' + error.message);
+    }
 }
 
 /* async function renewToken(req, res){
