@@ -184,7 +184,7 @@ describe('editTypeProposal function', () => {
         });
     });
 
-    /*it('should return 404 if the type proposal does not exist', async () => {
+    it('should return 404 if the type proposal does not exist', async () => {
         const typeId = '1';
         const updatedTypeData = {
             proposaltype: 'Type B'
@@ -273,5 +273,5 @@ describe('editTypeProposal function', () => {
             message: 'Something went wrong',
             error: expect.any(Error)
         });
-    });*/
+    });
 });
