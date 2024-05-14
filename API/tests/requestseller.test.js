@@ -25,7 +25,6 @@ describe('createRequestSeller function', () => {
             photo: 'photo-url.jpg',
             idstate: 1,
             iduser: 1,
-            // request seller properties...
         };
 
         models.user.findByPk.mockResolvedValue(mockUser);
@@ -217,7 +216,8 @@ describe('editRequestSeller function', () => {
 
         const mockRequestState = {
             id: 2,
-            // request state properties...
+            status: 'pending', // Assuming status is pending for the test
+            // other request state properties...
         };
 
         models.requestseller.findByPk.mockResolvedValue(mockRequestSeller);
@@ -271,29 +271,34 @@ describe('editRequestSeller function', () => {
     });
 
     it('should return 404 if request state does not exist', async () => {
-        const mockRequestSeller = {
-            id: 1,
-            nif: '123456789',
-            description: 'Lorem ipsum',
-            photo: 'photo-url.jpg',
-            idstate: 1,
-            iduser: 1,
-            // request seller properties...
-        };
-    
-        models.requestseller.findByPk.mockResolvedValue(mockRequestSeller);
-        models.requeststate.findByPk.mockResolvedValue(null);
-    
         const req = { 
             params: { id: 1 },
             body: {
-                // request seller update data...
+                nif: '987654321',
+                description: 'Updated description',
+                photo: 'updated-photo-url.jpg',
+                idstate: 2,  
+                iduser: 2
             }
         };
         const res = {
             status: jest.fn().mockReturnThis(),
             json: jest.fn()
         };
+    
+        models.requestseller.findByPk.mockResolvedValue({
+            id: 2,
+            // other properties...
+        });
+        // Mocking the implementation of models.requeststate.findByPk method
+         models.requeststate.findByPk.mockImplementation((id) => {
+            if (id === 2) { // Assuming the provided request state ID is 2
+                return null; // Simulating the scenario where the request state is not found
+            } else {
+                return {}; // Returning a simulated object representing the found request state
+            }
+        });
+
     
         await editRequestSeller(req, res);
     
