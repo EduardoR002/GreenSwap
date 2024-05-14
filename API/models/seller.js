@@ -26,6 +26,10 @@ module.exports = function(sequelize, DataTypes) {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: 'user',
+        key: 'userId'
+      }
     }
   }, {
     sequelize,
@@ -52,6 +56,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "idcertificate" },
+        ]
+      },
+      {
+        name: "userrequest_idx",
+        using: "BTREE",
+        fields: [
+          { name: "userId" },
         ]
       },
     ]

@@ -105,40 +105,34 @@ async function getProduct(req, res) {
 // Async function to get all products
 async function getAllProducts(req, res) {
     try {
-      const products = await models.product.findAll({
-        include: [
-          { model: models.typeproduct, as: 'TypeProduct', attributes: ['name'] },
-          { model: models.seller, as: 'Seller', attributes: ['name'] }
-        ]
-      });
-  
-      if (!products || products.length === 0) {
-        return res.status(404).json({
-          message: "No products found"
+        const { search_name } = req.body; // Assuming the search name is provided in the request body
+        
+        // Call the stored procedure using sequelize
+        const products = await models.sequelize.query(
+            'CALL getAllProducts(:search_name)',
+            {
+                replacements: { search_name },
+                type: models.sequelize.QueryTypes.SELECT
+            }
+        );
+
+        if (!products || products.length === 0) {
+            return res.status(404).json({
+                message: "No products found"
+            });
+        }
+
+        res.status(200).json({
+            message: "Products found successfully",
+            products
         });
-      }
-  
-      // Mapeia os produtos para retornar apenas os campos necessários
-      const productsData = products.map(product => ({
-        name: product.name,
-        description: product.description,
-        price: product.price,
-        stock: product.stock,
-        typeName: product.TypeProduct.name,
-        sellerName: product.Seller.name
-      }));
-  
-      res.status(200).json({
-        message: "Products found successfully",
-        products: productsData
-      });
     } catch (error) {
-      res.status(500).json({
-        message: "Something went wrong",
-        error: error.message
-      });
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error.message
+        })
     }
-};
+}
 
 // Async function used to edit data of one product
 async function editProduct(req, res) {

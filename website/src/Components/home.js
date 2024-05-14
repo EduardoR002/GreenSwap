@@ -28,6 +28,8 @@ function Home() {
                 <th>Description</th>
                 <th>Price</th>
                 <th>Stock</th>
+                <th>Type</th>
+                <th>Seller</th>
               </tr>
             </thead>
             <tbody>
