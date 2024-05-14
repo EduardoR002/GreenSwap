@@ -63,32 +63,33 @@ async function createPurchase(req, res) {
 }
 
 // Function to obtain all purchases
-function getAllPurchases(req, res) {
-    models.purchase.findAll()
-        .then(purchases => {
-            if (!purchases || purchases.length === 0) {
-                return res.status(404).json({
-                    message: "No purchases found"
-                });
-            }
-            res.status(200).json({
-                message: "Purchases found successfully",
-                purchases: purchases
+async function getAllPurchases(req, res) {
+    try {
+        const purchases = await models.purchase.findAll();
+        if (!purchases || purchases.length === 0) {
+            return res.status(404).json({
+                message: "No purchases found"
             });
-        })
-        .catch(error => {
-            res.status(500).json({
-                message: "Something went wrong",
-                error: error.message
-            });
+        }
+        res.status(200).json({
+            message: "Purchases found successfully",
+            purchases: purchases
         });
+    } catch (error) {
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error.message
+        });
+    }
 }
 
 // Function used to edit data of one purchase
 async function editPurchase(req, res) {
     const purchaseId = req.params.purchaseId;
     const updatedPurchaseData = req.body;
-
+    
+        // Extrair quantity e price de updatedPurchaseData
+        const { quantity, price } = updatedPurchaseData;
 
     // Check if quantity and price is greater than zero
     if (quantity <= 0 || price <= 0) {

@@ -2,7 +2,7 @@ const request = require('supertest');
 const express = require('express');
 const app = express();
 const models = require('../models'); // Replace with the path to your models
-const { createRequestSeller, getAllRequestSellers } = require('../controllers/requestseller.controller.js');
+const { createRequestSeller, getAllRequestSellers,editRequestSeller } = require('../controllers/requestseller.controller.js');
 
 jest.mock('../models');
 
@@ -184,6 +184,179 @@ describe('getAllRequestSellers function', () => {
         models.requestseller.findAll.mockRejectedValue(new Error('Database error'));
 
         await getAllRequestSellers(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.json).toHaveBeenCalledWith({
+            message: 'Something went wrong',
+            error: 'Database error'
+        });
+    });
+});
+
+describe('editRequestSeller function', () => {
+    it('should return 200 and the updated request seller if successful', async () => {
+        const mockRequestSeller = {
+            id: 1,
+            nif: '123456789',
+            description: 'Lorem ipsum',
+            photo: 'photo-url.jpg',
+            idstate: 1,
+            iduser: 1,
+            // request seller properties...
+        };
+
+        const updatedMockRequestSeller = {
+            id: 1,
+            nif: '987654321',
+            description: 'Updated description',
+            photo: 'updated-photo-url.jpg',
+            idstate: 2,
+            iduser: 2,
+            // updated request seller properties...
+        };
+
+        const mockRequestState = {
+            id: 2,
+            // request state properties...
+        };
+
+        models.requestseller.findByPk.mockResolvedValue(mockRequestSeller);
+        models.requeststate.findByPk.mockResolvedValue(mockRequestState);
+        models.requestseller.prototype.update.mockResolvedValue(updatedMockRequestSeller);
+
+        const req = { 
+            params: { id: 1 },
+            body: {
+                nif: '987654321',
+                description: 'Updated description',
+                photo: 'updated-photo-url.jpg',
+                idstate: 2,
+                iduser: 2
+            }
+        };
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn()
+        };
+
+        await editRequestSeller(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({
+            message: 'Request seller updated successfully',
+            requestSeller: updatedMockRequestSeller
+        });
+    });
+
+    it('should return 404 if request seller does not exist', async () => {
+        const req = { 
+            params: { id: 1 },
+            body: {
+                // request seller update data...
+            }
+        };
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn()
+        };
+
+        models.requestseller.findByPk.mockResolvedValue(null);
+
+        await editRequestSeller(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(404);
+        expect(res.json).toHaveBeenCalledWith({
+            message: 'Request seller not found'
+        });
+    });
+
+    it('should return 404 if request state does not exist', async () => {
+        const mockRequestSeller = {
+            id: 1,
+            nif: '123456789',
+            description: 'Lorem ipsum',
+            photo: 'photo-url.jpg',
+            idstate: 1,
+            iduser: 1,
+            // request seller properties...
+        };
+    
+        models.requestseller.findByPk.mockResolvedValue(mockRequestSeller);
+        models.requeststate.findByPk.mockResolvedValue(null);
+    
+        const req = { 
+            params: { id: 1 },
+            body: {
+                // request seller update data...
+            }
+        };
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn()
+        };
+    
+        await editRequestSeller(req, res);
+    
+        expect(res.status).toHaveBeenCalledWith(404);
+        expect(res.json).toHaveBeenCalledWith({
+            message: 'Request state not found'
+        });
+    });
+    
+    it('should return 422 if request state is not pending', async () => {
+        const mockRequestSeller = {
+            id: 1,
+            nif: '123456789',
+            description: 'Lorem ipsum',
+            photo: 'photo-url.jpg',
+            idstate: 2, // Assuming state is not pending
+            iduser: 1,
+            // request seller properties...
+        };
+
+        const mockRequestState = {
+            id: 2,
+            status: 'approved',
+            // request state properties...
+        };
+
+        models.requestseller.findByPk.mockResolvedValue(mockRequestSeller);
+        models.requeststate.findByPk.mockResolvedValue(mockRequestState);
+
+        const req = { 
+            params: { id: 1 },
+            body: {
+                // request seller update data...
+            }
+        };
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn()
+        };
+
+        await editRequestSeller(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(422);
+        expect(res.json).toHaveBeenCalledWith({
+            message: 'Cannot edit request seller. Request state is not pending.'
+        });
+    });
+
+    it('should return 500 if an error occurs during database operation', async () => {
+        const req = { 
+            params: { id: 1 },
+            body: {
+                // request seller update data...
+            }
+        };
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn()
+        };
+
+        models.requestseller.findByPk.mockRejectedValue(new Error('Database error'));
+
+        await editRequestSeller(req, res);
 
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.json).toHaveBeenCalledWith({
