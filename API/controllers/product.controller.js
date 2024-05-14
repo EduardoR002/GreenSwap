@@ -5,12 +5,6 @@ async function createProduct(req, res) {
     const { name, description, price, stock, idtypeproduct, idseller } = req.body;
 
     try {
-        // Check if any field is empty
-        if (!name || !description || !price || !stock || !idtypeproduct || !idseller) {
-            return res.status(422).json({
-                message: "All fields are required"
-            });
-        }
 
         // Check if price is greater than zero
         if (price <= 0) {
@@ -18,11 +12,17 @@ async function createProduct(req, res) {
                 message: "Price must be greater than zero"
             });
         }
-
-        // Check if stock is greater than zero
-        if (stock <= 0) {
+          // Check if stock is greater than zero
+          if (stock <= 0) {
             return res.status(422).json({
                 message: "Stock must be greater than zero"
+            });
+        }
+
+        // Check if any field is empty
+        if (!name || !description || !idtypeproduct || !idseller) {
+            return res.status(422).json({
+                message: "All fields are required"
             });
         }
 
@@ -131,12 +131,6 @@ async function editProduct(req, res) {
     const updatedProductData = req.body;
 
     try {
-        // Check if any field is empty
-        if (!updatedProductData.name || !updatedProductData.description || !updatedProductData.price || !updatedProductData.stock || !updatedProductData.idtypeproduct || !updatedProductData.idseller) {
-            return res.status(422).json({
-                message: "All fields are required"
-            });
-        }
 
         // Check if price is greater than zero
         if (updatedProductData.price <= 0) {
@@ -149,6 +143,13 @@ async function editProduct(req, res) {
         if (updatedProductData.stock <= 0) {
             return res.status(422).json({
                 message: "Stock must be greater than zero"
+            });
+        }
+        
+        // Check if any field is empty
+        if (!updatedProductData.name || !updatedProductData.description || !updatedProductData.idtypeproduct || !updatedProductData.idseller) {
+            return res.status(422).json({
+                message: "All fields are required"
             });
         }
 
