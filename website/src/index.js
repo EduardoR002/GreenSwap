@@ -1,12 +1,14 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client'; // Importe createRoot de react-dom/client
-//import Login from './Components/logIn'; // Importe o componente de login que você criou
-import Login from './Components/login';
+//import Login from './Components/login';
+//import Navbar from './Components/navBar';
+//import Home from './Components/home';
+import Register from './Components/register'
 
 const root = createRoot(document.getElementById('root')); // Use createRoot de react-dom/client
 root.render(
   <React.StrictMode>
-  <Login/>
+  <Register/>
 </React.StrictMode>
 );
 
