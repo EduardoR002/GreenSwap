@@ -1,6 +1,6 @@
 const models = require('../models');
 
-// Função assíncrona para criar uma solicitação para ser vendedor
+// Asynchronous function to create a request to be a seller
 async function createRequestSeller(req, res) {
     const { nif, description, photo, idstate, iduser } = req.body;
 
@@ -29,7 +29,7 @@ async function createRequestSeller(req, res) {
         }
 
         // Check if the request state ID exists in the requeststate table
-        const requestState = await models.requeststate.findByPk(idstate);
+        const requestState = await models.requeststate.findByPk(idstate);   
         if (!requestState) {
             return res.status(404).json({
                 message: "Request state not found"
@@ -50,7 +50,7 @@ async function createRequestSeller(req, res) {
     }
 }
 
-// Função assíncrona para obter todas as solicitações de vendedores
+// Asynchronous function to get all request sellers
 async function getAllRequestSellers(req, res) {
     try {
         const requestSellers = await models.requestseller.findAll();
@@ -71,7 +71,58 @@ async function getAllRequestSellers(req, res) {
     }
 }
 
+// Asynchronous function to edit a request seller
+async function editRequestSeller(req, res) {
+    const { id } = req.params;
+    const { nif, description, photo, idstate, iduser } = req.body;
+
+    try {
+        // Find the request seller by ID
+        const requestSeller = await models.requestseller.findByPk(id);
+        if (!requestSeller) {
+            return res.status(404).json({
+                message: "Request seller not found"
+            });
+        }
+
+        // Find the request state by ID
+        const requestState = await models.requeststate.findByPk(requestSeller.idstate);
+        if (!requestState) {
+            return res.status(404).json({
+                message: "Request state not found"
+            });
+        }
+
+        // Check if the request state is pending
+        if (requestState.status !== 'pending') {
+            return res.status(422).json({
+                message: "Cannot edit request seller. Request state is not pending."
+            });
+        }
+
+        // Update the request seller
+        await requestSeller.update({
+            nif,
+            description,
+            photo,
+            idstate,
+            iduser
+        });
+
+        res.status(200).json({
+            message: "Request seller updated successfully",
+            requestSeller: requestSeller
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error.message
+        });
+    }
+}
+
 module.exports = {
     createRequestSeller: createRequestSeller,
-    getAllRequestSellers: getAllRequestSellers
+    getAllRequestSellers: getAllRequestSellers,
+    editRequestSeller: editRequestSeller
 };
