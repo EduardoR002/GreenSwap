@@ -1,49 +1,57 @@
-import '../CSS/logIn.css';
-import GreenSwap from '../images/GreenSwap.png';
+import React from "react";
+import '../CSS/login.css'
+import logo from '../images/GreenSwap.png'
 
-function Login() {
-    // Função para lidar com o clique no botão de login
-    const login = () => {
-        // Coloque aqui a lógica de login
-        console.log('Login clicked');
-    };
-
-    return (
-        <div>
-            <div id="bg"></div>
-
+function Login(){
+    return(
+        <>
+            <div id="bg" />
             <div className="main">
-                {/* Ícone clicável que leva o usuário para a página inicial */}
+                {/* Clickable icon that takes the user to the home page */}
                 <div className="iconDiv">
-                    <a href="home.html">
-                    <img src={GreenSwap} style={{ width: '60%', height: '60%' }} className="icon" alt="GreenSwap Icon" />
-                    </a>
+                <a href="home.html">
+                    <img
+                    src={logo}
+                    style={{ width: "60%", height: "60%" }}
+                    className="icon"
+                    />
+                </a>
                 </div>
-
-                {/* Formulário */}
+                {/* Form */}
                 <div className="formDiv">
-                    <span className="poppins-regular greetings"><b>Welcome!</b></span>
-
-                    <div className="input-box">
-                        <span className="material-symbols-outlined">
-                            person
-                        </span>
-                        <input className="poppins-regular textBox" type="text" id="email" placeholder="Email" />
-                    </div>
-
-                    <div className="input-box">
-                        <span className="material-symbols-outlined">
-                            lock
-                        </span>
-                        <input className="poppins-regular textBox" type="password" id="password" placeholder="Password" />
-                    </div>
-                    
-                    <button className="poppins-regular" onClick={login}>Login</button>
-
-                    <span className="poppins-regular linknote">Not registered? <a href="register.html">Create an account</a></span>
+                <span className="poppins-regular greetings">
+                    <b>Welcome!</b>
+                </span>
+                <div className="input-box">
+                    <span className="material-symbols-outlined">person</span>
+                    <input
+                    className="poppins-regular"
+                    type="text"
+                    id="email"
+                    placeholder="Email"
+                    />
                 </div>
+                <div className="input-box">
+                    <span className="material-symbols-outlined">lock</span>
+                    <input
+                    className="poppins-regular"
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    />
+                </div>
+                <button className="poppins-regular" onclick="login()">
+                    Login
+                </button>
+                <span className="poppins-regular linknote">
+                    Not registered? <a href="register.html">Create an account</a>
+                </span>
+                <a href="register.html"></a>
+                </div>
+                <a href="register.html"></a>
             </div>
-        </div>
+            <a href="register.html"></a>
+        </>
     );
 }
 
