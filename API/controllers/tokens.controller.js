@@ -23,14 +23,14 @@ async function createTokenUser(email, userId, role) {
             await existingToken.save();
         } else {
             // Create a new token
-            await models.token.create({
+            existingToken = await models.token.create({
                 userId: userId,
                 token: token,
                 role: role
             });
         }
 
-        return token; // Resolve the promise with the new token
+        return existingToken; // Resolve the promise with the new token
     } catch (error) {
         throw new Error('Error at creating/updating token: ' + error.message);
     }
