@@ -1,6 +1,6 @@
 const models = require('../models');
 
-// Função para criar um tipo de produto
+// Async function to create a type of product 
 async function createTypeProduct(req, res) {
     const typeproduct = {
         typeproduct: req.body.typeproduct
@@ -34,7 +34,7 @@ async function createTypeProduct(req, res) {
     }
 }
 
-// Função para obter todos os tipos de produtos
+// Async function to obtain all of the types of product 
 async function getAllTypes(req, res) {
     try {
         const types = await models.typeproduct.findAll();
@@ -57,7 +57,7 @@ async function getAllTypes(req, res) {
     }
 }
 
-// Função para editar um tipo de produto
+// Async function to edit a type of product 
 async function editTypeProduct(req, res) {
     const idtypeproduct = req.params.idtypeproduct;
     const updatedTypeData = req.body;

@@ -1,6 +1,6 @@
 const models = require('../models');
 
-// Asynchronous function to create a request to be a seller
+// Async function to create a request to be a seller
 async function createRequestSeller(req, res) {
     const { nif, description, photo, idstate, iduser } = req.body;
 
@@ -50,7 +50,7 @@ async function createRequestSeller(req, res) {
     }
 }
 
-// Asynchronous function to get all request sellers
+// Async function to get all request sellers
 async function getAllRequestSellers(req, res) {
     try {
         const requestSellers = await models.requestseller.findAll();
@@ -71,7 +71,7 @@ async function getAllRequestSellers(req, res) {
     }
 }
 
-// Asynchronous function to edit a request seller
+// Async function to edit a request seller
 async function editRequestSeller(req, res) {
     const { id } = req.params;
     const { nif, description, photo, idstate, iduser } = req.body;

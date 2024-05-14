@@ -1,6 +1,6 @@
 const models = require('../models');
 
-// Asynchronous function to create a new proposal
+// Async function to create a new proposal
 async function createProposal(req, res) {
     const { newprice, iduser, idproduct, idproposalstate, idproposaltype, quantity, futuredate, startday } = req.body;
 
@@ -62,7 +62,7 @@ async function createProposal(req, res) {
     }
 }
 
-// Asynchronous function to get all proposals
+// Asynch function to get all proposals
 async function getAllProposals(req, res) {
     try {
         const proposals = await models.proposal.findAll();
@@ -83,7 +83,7 @@ async function getAllProposals(req, res) {
     }
 }
 
-// Asynchronous function used to edit data of one proposal
+// Async function used to edit data of one proposal
 async function editProposal(req, res) {
     const proposalId = req.params.proposalId;
     const updatedProposalData = req.body;

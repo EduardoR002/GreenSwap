@@ -1,6 +1,6 @@
 const models = require('../models');
 
-// Function  to create a new seller
+// Async function  to create a new seller
 async function createSeller(req, res) {
     const { idrequest, idcertificate, userId } = req.body;
 
@@ -24,7 +24,7 @@ async function createSeller(req, res) {
             });
         }
 
-        // Cria o vendedor
+        // Create a seller
         const createdSeller = await models.seller.create({
             idrequest,
             idcertificate,
@@ -43,7 +43,7 @@ async function createSeller(req, res) {
     }
 }
 
-// Function to get a single seller by their ID
+// Async function to get a single seller by their ID
 async function getSeller(req, res) {
     const sellerId = req.params.sellerId;
 
@@ -66,7 +66,7 @@ async function getSeller(req, res) {
     }
 }
 
-/// Function  to get all sellers
+/// Async function  to get all sellers
 async function getAllSellers(req, res) {
     try {
         const sellers = await models.seller.findAll();
@@ -87,7 +87,7 @@ async function getAllSellers(req, res) {
     }
 }
 
-// Function to edit seller data
+// Async functionto edit seller data
 async function editSeller(req, res) {
     const sellerId = req.params.sellerId;
     const updatedSellerData = req.body;

@@ -1,6 +1,6 @@
 const models = require('../models');
 
-// Função para criar um estado de proposta
+// Async function to create a proposal state
 async function createProposalState(req, res) {
     const proposalState = {
         state: req.body.state
@@ -34,7 +34,7 @@ async function createProposalState(req, res) {
     }
 }
 
-// Função para obter todos os estados de propostas
+// Async function to obtain all the proposal states
 async function getAllStates(req, res) {
     try {
         const states = await models.proposalstate.findAll();
@@ -57,7 +57,7 @@ async function getAllStates(req, res) {
     }
 }
 
-// Função para editar um estado de proposta
+// Async function to edit a proposal state
 async function editProposalState(req, res) {
     const idState = req.params.idState;
     const updatedStateData = req.body;

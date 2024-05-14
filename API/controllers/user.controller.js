@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const { createTokenCertifier, createTokenUser } = require('./tokens.controller.js');
 const token = require('../models/token.js');
 
-// Function that create a new User
+// Async function that create a new User
 async function createUser(req, res) {
     const { name, email, password, phone, address, description, photo } = req.body;
 
@@ -68,7 +68,7 @@ async function createUser(req, res) {
     }
 }
 
-// Function used to get all data of one user
+// Async function used to get all data of one user
 async function getUser(req, res){
     try {
         const idUser = req.params.userId;
@@ -93,7 +93,7 @@ async function getUser(req, res){
     }
 }
 
-// Function used to get all users data
+// Async function used to get all users data
 async function getAllUsers(req, res){
     try {
         const users = await models.user.findAll();
@@ -114,7 +114,7 @@ async function getAllUsers(req, res){
     }
 }
 
-// Function used to delete one user
+// Async function used to delete one user
 async function deleteUser(req, res){
     const userId = req.params.userId;
 
@@ -142,7 +142,7 @@ async function deleteUser(req, res){
     }
 }
 
-// Function used to edit data from one user
+// Async function used to edit data from one user
 async function editUser(req, res){
     const userId = req.params.userId;
     const updatedUserData = req.body;
@@ -211,6 +211,7 @@ async function editUser(req, res){
     }
 }
 
+/* Async function used to provide login to the user */
 async function loginUser(req, res) {
     try {
         const { email, password } = req.body;

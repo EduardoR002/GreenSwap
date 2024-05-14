@@ -1,6 +1,6 @@
 const models = require('../models');
 
-// Função para criar um tipo de compra
+// Async function to create a type of purchase 
 async function createTypePurchase(req, res) {
     const purchaseType = {
         type: req.body.type
@@ -34,7 +34,7 @@ async function createTypePurchase(req, res) {
     }
 }
 
-// Função para obter todos os tipos de compra
+// Async function to obtain all of the types of purchase 
 async function getAllTypes(req, res) {
     try {
         const types = await models.purchasetype.findAll();
@@ -57,7 +57,7 @@ async function getAllTypes(req, res) {
     }
 }
 
-// Função para editar um tipo de compra
+// Async function to edit a type of purchase
 async function editTypePurchase(req, res) {
     const idtype = req.params.idtype;
     const updatedTypeData = req.body;
