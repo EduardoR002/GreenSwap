@@ -8,7 +8,7 @@ import Register from './Components/register'
 const root = createRoot(document.getElementById('root')); // Use createRoot de react-dom/client
 root.render(
   <React.StrictMode>
-  <Register/>
+  <Register />
 </React.StrictMode>
 );
 
