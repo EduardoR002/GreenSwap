@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../CSS/home.css';
 import '../CSS/navbar.css';
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 function Home() {
     const [products, setProducts] = useState([]);
@@ -21,6 +22,17 @@ function Home() {
 
     return (
         <div className="App">
+        <div>
+        <Link to={'../login'}> -Login</Link>
+        <br ></br>
+        <br ></br>
+          <Link to={'../register'}>-Create</Link>
+          <br ></br>
+          <br ></br>
+          <br ></br>
+          <br ></br>
+          <br ></br>
+          </div>
           <table>
             <thead>
               <tr>

@@ -48,13 +48,13 @@ function Register() {
         <div className="main">
           {/* Clickable icon that takes the user to the home page */}
           <div className="iconDiv">
-            <a href="home.html">
+            <Link to={'../home'}>
               <img
                 src={logo}
                 style={{ width: "60%", height: "60%" }}
                 className="icon"
               />
-            </a>
+           </Link>
           </div>
           {/* Form */}
           <div className="formDiv">
