@@ -70,7 +70,7 @@ async function createTokenCertifier(email, idcertifier, role) {
     }
 }
 
-/* async function renewToken(req, res){
+async function renewToken(req, res){
     const { userId } = req.body;
     
     try {
@@ -103,13 +103,13 @@ async function revokeExpiredOrUnrenewedTokens() {
                 token.revokedAt = currentTime.getTime()
                 token.revoked = true;
                 await token.save();
-                console.log("Token revoked:", token.token);
             }
         }
-
-        console.log("Token revocation completed.");
     } catch (error) {
-        console.error("Error at token revocation:", error);
+        return res.status(500).json({
+            message: "Something went wrong",
+            error: error
+        });
     }
 }
 
@@ -123,19 +123,22 @@ async function removeRevokedTokens(){
         for (const token of tokens) {
             if (token.revoked && token.revokedAt < revokedTimeThreshold) {
                 await token.destroy();
-                console.log("Revoked Token removed: ", token.token);
             }
-            console.log("Removal of revoked tokens completed.");
         }
     } catch (error) {
-        
+        return res.status(500).json({
+            message: "Something went wrong",
+            error: error
+        });
     }
 }
 
 setInterval(revokeExpiredOrUnrenewedTokens, 60000);
-setInterval(removeRevokedTokens, 60000); */
+setInterval(removeRevokedTokens, 60000); 
 
 module.exports = {
     createTokenUser: createTokenUser,
-    createTokenCertifier: createTokenCertifier
+    createTokenCertifier: createTokenCertifier,
+    removeRevokedTokens: removeRevokedTokens,
+    revokeExpiredOrUnrenewedTokens: revokeExpiredOrUnrenewedTokens
 };
