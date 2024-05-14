@@ -4,17 +4,18 @@ const models = require('../models');
 async function createPurchase(req, res) {
     const { buydate, previewdate, definitivedate, quantity, price, futurepurchase, idproduct, idtypepurchase, iduser, startday, idpurchasestate } = req.body;
 
-    // Check if any field is empty
-    if (!buydate || !quantity || !price || !idproduct || !idtypepurchase || !idpurchasestate) {
-        return res.status(422).json({
-            message: "All fields are required"
-        });
-    }
-
     // Check if quantity and price is greater than zero
     if (quantity <= 0 || price <= 0) {
         return res.status(422).json({
             message: "Quantity and price must be greater than zero"
+        });
+    }
+
+    
+    // Check if any field is empty
+    if (!buydate || !idproduct || !idtypepurchase || !idpurchasestate) {
+        return res.status(422).json({
+            message: "All fields are required"
         });
     }
 
@@ -88,13 +89,7 @@ async function editPurchase(req, res) {
     const purchaseId = req.params.purchaseId;
     const updatedPurchaseData = req.body;
 
-    // Check if any field is empty
-    if (!updatedPurchaseData.buydate || !updatedPurchaseData.quantity || !updatedPurchaseData.price || !updatedPurchaseData.idproduct || !updatedPurchaseData.idtypepurchase || !updatedPurchaseData.idpurchasestate) {
-        return res.status(422).json({
-            message: "All fields are required"
-        });
-    }
-    
+
     // Check if quantity and price is greater than zero
     if (quantity <= 0 || price <= 0) {
         return res.status(422).json({
@@ -102,6 +97,13 @@ async function editPurchase(req, res) {
         });
     }
 
+    // Check if any field is empty
+    if (!updatedPurchaseData.buydate || !updatedPurchaseData.quantity || !updatedPurchaseData.price || !updatedPurchaseData.idproduct || !updatedPurchaseData.idtypepurchase || !updatedPurchaseData.idpurchasestate) {
+        return res.status(422).json({
+            message: "All fields are required"
+        });
+    }
+    
     try {
         const purchase = await models.purchase.findByPk(purchaseId);
         if (!purchase) {

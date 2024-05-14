@@ -4,6 +4,14 @@ const models = require('../models');
 async function createProposal(req, res) {
     const { newprice, iduser, idproduct, idproposalstate, idproposaltype, quantity, futuredate, startday } = req.body;
 
+    // Check if newprice is greater than 0
+    if (newprice <= 0) {
+        return res.status(422).json({
+            message: "Price must be greater than zero"
+        });
+    }
+
+    
     // Check if any field is empty
     if (!newprice || !iduser || !idproduct || !idproposalstate || !idproposaltype) {
         return res.status(422).json({
@@ -11,12 +19,7 @@ async function createProposal(req, res) {
         });
     }
 
-    // Check if newprice is greater than 0
-    if (newprice <= 0) {
-        return res.status(422).json({
-            message: "Price must be greater than zero"
-        });
-    }
+
 
     const newProposal = {
         newprice,
