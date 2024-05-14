@@ -20,7 +20,7 @@ async function createTokenUser(email, userId, role) {
             existingToken.role = role;
             existingToken.revoked = false;
             existingToken.revokedAt = null;
-            await existingToken.save(); // Save the updated token
+            await existingToken.save();
         } else {
             // Create a new token
             await models.token.create({

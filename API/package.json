@@ -4,7 +4,7 @@
   "description": "REST API GreenSwap with Nodejs and Mysql",
   "main": "index.js",
   "scripts": {
-    "test": "jest --verbose=false | findstr /R \"^PASS\" | node -e \"process.stdin.on('data', data => { process.stdout.write('\\x1b[32m' + data.toString().trim() + '\\x1b[0m\\n') })\""
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
