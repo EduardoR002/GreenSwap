@@ -4,12 +4,13 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 
 //Component imports
 import Register from './Components/register'
+import E404 from './Components/e404'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Register />,
-    errorElement: <div>404 Page Not Found!</div>
+    errorElement: <E404 />
   },
   
 ]);
