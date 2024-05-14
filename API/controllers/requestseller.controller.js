@@ -73,47 +73,44 @@ async function getAllRequestSellers(req, res) {
 
 // Async function to edit a request seller
 async function editRequestSeller(req, res) {
-    const { id } = req.params;
-    const { nif, description, photo, idstate, iduser } = req.body;
+    const idrequestseller = req.params.idrequestseller;
+    const updatedRequestData = req.body;
 
     try {
         // Find the request seller by ID
-        const requestSeller = await models.requestseller.findByPk(id);
-        if (!requestSeller) {
+        const requestseller = await models.requestseller.findByPk(idrequestseller);
+        if (!requestseller) {
             return res.status(404).json({
                 message: "Request seller not found"
             });
         }
-
+        console.log("Request: ", requestseller)
+        console.log("Request updated:", updatedRequestData)
         // Find the request state by ID
-        const requestState = await models.requeststate.findByPk(requestSeller.idstate);
+        const requestState = await models.requeststate.findByPk(requestseller.idstate);
+        console.log("Request State: ", requestState)
         if (!requestState) {
             return res.status(404).json({
                 message: "Request state not found"
             });
         }
-
         // Check if the request state is pending
-        if (requestState.status !== 'pending') {
+        if (requestState.state !== 'pending') {
             return res.status(422).json({
                 message: "Cannot edit request seller. Request state is not pending."
             });
         }
 
         // Update the request seller
-        await requestSeller.update({
-            nif,
-            description,
-            photo,
-            idstate,
-            iduser
-        });
+        Object.assign(requestseller, updatedRequestData);
+        const updatedRequest = await requestseller.save();
 
         res.status(200).json({
             message: "Request seller updated successfully",
-            requestSeller: requestSeller
+            requestSeller: updatedRequest
         });
     } catch (error) {
+        console.error("Error occurred: ", error);
         res.status(500).json({
             message: "Something went wrong",
             error: error.message
