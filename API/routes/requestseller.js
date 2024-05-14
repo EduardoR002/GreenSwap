@@ -5,6 +5,6 @@ const router = Router();
 
 router.post("/create", createRequestSeller);
 router.get('/getall', getAllRequestSellers);
-router.get('/editrequestseller', editRequestSeller);
+router.put('/editrequestseller/:idrequestseller', editRequestSeller);
 
 module.exports = router;
