@@ -193,7 +193,6 @@ describe('getAllRequestSellers function', () => {
 });
 
 describe('editRequestSeller function', () => {
-<<<<<<< HEAD
     it('should return 200 and the updated request seller if successful', async () => {
         const mockRequestSeller = {
             id: 1,
@@ -247,13 +246,9 @@ describe('editRequestSeller function', () => {
             message: 'Request seller updated successfully',
             requestSeller: updatedMockRequestSeller
         });
-=======
-    it('should return 200 and success message if request seller is updated successfully', async () => {
-        
->>>>>>> a8b1a21b46c3a404fc87767732ce2748d738d167
     });
 
-    /*it('should return 404 if request seller does not exist', async () => {
+    it('should return 404 if request seller does not exist', async () => {
         const req = { 
             params: { idrequestseller: 1 },
             body: {
@@ -373,5 +368,5 @@ describe('editRequestSeller function', () => {
             message: 'Something went wrong',
             error: 'Database error'
         });
-    });*/
+    });
 });
