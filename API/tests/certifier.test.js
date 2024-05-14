@@ -162,6 +162,9 @@ describe('getCertifier function', () => {
 });
 
 describe('getAllCertifiers function', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
     it('should return 200 and an array of certifiers if found', async () => {
         const certifiers = [{
                 id: 1,
@@ -294,31 +297,33 @@ describe('editCertifier function', () => {
     });
 
     it('should return 409 if the updated email already exists for another certifier', async () => {
+        const certifierId = '1';
+        const certifier = {
+            idcertifier: certifierId,
+            name: 'Original Name',
+            email: 'original@example.com',
+            password: 'originalpassword'
+        }
+        const existingCertifier = {
+            idcertifier: '2',
+            name: 'Existing name',
+            email: 'existingemail@example.com',
+            password: 'existingpassword'
+        }
+        models.certifier.findByPk.mockResolvedValue(certifier);
+        models.certifier.findOne.mockResolvedValue(existingCertifier);
+
         const req = {
-            params: {
-                certifierId: 1
-            },
-            body: {
-                name: 'Updated Name',
-                email: 'existing@example.com',
-                password: 'updatedPassword'
-            }
+            params: { certifierId },
+            body: {email: 'existingemail@example.com'}
         };
-        const res = {
+        const res = { 
             status: jest.fn().mockReturnThis(),
             json: jest.fn()
-        };
-    
-        const certifier = {
-            id: 1,
-            email: 'existing@example.com'
-        };
-    
-        models.certifier.findByPk.mockResolvedValue(certifier);
-        models.certifier.findOne.mockResolvedValue({ id: 2 }); // Simulate another certifier with the same email
-    
+        }
+
         await editCertifier(req, res);
-    
+
         expect(res.status).toHaveBeenCalledWith(409);
         expect(res.json).toHaveBeenCalledWith({
             message: 'Email already exists'
