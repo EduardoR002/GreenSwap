@@ -299,7 +299,6 @@ describe('editRequestSeller function', () => {
             }
         });
 
-    
         await editRequestSeller(req, res);
     
         expect(res.status).toHaveBeenCalledWith(404);

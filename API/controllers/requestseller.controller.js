@@ -72,50 +72,50 @@
     }
 
     // Asynchronous function to edit a request seller
-async function editRequestSeller(req, res) {
-    const idrequestseller = req.params.idrequestseller;
-    const updatedRequestData = req.body;
-
-    try {
-        // Find the request seller by ID
-        const requestseller = await models.requestseller.findByPk(idrequestseller);
-        if (!requestseller) {
-            return res.status(404).json({
-                message: "Request seller not found"
+    async function editRequestSeller(req, res) {
+        const idrequestseller = req.params.idrequestseller;
+        const updatedRequestData = req.body;
+    
+        try {
+            // Find the request seller by ID
+            const requestseller = await models.requestseller.findByPk(idrequestseller);
+            if (!requestseller) {
+                return res.status(404).json({
+                    message: "Request seller not found"
+                });
+            }
+            
+            // Find the request state by ID
+            const requestState = await models.requeststate.findByPk(updatedRequestData.idstate);
+            if (!requestState) {
+                return res.status(404).json({
+                    message: "Request state not found"
+                });
+            }
+            
+            // Check if the request state is pending
+            if (requestState.state !== 'pending') {
+                return res.status(422).json({
+                    message: "Cannot edit request seller. Request state is not pending."
+                });
+            }
+    
+            // Update the request seller
+            Object.assign(requestseller, updatedRequestData);
+            const updatedRequest = await requestseller.save();
+    
+            res.status(200).json({
+                message: "Request seller updated successfully",
+                requestSeller: updatedRequest
+            });
+        } catch (error) {
+            console.error("Error occurred: ", error);
+            res.status(500).json({
+                message: "Something went wrong",
+                error: error.message
             });
         }
-        console.log("Request: ", requestseller)
-        console.log("Request updated:", updatedRequestData)
-        // Find the request state by ID
-        const requestState = await models.requeststate.findByPk(idstate);
-        if (!requestState) {
-            return res.status(404).json({
-                message: "Request state not found"
-            });
-        }
-        // Check if the request state is pending
-        if (requestState.state !== 'pending') {
-            return res.status(422).json({
-                message: "Cannot edit request seller. Request state is not pending."
-            });
-        }
-
-        // Update the request seller
-        Object.assign(requestseller, updatedRequestData);
-        const updatedRequest = await requestseller.save();
-
-        res.status(200).json({
-            message: "Request seller updated successfully",
-            requestSeller: updatedRequest
-        });
-    } catch (error) {
-        console.error("Error occurred: ", error);
-        res.status(500).json({
-            message: "Something went wrong",
-            error: error.message
-        });
     }
-}
     module.exports = {
         createRequestSeller: createRequestSeller,
         getAllRequestSellers: getAllRequestSellers,
