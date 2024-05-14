@@ -1,15 +1,24 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client'; // Importe createRoot de react-dom/client
-//import Login from './Components/login';
-//import Navbar from './Components/navBar';
-//import Home from './Components/home';
+import { createRoot } from 'react-dom/client';
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+
+//Component imports
 import Register from './Components/register'
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Register />,
+    errorElement: <div>404 Page Not Found!</div>
+  },
+  
+]);
 
 const root = createRoot(document.getElementById('root')); // Use createRoot de react-dom/client
 root.render(
   <React.StrictMode>
-  <Register />
-</React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
 );
 
 // Se você deseja começar a medir o desempenho em sua aplicação, passe uma função

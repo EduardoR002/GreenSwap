@@ -2,8 +2,6 @@ import React, { useRef }  from "react";
 import '../CSS/register.css'
 import logo from '../images/GreenSwap.png'
 
-
-
 //Function that will apresent user Regist page of the website
 function Register() {
     const handleRegisterUser = async () => {
