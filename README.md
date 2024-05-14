@@ -39,7 +39,8 @@ GreenSwap is an online platform designed to facilitate the buying and selling of
 2. Navigate to the `api` directory.
 3. Install dependencies with `npm install`.
 4. Configure the database connection in `config` foulder.
-5. Start the server with `node server.js`.
+5. Run API tests using the command `npm test`.
+6. Start the server with `node server.js`.
 
 ### Database
 1. Install MySQL.
