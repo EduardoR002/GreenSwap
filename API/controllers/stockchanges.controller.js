@@ -2,7 +2,7 @@ const models = require('../models');
 const productController = require('./product.controller');
 
 
-// Function to create a new stock change
+// Async function to create a new stock change
 async function createStockChange(req, res) {
     const { quantity, idtypechange, idproduct } = req.body;
 
@@ -72,7 +72,7 @@ async function createStockChange(req, res) {
         });
     }
 }
-// Function to get all stock changes
+// Async function to get all stock changes
 async function getAllStockChanges(req, res) {
     try {
         const stockChanges = await models.stockchanges.findAll();
@@ -93,7 +93,7 @@ async function getAllStockChanges(req, res) {
     }
 }
 
-// Function used to edit data of one stock change
+// Async function used to edit data of one stock change
 async function editChangeStock(req, res) {
     const stockChangeId = req.params.stockChangeId;
     const updatedStockChangeData = req.body;

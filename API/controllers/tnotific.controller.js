@@ -1,6 +1,6 @@
 const models = require('../models');
 
-// Function create a type of notificarion
+// Async function to create a type of notificarion
 async function createTypeNotification(req, res) {
     const typenotification = {
         name: req.body.name,
@@ -35,7 +35,7 @@ async function createTypeNotification(req, res) {
     }
 }
 
-// Function obtains all types of notifications
+// Async function that obtains all types of notifications
 async function getAllTypes(req, res) {
     try {
         const types = await models.typenotification.findAll();
@@ -58,7 +58,7 @@ async function getAllTypes(req, res) {
     }
 }
 
-// Function to edit type notification
+// Async function to edit type notification
 async function editTypeNotification(req, res) {
     const idtypenotification = req.params.idtypenotification;
     const updatedTypeData = req.body;

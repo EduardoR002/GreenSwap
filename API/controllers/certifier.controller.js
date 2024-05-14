@@ -1,6 +1,6 @@
 const models = require('../models');
 
-// Function to create a new certifier
+// Async function to create a new certifier
 async function createCertifier(req, res) {
     const { name, email, password } = req.body;
 
@@ -46,7 +46,7 @@ async function createCertifier(req, res) {
     }
 }
 
-// Function to get all data of a Certifier
+// Async function to get all data of a Certifier
 async function getCertifier(req, res) {
     const idCertifier = req.params.certifierId;
     try {
@@ -69,7 +69,7 @@ async function getCertifier(req, res) {
     }
 }
 
-// Function to get all data of certifiers
+// Async function to get all data of certifiers
 async function getAllCertifiers(req, res) {
     try {
         const certifiers = await models.certifier.findAll();
@@ -90,7 +90,7 @@ async function getAllCertifiers(req, res) {
     }
 }
 
-// Function to edit data of a certifier
+// Async function to edit data of a certifier
 async function editCertifier(req, res) {
     const certifierId = req.params.certifierId;
     const updatedCertifierData = req.body;

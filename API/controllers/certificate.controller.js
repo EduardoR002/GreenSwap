@@ -1,6 +1,6 @@
 const models = require('../models');
 
-// Function used to create a new certificate
+// Async function used to create a new certificate
 async function createCertificate(req, res) {
     const { certificate, idcertifier } = req.body;
 
@@ -40,7 +40,7 @@ async function createCertificate(req, res) {
     }
 }
 
-// Function used to get all certificates data
+// Async function used to get all certificates data
 async function getAllCertificates(req, res) {
     try {
         const certificates = await models.certificate.findAll();

@@ -1,6 +1,6 @@
 const models = require('../models');
 
-// Função para criar um tipo de proposta
+// Async function to create a type of proposal 
 async function createTypeProposal(req, res) {
     const proposalType = {
         proposaltype: req.body.proposaltype
@@ -34,7 +34,7 @@ async function createTypeProposal(req, res) {
     }
 }
 
-// Função para obter todos os tipos de proposta
+// Async function to obtain all the types of proposal
 async function getAllTypes(req, res) {
     try {
         const types = await models.proposaltype.findAll();
@@ -57,7 +57,7 @@ async function getAllTypes(req, res) {
     }
 }
 
-// Função para editar um tipo de proposta
+// Async function to edit a type of proposal 
 async function editTypeProposal(req, res) {
     const idtype = req.params.idtype;
     const updatedTypeData = req.body;

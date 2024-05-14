@@ -1,6 +1,6 @@
 const models = require('../models');
 
-// Função assíncrona para criar um estado de compra
+// Async function to create a purchase status 
 async function createPurchaseState(req, res) {
     const purchaseState = {
         state: req.body.state
@@ -32,7 +32,7 @@ async function createPurchaseState(req, res) {
     }
 }
 
-// Função assíncrona para obter todos os estados de compra
+// Async function to obtain all of the purchase status 
 async function getAllPurchaseStates(req, res) {
     try {
         const states = await models.purchasestate.findAll();
@@ -53,7 +53,7 @@ async function getAllPurchaseStates(req, res) {
     }
 }
 
-// Função assíncrona para editar um estado de compra
+// Async function to edit a purchase status 
 async function editPurchaseState(req, res) {
     const idState = req.params.idState;
     const updatedStateData = req.body;

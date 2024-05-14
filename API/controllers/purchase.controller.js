@@ -1,6 +1,6 @@
 const models = require('../models');
 
-// Function to create a purchase
+// Async function to create a purchase
 async function createPurchase(req, res) {
     const { buydate, previewdate, definitivedate, quantity, price, futurepurchase, idproduct, idtypepurchase, iduser, startday, idpurchasestate } = req.body;
 
@@ -62,7 +62,7 @@ async function createPurchase(req, res) {
     }
 }
 
-// Function to obtain all purchases
+// Async function to obtain all purchases
 async function getAllPurchases(req, res) {
     try {
         const purchases = await models.purchase.findAll();
@@ -83,7 +83,7 @@ async function getAllPurchases(req, res) {
     }
 }
 
-// Function used to edit data of one purchase
+// Async function used to edit data of one purchase
 async function editPurchase(req, res) {
     const purchaseId = req.params.purchaseId;
     const updatedPurchaseData = req.body;

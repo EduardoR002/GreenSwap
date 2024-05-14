@@ -1,6 +1,6 @@
 const models = require('../models');
 
-// Function to create a new notification
+// Async function to create a new notification
 async function createNotification(req, res) {
     const { date, idtypenotification, idpurchase, idproposal, idcertificate, idrequest } = req.body;
 
@@ -80,7 +80,7 @@ async function createNotification(req, res) {
 }
 
 
-// Function to get all notifications
+// Async function to get all notifications
 async function getAllNotifications(req, res) {
     try {
         const notifications = await models.notification.findAll();

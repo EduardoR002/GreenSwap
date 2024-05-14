@@ -1,6 +1,6 @@
 const models = require('../models');
 
-// Function to create a new product
+// Async function to create a new product
 async function createProduct(req, res) {
     const { name, description, price, stock, idtypeproduct, idseller } = req.body;
 
@@ -77,7 +77,7 @@ async function createProduct(req, res) {
     }
 }
 
-// Function to get a single product by its ID
+// Async function to get a single product by its ID
 async function getProduct(req, res) {
     const productId = req.params.productId;
 
@@ -102,7 +102,7 @@ async function getProduct(req, res) {
     }
 }
 
-// Function to get all products
+// Async function to get all products
 async function getAllProducts(req, res) {
     try {
         const products = await models.product.findAll();
@@ -125,7 +125,7 @@ async function getAllProducts(req, res) {
     }
 }
 
-// Function used to edit data of one product
+// Async function used to edit data of one product
 async function editProduct(req, res) {
     const productId = req.params.productId;
     const updatedProductData = req.body;
@@ -193,7 +193,7 @@ async function editProduct(req, res) {
     }
 }
 
-// Function to edit the stock of a product
+// Async function to edit the stock of a product
 async function editProductStock(productId, newStock) {
     try {
         const product = await models.product.findByPk(productId);

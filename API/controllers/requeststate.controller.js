@@ -1,6 +1,6 @@
 const models = require('../models');
 
-// Função para criar um estado de solicitação
+// Async function to create a request state
 async function createRequestState(req, res) {
     const requestState = {
         state: req.body.state
@@ -34,7 +34,7 @@ async function createRequestState(req, res) {
     }
 }
 
-// Função para obter todos os estados de solicitação
+// Async function to obtain all of the request states 
 async function getAllRequestStates(req, res) {
     try {
         const states = await models.requeststate.findAll();
@@ -57,7 +57,7 @@ async function getAllRequestStates(req, res) {
     }
 }
 
-// Função para editar um estado de solicitação
+// Async function to edit a request state 
 async function editRequestState(req, res) {
     const idState = req.params.idState;
     const updatedStateData = req.body;

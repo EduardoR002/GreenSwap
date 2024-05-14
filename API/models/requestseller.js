@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     nif: {
-      type: DataTypes.STRING(9),
+      type: DataTypes.STRING(10),
       allowNull: false,
       unique: "nif_UNIQUE"
     },

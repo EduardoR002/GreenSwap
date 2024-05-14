@@ -1,6 +1,6 @@
 const models = require('../models');
 
-// Função para criar um tipo de mudança
+// Async function to create a type of change
 async function createTypeChange(req, res) {
     const typechange = {
         typechange: req.body.typechange
@@ -34,7 +34,7 @@ async function createTypeChange(req, res) {
     }
 }
 
-// Função para obter todos os tipos de mudança
+// Async function to obtain all of the types of change
 async function getAllTypes(req, res) {
     try {
         const types = await models.typechange.findAll();
@@ -57,7 +57,7 @@ async function getAllTypes(req, res) {
     }
 }
 
-// Função para editar um tipo de mudança
+// Async function to edit a type of change 
 async function editTypeChange(req, res) {
     const idtypechange = req.params.idtypechange;
     const updatedTypeData = req.body;

@@ -1,7 +1,7 @@
 const models = require('../models');
 const jwt = require('jsonwebtoken');
 
-// Function used to create an token for a role 'user' or 'seller'
+// Async function used to create an token for a role 'user' or 'seller'
 async function createTokenUser(email, userId, role) {
     try {
         // Generate JWT token
@@ -35,7 +35,7 @@ async function createTokenUser(email, userId, role) {
         throw new Error('Error at creating/updating token: ' + error.message);
     }
 }
-
+/* Async function that create a token certifier */
 async function createTokenCertifier(email, idcertifier, role) {
     try {
         // Generate JWT token
