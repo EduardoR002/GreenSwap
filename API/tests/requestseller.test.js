@@ -193,58 +193,57 @@ describe('getAllRequestSellers function', () => {
 });
 
 describe('editRequestSeller function', () => {
-    it('should return 200 and the updated request seller if successful', async () => {
-        const mockRequestSeller = {
-            id: 1,
-            nif: '123456789',
-            description: 'Lorem ipsum',
-            photo: 'photo-url.jpg',
-            idstate: 1,
-            iduser: 1,
-            // request seller properties...
-        };
-
-        const updatedMockRequestSeller = {
-            id: 1,
-            nif: '987654321',
-            description: 'Updated description',
-            photo: 'updated-photo-url.jpg',
-            idstate: 2,
-            iduser: 2,
-            // updated request seller properties...
-        };
-
-        const mockRequestState = {
-            id: 2,
-            status: 'pending', // Assuming status is pending for the test
-            // other request state properties...
-        };
-
-        models.requestseller.findByPk.mockResolvedValue(mockRequestSeller);
-        models.requeststate.findByPk.mockResolvedValue(mockRequestState);
-        models.requestseller.prototype.update.mockResolvedValue(updatedMockRequestSeller);
-
-        const req = { 
-            params: { id: 1 },
-            body: {
-                nif: '987654321',
-                description: 'Updated description',
-                photo: 'updated-photo-url.jpg',
-                idstate: 2,
-                iduser: 2
-            }
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+    it('should return status 200 and updated request seller', async () => {
+        // Mocking request and response objects
+        const req = {
+            params: { idrequestseller: '1' }, // Provide a valid ID for testing
+            body: {nif: '123444555', description: 'Updated description' } // Provide valid updated data
         };
         const res = {
-            status: jest.fn().mockReturnThis(),
-            json: jest.fn()
+            status: jest.fn(() => res), // Mock the status function to return itself
+            json: jest.fn() // Mock the json function
         };
 
+        // Mock the findByPk and save methods to return expected values
+        const findByPkMock = jest.fn().mockResolvedValue({
+            // Mocked request seller data
+            idrequestseller: '1',
+            nif: '123456789',
+            description: 'Original description',
+            /* other properties */
+            save: jest.fn().mockResolvedValue({
+                // Mocked updated request data
+                idrequestseller: '1',
+                nif: '123444555',
+                description: 'Updated description'
+                /* other updated properties */
+            })
+        });
+        models.requestseller.findByPk = findByPkMock;
+
+        // Mock the findByPk method of requeststate
+        models.requeststate.findByPk = jest.fn().mockResolvedValue({
+            // Mocked request state data
+            id: '1',
+            state: 'pending'
+        });
+
+        // Call the function to be tested
         await editRequestSeller(req, res);
 
-        expect(res.status).toHaveBeenCalledWith(200);
+        // Assertions
+        expect(findByPkMock).toHaveBeenCalledWith('1'); // Ensure findByPk was called with correct ID
+        expect(res.status).toHaveBeenCalledWith(200); // Ensure status 200 was set
         expect(res.json).toHaveBeenCalledWith({
-            message: 'Request seller updated successfully',
-            requestSeller: updatedMockRequestSeller
+            message: "Request seller updated successfully",
+            requestSeller: {
+                idrequestseller: '1',
+                nif: '123444555',
+                description: 'Updated description'
+            }
         });
     });
 
