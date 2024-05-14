@@ -1,6 +1,7 @@
 import React from "react";
-import '../CSS/login.css'
+import '../CSS/logIn.css'
 import logo from '../images/GreenSwap.png'
+import { Link } from "react-router-dom";
 
 function Login(){
     return(
@@ -44,13 +45,10 @@ function Login(){
                     Login
                 </button>
                 <span className="poppins-regular linknote">
-                    Not registered? <a href="register.html">Create an account</a>
+                    Not registered? <Link to={'../register'}>Create</Link>
                 </span>
-                <a href="register.html"></a>
                 </div>
-                <a href="register.html"></a>
             </div>
-            <a href="register.html"></a>
         </>
     );
 }

@@ -5,6 +5,7 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 //Component imports
 import Register from './Components/register'
 import E404 from './Components/e404'
+import Login from './Components/logIn'
 
 const router = createBrowserRouter([
   {
@@ -12,7 +13,16 @@ const router = createBrowserRouter([
     element: <Register />,
     errorElement: <E404 />
   },
+
+  {
+    path: 'login',
+    element: <Login />,
+  },
   
+  {
+    path: 'register',
+    element: <Register />
+  }
 ]);
 
 const root = createRoot(document.getElementById('root')); // Use createRoot de react-dom/client

@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import '../CSS/e404.css'
 
 export default function E404(){
@@ -13,7 +14,7 @@ export default function E404(){
             <div className='third' id='last'>
                 <h2 className='poppins-regular'>Page not found</h2>
                 <button>
-                    <h3 className='poppins-regular'>Back to Home</h3>
+                    <Link className='poppins-regular' to="/">Home</Link>
                 </button>
             </div> 
         </div>
