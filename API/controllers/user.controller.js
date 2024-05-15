@@ -251,7 +251,7 @@ async function loginUser(req, res) {
             }
 
             // Password matched, generate token and send response
-            const token = await createTokenCertifier(certifier.email, certifier.idcertifier, 'certifier');
+            const token = await createToken(certifier.idcertifier, 'certifier');
             
             const expiresDate = new Date();
             expiresDate.setTime(expiresDate.getTime() + 60 * 1000); // Adiciona 60 segundos ao tempo atual
@@ -283,7 +283,7 @@ async function loginUser(req, res) {
             const seller = await models.seller.findOne({ where: { userId: user.idUser }});
 
             if (!seller) {
-                const token = await createTokenUser(user.email, user.idUser, 'user');
+                const token = await createToken(user.idUser, 'user');
                 res.cookie('token', token, {
                     httpOnly: true,
                     secure: true,
@@ -296,7 +296,7 @@ async function loginUser(req, res) {
                 });
             } else {
                 // User is also a seller, generate seller token and send response
-                const token = await createTokenUser(user.email, user.idUser, 'seller');
+                const token = await createToken(user.idUser, 'seller');
                 res.cookie('token', token, {
                     httpOnly: true,
                     secure: true,
