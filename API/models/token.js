@@ -7,44 +7,15 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'user',
-        key: 'idUser'
-      }
-    },
     token: {
       type: DataTypes.STRING(100),
       allowNull: false,
       unique: "token_UNIQUE"
     },
-    revokedAt: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    revoked: {
-      type: DataTypes.TINYINT,
-      allowNull: true,
-      defaultValue: 0
-    },
-    idcertifier: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'certifier',
-        key: 'idcertifier'
-      }
-    },
-    role: {
-      type: DataTypes.STRING(45),
-      allowNull: false
-    }
   }, {
     sequelize,
     tableName: 'token',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",
@@ -60,20 +31,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "token" },
-        ]
-      },
-      {
-        name: "tokenuser_idx",
-        using: "BTREE",
-        fields: [
-          { name: "userId" },
-        ]
-      },
-      {
-        name: "tokencertifier_idx",
-        using: "BTREE",
-        fields: [
-          { name: "idcertifier"},
         ]
       },
     ]

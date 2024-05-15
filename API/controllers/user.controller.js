@@ -1,7 +1,7 @@
 const models = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { createTokenCertifier, createTokenUser } = require('./tokens.controller.js');
+const { createToken } = require('./tokens.controller.js');
 const token = require('../models/token.js');
 
 // Async function that create a new User
@@ -251,17 +251,11 @@ async function loginUser(req, res) {
             }
 
             // Password matched, generate token and send response
-            const token = await createTokenCertifier(certifier.email, certifier.idcertifier, 'certifier');
-            
-            const expiresDate = new Date();
-            expiresDate.setTime(expiresDate.getTime() + 60 * 1000); // Adiciona 60 segundos ao tempo atual
-
-
+            const token = await createToken(certifier.idcertifier, 'certifier');
             res.cookie('token', token, {
                 httpOnly: true,
                 secure: true,
                 sameSite: 'Strict',
-                expires: expiresDate 
             });
 
             return res.status(200).json({
@@ -283,7 +277,7 @@ async function loginUser(req, res) {
             const seller = await models.seller.findOne({ where: { userId: user.idUser }});
 
             if (!seller) {
-                const token = await createTokenUser(user.email, user.idUser, 'user');
+                const token = await createToken(user.idUser, 'user');
                 res.cookie('token', token, {
                     httpOnly: true,
                     secure: true,
@@ -296,7 +290,7 @@ async function loginUser(req, res) {
                 });
             } else {
                 // User is also a seller, generate seller token and send response
-                const token = await createTokenUser(user.email, user.idUser, 'seller');
+                const token = await createToken(user.idUser, 'seller');
                 res.cookie('token', token, {
                     httpOnly: true,
                     secure: true,
@@ -310,6 +304,7 @@ async function loginUser(req, res) {
             }
         }
     } catch (error) {
+        console.log(error)
         return res.status(500).json({
             message: "Something went wrong",
             error: error
