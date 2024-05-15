@@ -1,11 +1,32 @@
 .cont-09 {
-    margin-left: 2%;
-    margin-right: 2%;
-    width: 93%;
-    height: 65%;
+    margin: 0 auto;
+    width: 80%;
+    height: 50%;
     padding: 20px;
     border: 5px solid #042C3B;
     text-align: justify;
     border-radius: 8px;
     background-color: #4CCC7B;
 }
+
+.titles-09 {
+    font-size: 250%;
+    font-weight: bold;
+    color: #012837; ;
+    text-align: left;
+    margin-top: 1%;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    font-family: 'Arial', sans-serif;
+  }
+
+  .text-09 {
+    font-size: 120%;
+  }
+
+  .verDev-09 {
+    width: 20%;
+    height: 20%;
+    position: absolute;
+    left: 65%;
+    top: 75%;
+  }
