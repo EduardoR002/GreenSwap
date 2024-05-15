@@ -44,58 +44,58 @@ function Register() {
     }
     return(
         <>
-        <div id="bg" />
-        <div className="main">
+        <div id="bg-04" />
+        <div className="main-06">
           {/* Clickable icon that takes the user to the home page */}
-          <div className="iconDiv">
+          <div className="iconDiv-04">
             <Link to={'../home'}>
               <img
                 src={logo}
                 style={{ width: "60%", height: "60%" }}
-                className="icon"
+                className="icon-06"
               />
            </Link>
           </div>
           {/* Form */}
-          <div className="formDiv">
-            <span className="poppins-regular greetings">
+          <div className="formDiv-04">
+            <span className="poppins-regular greetings-06">
               <b>Join us!</b>
             </span>
 
-            <div className="input-box">
+            <div className="input-box-04">
               <span className="material-symbols-outlined">person</span>
               <input
-                className="poppins-regular"
+                className="poppins-regular input-06"
                 type="text"
                 id="name"
                 placeholder="Name"
               />
             </div>
 
-            <div className="input-box">
+            <div className="input-box-04">
               <span className="material-symbols-outlined">alternate_email</span>
               <input
-                className="poppins-regular"
+                className="poppins-regular input-06"
                 type="text"
                 id="email"
                 placeholder="Email"
               />
             </div>
 
-            <div className="input-box">
+            <div className="input-box-04">
               <span className="material-symbols-outlined">lock</span>
               <input
-                className="poppins-regular"
+                className="poppins-regular input-06"
                 type="password"
                 id="password"
                 placeholder="Password"
               />
             </div>
 
-            <div className="input-box">
-              <span className="material-symbols-outlined fa">calendar_month</span>
+            <div className="input-box-04">
+              <span className="material-symbols-outlined fa-06">calendar_month</span>
               <input
-                className="poppins-regular"
+                className="poppins-regular input-06"
                 type="date"
                 id="bd"
                 placeholder="Birthday"
@@ -103,19 +103,20 @@ function Register() {
               />
             </div>
 
-            <div className="input-box">
+            <div className="input-box-04">
               <span className="material-symbols-outlined">call</span>
               <input
-                className="poppins-regular"
+                className="poppins-regular input-06"
                 type="number"
                 id="phone"
                 placeholder="Phone number"
               />
             </div>
 
-            {/*<div className="input-box">
+            {/*<div className="input-box-04">
               <span className="material-symbols-outlined">photo_camera</span>
               <input
+                className="input-06"
                 onChange="showImageName('photoInput','photoText')"
                 type="file"
                 id="photoInput"
@@ -124,17 +125,17 @@ function Register() {
               <label
                 htmlFor="photoInput"
                 id="photoText"
-                className="newinput poppins-regular"
+                className="newinput-06 poppins-regular"
               >
                 Choose a photo
               </label>
           </div>*/}
 
-            <button className="poppins-regular" onClick={handleRegisterUser}>
+            <button className="poppins-regular button-04" onClick={handleRegisterUser}>
               Register
             </button>
 
-            <span className="poppins-regular linknote">
+            <span className="poppins-regular linknote-06">
               Already registered? <Link to={'../login'}>Login</Link>
             </span>
           </div>

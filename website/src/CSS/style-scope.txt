@@ -1,10 +1,9 @@
-aboutUs.css         01
-e404.css            02
-home.css            03
-logIn.css           04
-navbar.css          05
-profileView.css     06
-register.css        07
+aboutUs.css         -01
+e404.css            -02
+home.css            -03
+logIn.css           -04
+navbar.css          -05
+register.css        -06
 
 ### HOW TO USE (example):
 
@@ -23,5 +22,7 @@ To avoid style override and conflicts, ADD TO EVERY SELECTOR THIS "-[number]"
 So for example:
 
 .container-01 && .container-02
+
+Same for IDs and element selector (a -> .a-number)(add the class in the html)
 
 The file identifiers will be here, as in a list

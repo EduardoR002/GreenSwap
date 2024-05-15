@@ -5,19 +5,16 @@ import '../CSS/e404.css'
 export default function E404(){
     return(
         <>
-        <div className='container'>
-            <div className='third'>
-                <h1 className='poppins-regular'>404</h1>
-            </div>
-            <div className='third'></div>
-            <div className='gif'></div>
-            <div className='third' id='last'>
-                <h2 className='poppins-regular'>Page not found</h2>
-                <button>
-                    <Link className='poppins-regular' to="/">Home</Link>
+        <div className='container-02'>
+            <div className='part-02' />
+            <div className='gif-02' />
+            <div className='part-02' />
+            <div className='part-02'>
+                <button className='button-04 button-02'>
+                    <Link className='poppins-regular link-04' to="/">Home</Link>
                 </button>
-            </div> 
-        </div>
+            </div>
+        </div> 
         </>
     )
 }

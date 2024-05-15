@@ -4,8 +4,8 @@ import '../CSS/navbar.css';
 
 function Navbar() {
     return (
-        <div className="navbar-container">
-            <div className="tocenter">
+        <div className="navbar-container-05">
+            <div className="tocenter-05">
                 <svg xmlns="http://www.w3.org/2000/svg" width="222" height="183" viewBox="0 0 222 183" fill="none">
                     <path d="M222 72C222 133.304 172.304 183 111 183C49.6964 183 0 133.304 0 72C0 10.6964 49.6964 -39 111 -39C172.304 -39 222 10.6964 222 72Z" fill="#042C3B"/>
                 </svg>
@@ -15,35 +15,35 @@ function Navbar() {
                 <svg xmlns="http://www.w3.org/2000/svg" width="145" height="145" viewBox="0 0 145 145" fill="none" >
                     <path d="M145 72.5C145 112.541 112.541 145 72.5 145C32.4594 145 0 112.541 0 72.5C0 32.4594 32.4594 0 72.5 0C112.541 0 145 32.4594 145 72.5Z" fill="#042C3B"/>
                 </svg>
-                <a href="home.html">
-                    <img src={GreenSwap} className="icon" alt="GreenSwap Icon" />
+                <a className='a-05' href="home.html">
+                    <img src={GreenSwap} className="icon-05" alt="GreenSwap Icon" />
                 </a>
             </div>
-            <div className="full-section-container">
-                <div className="left-section-container">
-                    <div className="section">
-                        <span className="material-symbols-outlined navbar-symbols">
+            <div className="full-section-container-05">
+                <div className="left-section-container-05">
+                    <div className="section-05">
+                        <span className="material-symbols-outlined navbar-symbols-05">
                             social_leaderboard
                         </span>
-                        <a className="poppins-regular" href="ranking.html">Ranking</a>
+                        <a className="a-05 poppins-regular" href="ranking.html">Ranking</a>
                     </div>
-                    <div className="section">
-                        <a className="poppins-regular" href="orders.html">Orders</a>
+                    <div className="section-05">
+                        <a className="a-05 poppins-regular" href="orders.html">Orders</a>
                     </div>
                 </div>
-                <div className="right-section-container">
-                    <div className="section">
-                        <a className="poppins-regular" href="aboutus.html">About Us</a>
+                <div className="right-section-container-05">
+                    <div className="section-05">
+                        <a className="a-05 poppins-regular" href="aboutus.html">About Us</a>
                     </div>
-                    <div className="section">
-                        <a href="profileView.html">
-                            <span className="material-symbols-outlined navbar-symbols">
+                    <div className="section-05">
+                        <a className='a-05' href="profileView.html">
+                            <span className="material-symbols-outlined navbar-symbols-05">
                                 person
                             </span>
                         </a>
-                        <span className="navbar-symbols">|  </span>
-                        <a href="cart.html">
-                            <span className="material-symbols-outlined navbar-symbols">
+                        <span className="navbar-symbols-05">|  </span>
+                        <a className='a-05' href="cart.html">
+                            <span className="material-symbols-outlined navbar-symbols-05">
                                 shopping_cart
                             </span>
                         </a>

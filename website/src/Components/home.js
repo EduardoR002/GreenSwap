@@ -21,7 +21,7 @@ function Home() {
     }
 
     return (
-        <div className="App">
+        <div className="App-03">
         <div>
         <Link to={'../login'}> -Login</Link>
         <br ></br>
