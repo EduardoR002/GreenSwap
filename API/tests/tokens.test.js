@@ -34,16 +34,7 @@ describe('createTokenUser function', () => {
 
         const token = await createTokenUser(email, userId, role);
 
-        expect(token).toEqual({
-            tokenid: 1,
-            userId,
-            token: 'mocked-token',
-            revokedAt: null,
-            revoked: false,
-            createdAt,
-            updatedAt,
-            role
-        });
+        expect(token).toEqual('mocked-token');
         expect(models.token.findOne).toHaveBeenCalledWith({ where: { userId } });
         expect(models.token.create).toHaveBeenCalledWith({ userId, token: 'mocked-token', role });
     });
@@ -64,7 +55,7 @@ describe('createTokenUser function', () => {
     
         const token = await createTokenUser(email, userId, role);
 
-        expect(token).toEqual(existingToken);
+        expect(token).toEqual('mocked-token');
         expect(models.token.findOne).toHaveBeenCalledWith({ where: { userId } });
         expect(existingToken.role).toBe(role);
         expect(existingToken.revoked).toBe(false);
@@ -160,7 +151,7 @@ describe('removeRevokedTokens function', () => {
             { id: 1, token: 'token1', revoked: true, revokedAt: new Date('2024-05-13T10:00:00Z') },
             { id: 2, token: 'token2', revoked: true, revokedAt: new Date('2024-05-13T03:00:00Z') },
             { id: 3, token: 'token3', revoked: false, revokedAt: null },
-            { id: 4, token: 'token4', revoked: true, revokedAt: new Date('2024-05-14T20:00:00Z') }
+            { id: 4, token: 'token4', revoked: true, revokedAt: new Date() }
         ];
         // Mock the findAll method to return the tokens
         const tokenModelMock = require('../models').token;
