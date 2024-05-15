@@ -7,6 +7,14 @@ import Register from './Components/register'
 import E404 from './Components/e404'
 import Login from './Components/logIn'
 import Home from './Components/home'
+import ProfileView from './Components/profileView';
+import ProductRegister from './Components/productRegist';
+import SellerRegister from './Components/sellerRegist';
+import Orders from './Components/orders';
+import Ranking from './Components/ranking';
+import AboutUs from './Components/aboutUs';
+
+
 
 // #region Routes
 const router = createBrowserRouter([
@@ -28,42 +36,53 @@ const router = createBrowserRouter([
 
   {
     path: 'home',
-    element: < Home/>
-  }
-  /*
+    element: <Home />
+  },
+
   {
-    path: 'profileView'
+    path: 'productRegist',
+    element: <ProductRegister />
+  },
+
+  {
+    path: 'sellerRegist',
+    element: <SellerRegister />
+  },
+
+  {
+    path: 'profileView',
     element: <ProfileView/>
-  }
+  },
+ 
+
+  {
+    path:'orders',
+    elements: <Orders />
+  },
+
+  {
+    path: 'ranking',
+    element: <Ranking />
+  },
+
+  {
+    path: 'aboutUs',
+    element: <AboutUs />
+  },
+
+
+
+  /*
 
   {
     path: 'profileEdit'
     element: <ProfileEdit/>
   }
 
-  {
-    path:'order'
-    elements: <Order />
-  }
-
-  {
-    path: 'ranking'
-    element: <Ranking />
-  }
-
-  {
-    path: 'aboutUs'
-    element: <AboutUs/>
-  }
 
   {
     path: 'productView'
     element: <ProductView />
-  }
-
-  {
-    path: 'productRegister'
-    element: <ProductRegister>
   }
 
 

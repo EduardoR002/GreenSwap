@@ -4,6 +4,12 @@ home.css            -03
 logIn.css           -04 * Style Reuse Recommended
 navbar.css          -05
 register.css        -06
+productRegist.css   -07
+sellerRegist.css    -08
+aboutUs.css         -09
+orders.css          -10
+ranking.css         -11
+profileView.css     -12
 
 ### HOW TO USE (example):
 

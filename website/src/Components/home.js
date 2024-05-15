@@ -35,10 +35,27 @@ function Home() {
 
     return (
       <>
-        <div>
-          <h1>Cookie Value</h1>
-          
-        </div>
+
+      {/*não apagar, é só pra testar os links e páginas */}
+      <div>
+      <Link to={'../register'}>Register</Link>
+      <p></p>
+      <Link to={'../logIn'}>Login</Link>
+      <p></p>
+      <Link to={'../productRegist'}>Regist Product</Link>
+      <p></p>
+      <Link to={'../sellerRegist'}>Regist Seller</Link>
+      <p></p>
+      <Link to={'../profileView'}>View Profile</Link>
+      <p></p>
+      <Link to={'../orders'}>Orders</Link>
+      <p></p>
+      <Link to={'../ranking'}>Ranking</Link>
+      <p></p>
+      <Link to={'../aboutUs'}>About Us</Link>     
+      <p></p>
+    </div>
+
       </> 
     );
 }
