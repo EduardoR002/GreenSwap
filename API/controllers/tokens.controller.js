@@ -46,7 +46,41 @@ async function deleteToken(req, res){
     }
 }
 
+async function renewToken(req, res){
+    const token = req.body.token;
+    try {
+        const oldtoken = await models.token.findOne({ where: {token: token}});
+        if (oldtoken) {
+            const decodedtoken = jwt.verify(token, '0f1ab83a576c30f57aa5c33de4009cc923923ac041f6f63af8daa1a5ad53254a');
+            const { id, role} = decodedtoken;
+            console.log("ID:", id);
+            console.log("Role:", role);
+            const newtoken = jwt.sign(
+                { id: id, role: role},
+                '0f1ab83a576c30f57aa5c33de4009cc923923ac041f6f63af8daa1a5ad53254a',
+                { expiresIn: '1h' }
+            );
+            const updatedtoken = await models.token.update({token: newtoken}, {where: {idtoken: oldtoken.idtoken}});
+            return res.status(200).json({
+                message: "Token renewed with success",
+                token: updatedtoken.token
+            })
+        }
+        else{
+            return res.status(404).json({
+                message: "Token not found"
+            })
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: "Something went wrong",
+            error: error.message
+        });
+    }
+}
+
 module.exports = {
     createToken: createToken,
-    deleteToken: deleteToken
+    deleteToken: deleteToken,
+    renewToken: renewToken
 };
