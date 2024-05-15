@@ -22,8 +22,9 @@ async function createToken(id, role) {
     }
 }
 
-async function deleteToken(token){
+async function deleteToken(req, res){
     try {
+        const token = req.body.token;
         const deletedToken = await models.token.destroy({
             where: {
                 token: token
@@ -47,4 +48,5 @@ async function deleteToken(token){
 
 module.exports = {
     createToken: createToken,
+    deleteToken: deleteToken
 };

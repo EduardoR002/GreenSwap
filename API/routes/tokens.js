@@ -1,16 +1,17 @@
 const { Router } = require('express');
-const {createTokenUser, createTokenCertifier} = require('../controllers/tokens.controller.js');
+const {createToken, deleteToken} = require('../controllers/tokens.controller.js');
 
 const router = Router();
 
 router.post('/create', async (req, res) => {
     try {
-        const { email, idUser} = req.body;
-        const token = await createTokenUser(email, idUser, 'user');
+        const { id, role} = req.body;
+        const token = await createTokenUser(id, role);
         res.json({ token });
     } catch (error) {
         res.status(500).json({ message: 'Failed to create token', error: error.message });
     }
 });
+router.delete('/delete', deleteToken)
 
 module.exports = router;

@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'token',
-    timestamps: true,
+    timestamps: false,
     indexes: [
       {
         name: "PRIMARY",

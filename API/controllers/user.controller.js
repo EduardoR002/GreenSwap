@@ -1,7 +1,7 @@
 const models = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { createTokenCertifier, createTokenUser } = require('./tokens.controller.js');
+const { createToken } = require('./tokens.controller.js');
 const token = require('../models/token.js');
 
 // Async function that create a new User
@@ -252,16 +252,10 @@ async function loginUser(req, res) {
 
             // Password matched, generate token and send response
             const token = await createToken(certifier.idcertifier, 'certifier');
-            
-            const expiresDate = new Date();
-            expiresDate.setTime(expiresDate.getTime() + 60 * 1000); // Adiciona 60 segundos ao tempo atual
-
-
             res.cookie('token', token, {
                 httpOnly: true,
                 secure: true,
                 sameSite: 'Strict',
-                expires: expiresDate 
             });
 
             return res.status(200).json({
@@ -310,6 +304,7 @@ async function loginUser(req, res) {
             }
         }
     } catch (error) {
+        console.log(error)
         return res.status(500).json({
             message: "Something went wrong",
             error: error
