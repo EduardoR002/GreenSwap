@@ -1,9 +1,10 @@
 const request = require('supertest');
-const app = require('../app'); // assumindo que seu aplicativo está definido em um arquivo separado chamado app.js
+const app = require('../app'); // assuming your app is defined in a separate file called app.js
 const models = require('../models');
 const {createCertificate,getAllCertificates} = require('../controllers/certificate.controller.js');
 jest.mock('../models');
 
+// Group of unit tests that test the function CreateCertificate
 describe('createCertificate function', () => {
     it('should return 200 and the created certificate if successful', async () => {
         const mockCertificate = {
@@ -12,13 +13,13 @@ describe('createCertificate function', () => {
             idcertifier: 1
         };
 
-        models.certifier.findByPk.mockResolvedValue({}); // mock para simular certificador existente
+        models.certifier.findByPk.mockResolvedValue({}); // mock to simulate existing certifier
         models.certificate.create.mockResolvedValue(mockCertificate);
 
         const req = {
             body: {
                 certificate: 'Certificate A',
-                idcertifier: 1 // mock para simular certificador existente
+                idcertifier: 1 // mock to simulate existing certifier
             }
         };
         const res = {
@@ -98,6 +99,7 @@ describe('createCertificate function', () => {
     });
 });
 
+// Group of unit tests that test the function getAllCertificates
 describe('getAllCertificates function', () => {
     it('should return 200 and an array of certificates if found', async () => {
         const certificates = [{

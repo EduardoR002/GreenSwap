@@ -6,6 +6,7 @@ const { createTypeNotification, getAllTypes, editTypeNotification } = require('.
 
 jest.mock('../models');
 
+// Group of unit tests that test the function createTypeNotification
 describe('createTypeNotification function', () => {
     it('should return 200 and the type notification object if the type notification is created successfully', async () => {
         const mockTypeNotification = { 
@@ -82,6 +83,7 @@ describe('createTypeNotification function', () => {
     });
 });
 
+// Group of unit tests that test the function getAllTypes
 describe('getAllTypes function', () => {
     it('should return 200 and an array of types if types are found', async () => {
         const types = [
@@ -142,6 +144,7 @@ describe('getAllTypes function', () => {
     });
 });
 
+// Group of unit tests that test the function editTypeNotification
 describe('editTypeNotification function', () => {
     it('should return 200 and the updated type notification if it exists and is successfully updated', async () => {
         const idtypenotification = '1';

@@ -6,6 +6,7 @@ const { createSeller, getSeller, getAllSellers, editSeller } = require('../contr
 
 jest.mock('../models');
 
+// Group of unit tests that test the function createSeller
 describe('createSeller function', () => {
     it('should return 200 and the seller object if the seller is created successfully', async () => {
         const mockRequestSeller = {
@@ -116,6 +117,7 @@ describe('createSeller function', () => {
     });
 });
 
+// Group of unit tests that test the function getSeller
 describe('getSeller function', () => {
     it('should return 200 and the seller object if seller is found', async () => {
         const mockSeller = { 
@@ -182,6 +184,7 @@ describe('getSeller function', () => {
     });
 });
 
+// Group of unit tests that test the function getAllSellers
 describe('getAllSellers function', () => {
     it('should return 200 and an array of sellers if sellers are found', async () => {
         const mockSellers = [
@@ -242,6 +245,7 @@ describe('getAllSellers function', () => {
     });
 });
 
+// Group of unit tests that test the function editSeller
 describe('editSeller function', () => {
     it('should return 200 and the updated seller if seller exists and is successfully updated', async () => {
         const sellerId = '1';
@@ -249,7 +253,7 @@ describe('editSeller function', () => {
             idrequest: 1,
             idcertificate: 1,
             userId: 1
-            // outras propriedades atualizadas
+            // other updated properties
         };
         
         const mockSeller = {

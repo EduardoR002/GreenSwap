@@ -6,6 +6,7 @@ const { createProduct, getProduct, getAllProducts, editProduct } = require('../c
 
 jest.mock('../models');
 
+// Group of unit tests that test the function createProduct
 describe('createProduct function', () => {
     it('should return 200 and the created product if successful', async () => {
         const mockProduct = {
@@ -202,6 +203,7 @@ describe('createProduct function', () => {
     });
 });
 
+// Group of unit tests that test the function getProduct
 describe('getProduct function', () => {
     it('should return 200 and the product if found', async () => {
         const mockProduct = {
@@ -279,6 +281,7 @@ describe('getProduct function', () => {
     });
 });
 
+// Group of unit tests that test the function getAllProducts
 describe('getAllProducts function', () => {
     it('should return 200 and an array of products if found without search parameters', async () => {
         const products = [{
@@ -475,6 +478,7 @@ describe('getAllProducts function', () => {
     });
 });
 
+// Group of unit tests that test the function editProduct
 describe('editProduct function', () => {
     it('should return 200 and the updated product data if successful', async () => {
         const productId = '1';

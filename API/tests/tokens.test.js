@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 jest.mock('../models');
 jest.mock('bcrypt');
 
+// Group of unit tests that test the function createTokenUser
 describe('createTokenUser function', () => {
     jest.spyOn(jwt, 'sign').mockImplementation(() => 'mocked-token');
     afterEach(() => {
@@ -73,8 +74,9 @@ describe('createTokenUser function', () => {
 
         await expect(createTokenUser(email, userId, role)).rejects.toThrowError('Error at creating/updating token: Database error');
     });
-})
+});
 
+// Group of unit tests that test the function createTokenCertifier
 describe('createTokenCertifier function', () => {
     jest.spyOn(jwt, 'sign').mockImplementation(() => 'mocked-token');
 
@@ -134,6 +136,7 @@ describe('createTokenCertifier function', () => {
     });
 });
 
+// Group of unit tests that test the function removeRevokedTokens
 describe('removeRevokedTokens function', () => {
     beforeEach(() => {
         jest.clearAllMocks(); // Clear all mocks before each test

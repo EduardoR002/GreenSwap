@@ -10,6 +10,7 @@ const {
 
 jest.mock('../models');
 
+// Group of unit tests that test the function createProposalState
 describe('createProposalState function', () => {
     it('should return 200 and the created proposal state if successful', async () => {
         const mockProposalState = {
@@ -83,6 +84,7 @@ describe('createProposalState function', () => {
     });
 });
 
+// Group of unit tests that test the function getAllStates
 describe('getAllStates function', () => {
     it('should return 200 and an array of states if found', async () => {
         const states = [{
@@ -146,6 +148,8 @@ describe('getAllStates function', () => {
             error: expect.any(Error)
         });
     });
+    
+    // Group of unit tests that test the function editProposalState
     describe('editProposalState function', () => {
         it('should return 200 and the updated proposal state if it exists and is successfully updated', async () => {
             const idState = '1';

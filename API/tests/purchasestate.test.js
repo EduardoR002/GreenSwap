@@ -6,6 +6,7 @@ const {createPurchaseState,getAllPurchaseStates,editPurchaseState} = require('..
 
 jest.mock('../models');
 
+// Group of unit tests that test the function createPurchaseState
 describe('createPurchaseState function', () => {
     it('should return 200 and the created purchase state if successful', async () => {
         const mockPurchaseState = {
@@ -79,6 +80,7 @@ describe('createPurchaseState function', () => {
     });
 });
 
+// Group of unit tests that test the function getAllPurchaseStates
 describe('getAllPurchaseStates function', () => {
     it('should return 200 and an array of states if found', async () => {
         const states = [{
@@ -144,6 +146,7 @@ describe('getAllPurchaseStates function', () => {
     });
 });
 
+// Group of unit tests that test the function editPurchaseState
 describe('editPurchaseState function', () => {
     it('should return 200 and the updated purchase state if it exists and is successfully updated', async () => {
         const idState = '1';
