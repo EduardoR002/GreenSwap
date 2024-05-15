@@ -23,7 +23,7 @@ function Register() {
         });
 
         if (res.status === 200) {
-          console.log("Criado com sucesso")
+          alert("Criado com sucesso")
         }
         else if (res.status === 422) {
           alert("Phone number must be 9 digits long")
