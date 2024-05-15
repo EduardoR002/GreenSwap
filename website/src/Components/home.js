@@ -32,11 +32,16 @@ function Home() {
       <p></p>
       <Link to={'../sellerRegist'}>Regist Seller</Link>
       <p></p>
-      <Link to={'../aboutUs'}>About Us</Link>
+      <Link to={'../profileView'}>View Profile</Link>
+      <p></p>
+      <Link to={'../orders'}>Orders</Link>
+      <p></p>
+      <Link to={'../ranking'}>Ranking</Link>
+      <p></p>
+      <Link to={'../aboutUs'}>About Us</Link>     
       <p></p>
     </div>
 
-        <p><br/><br/><br/><br/><br/><br/>Home works!</p>
       </> 
     );
 }
