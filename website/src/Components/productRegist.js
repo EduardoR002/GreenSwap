@@ -53,7 +53,7 @@ function ProductRegister() {
             <div className="input-box-07">
                 <label for="productPhoto" >Foto do Produto:
                 <input
-                className="poppins-regular input-06"
+                className="poppins-regular input-07"
                 type="file"
                 id="productPhoto"
                 accept="image/*"
@@ -64,7 +64,7 @@ function ProductRegister() {
             <div className="input-box-07">
                 <label for="name">Product Name:
                 <input
-                className="poppins-regular input-06"
+                className="poppins-regular input-07"
                 type="text"
                 id="productName"
                 placeholder=""
@@ -75,7 +75,7 @@ function ProductRegister() {
             <div className="input-box-07">
             <label for="type">Product Type:
                 <input
-                className="poppins-regular input-06"
+                className="poppins-regular input-07"
                 type="text"
                 id="productType"
                 placeholder=""
@@ -87,7 +87,7 @@ function ProductRegister() {
             <div className="input-box-07">
             <label for="price">Price ($/Kg):
                 <input
-                className="poppins-regular input-06"
+                className="poppins-regular input-07"
                 type="number"
                 id="productPrice"
                 placeholder=""
@@ -98,7 +98,7 @@ function ProductRegister() {
             <div className="input-box-07">
             <label for="name">Quantity (Kg):
                 <input
-                className="poppins-regular input-06"
+                className="poppins-regular input-07"
                 type="number"
                 id="productQuantity"
                 placeholder=""
@@ -109,7 +109,7 @@ function ProductRegister() {
             <div className="input-box-07">
             <label for="price">Description:
                 <input
-                className="poppins-regular input-06"
+                className="poppins-regular input-07"
                 type="text"
                 id="productDescription"
                 placeholder=""

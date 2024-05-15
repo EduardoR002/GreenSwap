@@ -8,6 +8,7 @@ import E404 from './Components/e404'
 import Login from './Components/logIn'
 import Home from './Components/home'
 import ProductRegister from './Components/productRegist';
+import SellerRegister from './Components/sellerRegist';
 
 // #region Routes
 const router = createBrowserRouter([
@@ -33,10 +34,14 @@ const router = createBrowserRouter([
   },
 
   {
-    path: 'productRegister',
+    path: 'productRegist',
     element: <ProductRegister />
   },
 
+  {
+    path: 'sellerRegist',
+    element: <SellerRegister />
+  }
   /*
   {
     path: 'profileView'

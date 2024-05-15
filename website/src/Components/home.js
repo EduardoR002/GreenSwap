@@ -24,11 +24,14 @@ function Home() {
 
       {/*não apagar, é só pra testar os links e páginas */}
       <div>
-      <Link to={'../productRegister'}>Regist Product</Link>
-      <p></p>
       <Link to={'../register'}>Register</Link>
       <p></p>
       <Link to={'../logIn'}>Login</Link>
+      <p></p>
+      <Link to={'../productRegist'}>Regist Product</Link>
+      <p></p>
+      <Link to={'../sellerRegist'}>Regist Seller</Link>
+      <p></p>
     </div>
 
         <p><br/><br/><br/><br/><br/><br/>Home works!</p>

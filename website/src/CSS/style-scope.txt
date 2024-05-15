@@ -5,6 +5,7 @@ logIn.css           -04 * Style Reuse Recommended
 navbar.css          -05
 register.css        -06
 productRegist.css   -07
+sellerRegist.css    -08
 
 ### HOW TO USE (example):
 
