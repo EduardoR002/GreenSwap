@@ -6,6 +6,7 @@ const { createTypePurchase, getAllTypes, editTypePurchase } = require('../contro
 
 jest.mock('../models');
 
+// Group of unit tests that test the function createTypePurchase
 describe('createTypePurchase function', () => {
     it('should return 200 and the created type purchase if successful', async () => {
         const mockTypePurchase = { 
@@ -79,6 +80,7 @@ describe('createTypePurchase function', () => {
     });
 });
 
+// Group of unit tests that test the function getAllTypes
 describe('getAllTypes function', () => {
     it('should return 200 and an array of types if found', async () => {
         const types = [
@@ -139,6 +141,7 @@ describe('getAllTypes function', () => {
     });
 });
 
+// Group of unit tests that test the function editTypePurchase
 describe('editTypePurchase function', () => {
     it('should return 200 and the updated type purchase if it exists and is successfully updated', async () => {
         const idtype = '1';

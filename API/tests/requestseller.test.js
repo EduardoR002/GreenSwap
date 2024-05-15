@@ -6,6 +6,7 @@ const { createRequestSeller, getAllRequestSellers,editRequestSeller } = require(
 
 jest.mock('../models');
 
+// Group of unit tests that test the function createRequestSeller
 describe('createRequestSeller function', () => {
     it('should return 200 and the created request seller if successful', async () => {
         const mockUser = {
@@ -126,6 +127,7 @@ describe('createRequestSeller function', () => {
     });
 });
 
+// Group of unit tests that test the function getAllRequestSellers
 describe('getAllRequestSellers function', () => {
     it('should return 200 and an array of request sellers if found', async () => {
         const mockRequestSellers = [
@@ -192,6 +194,7 @@ describe('getAllRequestSellers function', () => {
     });
 });
 
+// Group of unit tests that test the function editRequestSeller
 describe('editRequestSeller function', () => {
     beforeEach(() => {
         jest.clearAllMocks();

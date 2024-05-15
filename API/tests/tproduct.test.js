@@ -6,6 +6,7 @@ const { createTypeProduct, getAllTypes, editTypeProduct } = require('../controll
 
 jest.mock('../models');
 
+// Group of unit tests that test the function createTypeProduct
 describe('createTypeProduct function', () => {
     it('should return 200 and the type product object if the type product is created successfully', async () => {
         const mockTypeProduct = { 
@@ -78,6 +79,7 @@ describe('createTypeProduct function', () => {
     });
 });
 
+// Group of unit tests that test the function getAllTypes
 describe('getAllTypes function', () => {
     it('should return 200 and an array of types if types are found', async () => {
         const types = [
@@ -138,6 +140,7 @@ describe('getAllTypes function', () => {
     });
 });
 
+// Group of unit tests that test the function editTypeProduct
 describe('editTypeProduct function', () => {
     it('should return 200 and the updated type product if it exists and is successfully updated', async () => {
         const idtypeproduct = '1';

@@ -6,6 +6,7 @@ const { createRequestState, getAllRequestStates, editRequestState } = require('.
 
 jest.mock('../models');
 
+// Group of unit tests that test the function createRequestState
 describe('createRequestState function', () => {
     it('should return 200 and the request state object if the request state is created successfully', async () => {
         const mockRequestState = { 
@@ -78,6 +79,7 @@ describe('createRequestState function', () => {
     });
 });
 
+// Group of unit tests that test the function getAllRequestStates
 describe('getAllRequestStates function', () => {
     it('should return 200 and an array of request states if request states are found', async () => {
         const requestStates = [
@@ -138,6 +140,7 @@ describe('getAllRequestStates function', () => {
     });
 });
 
+// Group of unit tests that test the function editRequestState
 describe('editRequestState function', () => {
     it('should return 200 and the updated request state if it exists and is successfully updated', async () => {
         const idState = '1';
