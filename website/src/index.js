@@ -8,6 +8,7 @@ import E404 from './Components/e404'
 import Login from './Components/logIn'
 import Home from './Components/home'
 
+// #region Routes
 const router = createBrowserRouter([
   {
     path: '/',
@@ -29,7 +30,46 @@ const router = createBrowserRouter([
     path: 'home',
     element: < Home/>
   }
+  /*
+  {
+    path: 'profileView'
+    element: <ProfileView/>
+  }
+
+  {
+    path: 'profileEdit'
+    element: <ProfileEdit/>
+  }
+
+  {
+    path:'order'
+    elements: <Order />
+  }
+
+  {
+    path: 'ranking'
+    element: <Ranking />
+  }
+
+  {
+    path: 'aboutUs'
+    element: <AboutUs/>
+  }
+
+  {
+    path: 'productView'
+    element: <ProductView />
+  }
+
+  {
+    path: 'productRegister'
+    element: <ProductRegister>
+  }
+
+
+  */
 ]);
+// #endregion
 
 const root = createRoot(document.getElementById('root')); // Use createRoot de react-dom/client
 root.render(
@@ -37,6 +77,8 @@ root.render(
     <RouterProvider router={router} />
   </React.StrictMode>
 );
+
+
 
 // Se você deseja começar a medir o desempenho em sua aplicação, passe uma função
 // para registrar resultados (por exemplo: reportWebVitals(console.log))
