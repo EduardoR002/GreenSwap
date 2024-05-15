@@ -2,6 +2,20 @@ import React, { useState, useEffect } from 'react';
 import '../CSS/home.css';
 import '../CSS/navbar.css';
 import { Link } from "react-router-dom";
+import Cookies from 'js-cookie';
+
+function getCookie(name){
+  const cDecoded = decodeURIComponent(document.cookie);
+  const cArray = cDecoded.split("; ");
+  let result = null;
+  
+  cArray.forEach(element => {
+      if(element.indexOf(name) == 0){
+          result = element.substring(name.length + 1)
+      }
+  })
+  return result;
+}
 
 function Home() {
     const [products, setProducts] = useState([]);
@@ -21,7 +35,10 @@ function Home() {
 
     return (
       <>
-        <p>Home works!</p>
+        <div>
+          <h1>Cookie Value</h1>
+          
+        </div>
       </> 
     );
 }

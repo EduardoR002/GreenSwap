@@ -216,6 +216,14 @@ async function editUser(req, res){
     }
 }
 
+function getCookieTTL(ttl){
+    const date = new Date();
+    date.setTime(date.getTime() +  (ttl * 60 * 1000));
+    let expires = date.toUTCString();
+    //document.cookie = `${name}=${value}; ${expires}; path=/`
+    return expires;
+}
+
 /* Async function used to provide login to the user */
 async function loginUser(req, res) {
     try {
@@ -245,11 +253,17 @@ async function loginUser(req, res) {
             // Password matched, generate token and send response
             const token = await createTokenCertifier(certifier.email, certifier.idcertifier, 'certifier');
             
+            const expiresDate = new Date();
+            expiresDate.setTime(expiresDate.getTime() + 60 * 1000); // Adiciona 60 segundos ao tempo atual
+
+
             res.cookie('token', token, {
                 httpOnly: true,
                 secure: true,
-                sameSite: 'Strict'
+                sameSite: 'Strict',
+                expires: expiresDate 
             });
+
             return res.status(200).json({
                 message: "Login successful",
                 token: token,
