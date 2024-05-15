@@ -55,6 +55,11 @@ async function createUser(req, res) {
             }
         } else {
             const result = await models.user.create(user);
+            res.cookie('user', name, {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'Strict'
+            });
             return res.status(200).json({
                 message: "User created successfully",
                 user: result

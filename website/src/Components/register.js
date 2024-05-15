@@ -19,12 +19,13 @@ function Register() {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(formData)
+          body: JSON.stringify(formData),
         });
-
         if (res.status === 200) {
-          alert("Criado com sucesso")
-        }
+          const data = await res.json();
+          document.cookie = `user=${data.user.name}; path=/`;
+          alert("Criado com sucesso");
+      }      
         else if (res.status === 422) {
           alert("Phone number must be 9 digits long")
         }
