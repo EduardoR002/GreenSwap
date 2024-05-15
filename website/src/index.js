@@ -7,6 +7,7 @@ import Register from './Components/register'
 import E404 from './Components/e404'
 import Login from './Components/logIn'
 import Home from './Components/home'
+import ProductRegister from './Components/productRegist';
 
 // #region Routes
 const router = createBrowserRouter([
@@ -28,8 +29,14 @@ const router = createBrowserRouter([
 
   {
     path: 'home',
-    element: < Home/>
-  }
+    element: <Home />
+  },
+
+  {
+    path: 'productRegister',
+    element: <ProductRegister />
+  },
+
   /*
   {
     path: 'profileView'
@@ -59,11 +66,6 @@ const router = createBrowserRouter([
   {
     path: 'productView'
     element: <ProductView />
-  }
-
-  {
-    path: 'productRegister'
-    element: <ProductRegister>
   }
 
 

@@ -21,7 +21,17 @@ function Home() {
 
     return (
       <>
-        <p>Home works!</p>
+
+      {/*não apagar, é só pra testar os links e páginas */}
+      <div>
+      <Link to={'../productRegister'}>Regist Product</Link>
+      <p></p>
+      <Link to={'../register'}>Register</Link>
+      <p></p>
+      <Link to={'../logIn'}>Login</Link>
+    </div>
+
+        <p><br/><br/><br/><br/><br/><br/>Home works!</p>
       </> 
     );
 }
