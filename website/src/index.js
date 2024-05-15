@@ -9,6 +9,7 @@ import Login from './Components/logIn'
 import Home from './Components/home'
 import ProductRegister from './Components/productRegist';
 import SellerRegister from './Components/sellerRegist';
+import AboutUs from './Components/aboutUs';
 
 // #region Routes
 const router = createBrowserRouter([
@@ -41,7 +42,13 @@ const router = createBrowserRouter([
   {
     path: 'sellerRegist',
     element: <SellerRegister />
-  }
+  },
+ 
+  {
+    path: 'aboutUs',
+    element: <AboutUs />
+  },
+
   /*
   {
     path: 'profileView'
@@ -61,11 +68,6 @@ const router = createBrowserRouter([
   {
     path: 'ranking'
     element: <Ranking />
-  }
-
-  {
-    path: 'aboutUs'
-    element: <AboutUs/>
   }
 
   {

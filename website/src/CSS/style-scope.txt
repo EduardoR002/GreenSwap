@@ -6,6 +6,7 @@ navbar.css          -05
 register.css        -06
 productRegist.css   -07
 sellerRegist.css    -08
+aboutUs.css         -09
 
 ### HOW TO USE (example):
 

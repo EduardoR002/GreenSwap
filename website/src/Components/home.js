@@ -32,6 +32,8 @@ function Home() {
       <p></p>
       <Link to={'../sellerRegist'}>Regist Seller</Link>
       <p></p>
+      <Link to={'../aboutUs'}>About Us</Link>
+      <p></p>
     </div>
 
         <p><br/><br/><br/><br/><br/><br/>Home works!</p>
