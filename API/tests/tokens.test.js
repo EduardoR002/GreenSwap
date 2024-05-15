@@ -19,9 +19,31 @@ describe('createTokenUser function', () => {
 
         models.token.findOne = jest.fn().mockResolvedValue(null);
 
+        const createdAt = new Date();
+        const updatedAt = new Date();
+        models.token.create = jest.fn().mockResolvedValue({
+            tokenid: 1,
+            userId,
+            token: 'mocked-token',
+            revokedAt: null,
+            revoked: false,
+            createdAt,
+            updatedAt,
+            role
+        });
+
         const token = await createTokenUser(email, userId, role);
 
-        expect(token).toBe('mocked-token');
+        expect(token).toEqual({
+            tokenid: 1,
+            userId,
+            token: 'mocked-token',
+            revokedAt: null,
+            revoked: false,
+            createdAt,
+            updatedAt,
+            role
+        });
         expect(models.token.findOne).toHaveBeenCalledWith({ where: { userId } });
         expect(models.token.create).toHaveBeenCalledWith({ userId, token: 'mocked-token', role });
     });
@@ -29,7 +51,7 @@ describe('createTokenUser function', () => {
         const userId = 123;
         const email = 'test@example.com';
         const role = 'user';
-
+    
         const existingToken = { 
             userId: userId, 
             token: 'existing-token', 
@@ -39,12 +61,11 @@ describe('createTokenUser function', () => {
             save: jest.fn().mockResolvedValue()
         };
         models.token.findOne = jest.fn().mockResolvedValue(existingToken);
-
+    
         const token = await createTokenUser(email, userId, role);
 
-        expect(token).toBe('mocked-token');
+        expect(token).toEqual(existingToken);
         expect(models.token.findOne).toHaveBeenCalledWith({ where: { userId } });
-        expect(existingToken.token).toBe('mocked-token');
         expect(existingToken.role).toBe(role);
         expect(existingToken.revoked).toBe(false);
         expect(existingToken.revokedAt).toBe(null);

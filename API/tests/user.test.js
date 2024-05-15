@@ -1,12 +1,14 @@
 const request = require('supertest');
 const express = require('express');
 const app = express();
-const models = require('../models'); // replace with your models path
+const models = require('../models');
 const { createUser, getUser, getAllUsers, deleteUser, editUser, loginUser} = require('../controllers/user.controller.js');
 const bcrypt = require('bcrypt');
 
 jest.mock('../models');
 jest.mock('bcrypt');
+
+const createTokenUser = jest.fn();
 
 describe('getUser function', () => {
     it('should return 200 and the user object if the user is found', async () => {
@@ -445,6 +447,7 @@ describe('loginUser function', () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
+    
     it('should return 200 and success message for user login with correct credentials', async () => {
         const mockUser = {
             idUser: 1,

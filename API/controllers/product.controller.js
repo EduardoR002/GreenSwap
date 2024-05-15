@@ -105,13 +105,13 @@ async function getProduct(req, res) {
 // Async function to get all products
 async function getAllProducts(req, res) {
     try {
-        const { search_name } = req.body; // Assuming the search name is provided in the request body
-        
+        const { search_name, max_price, min_price } = req.body; // Assuming the search name is provided in the request body
+
         // Call the stored procedure using sequelize
         const products = await models.sequelize.query(
-            'CALL getAllProducts(:search_name)',
+            'CALL getAllProducts(:search_name, :max_price, :min_price)',
             {
-                replacements: { search_name },
+                replacements: { search_name, max_price, min_price },
                 type: models.sequelize.QueryTypes.SELECT
             }
         );

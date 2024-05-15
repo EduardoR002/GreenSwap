@@ -280,7 +280,7 @@ describe('getProduct function', () => {
 });
 
 describe('getAllProducts function', () => {
-    it('should return 200 and an array of products if found', async () => {
+    it('should return 200 and an array of products if found without search parameters', async () => {
         const products = [{
                 id: 1,
                 name: 'Test Product 1',
@@ -301,9 +301,15 @@ describe('getAllProducts function', () => {
             }
         ];
 
-        models.product.findAll.mockResolvedValue(products);
+        models.sequelize.query.mockResolvedValue(products);
 
-        const req = {};
+        const req = {
+            body: {
+                search_name: '',
+                max_price: '0',
+                min_price: '0'
+            }
+        };
         const res = {
             status: jest.fn().mockReturnThis(),
             json: jest.fn()
@@ -318,10 +324,119 @@ describe('getAllProducts function', () => {
         });
     });
 
-    it('should return 404 if no products are found', async () => {
-        models.product.findAll.mockResolvedValue([]);
+    it('should return 200 and an array of products if found with search parameters', async () => {
+        const products = [{
+            id: 1,
+            name: 'Test Product 1',
+            description: 'Test Description 1',
+            price: 10.99,
+            stock: 100,
+            idtypeproduct: 1,
+            idseller: 1
+        },
+        {
+            id: 2,
+            name: 'Test Product 2',
+            description: 'Test Description 2',
+            price: 20.99,
+            stock: 200,
+            idtypeproduct: 2,
+            idseller: 2
+        }];
+    
+        models.sequelize.query.mockResolvedValue(products);
+    
+        const req = {
+            body: {
+                search_name: 'Test',
+                max_price: 15.00,
+                min_price: 5.00
+            }
+        };
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn()
+        };
+    
+        await getAllProducts(req, res);
+    
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({
+            message: 'Products found successfully',
+            products
+        });
+    });
+    
+    it('should return 200 and an array of products if found with search parameters, but not all products meet the criteria', async () => {
+        const allProducts = [
+            {
+                id: 1,
+                name: 'Test Product 1',
+                description: 'Test Description 1',
+                price: 10.99,
+                stock: 100,
+                idtypeproduct: 1,
+                idseller: 1
+            },
+            {
+                id: 2,
+                name: 'Test Product 2',
+                description: 'Test Description 2',
+                price: 20.99,
+                stock: 200,
+                idtypeproduct: 2,
+                idseller: 2
+            },
+            {
+                id: 3,
+                name: 'Another Product',
+                description: 'Another Description',
+                price: 5.99,
+                stock: 50,
+                idtypeproduct: 3,
+                idseller: 3
+            }
+        ];
+    
+        // Mock response including products that partially meet the search criteria
+        const products = allProducts.filter(product =>
+            product.name.includes('Test') && product.price >= 5.00 && product.price <= 15.00
+        );
+    
+        models.sequelize.query.mockResolvedValue(products);
+    
+        const req = {
+            body: {
+                search_name: 'Test',
+                max_price: 15.00,
+                min_price: 5.00
+            }
+        };
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn()
+        };
+    
+        await getAllProducts(req, res);
+    
+        expect(res.status).toHaveBeenCalledWith(200);
+        // Check if only products meeting the criteria are returned
+        expect(res.json).toHaveBeenCalledWith({
+            message: 'Products found successfully',
+            products
+        });
+    });
 
-        const req = {};
+    it('should return 404 if no products are found', async () => {
+        models.sequelize.query.mockResolvedValue([]);
+
+        const req = {
+            body: {
+                search_name: 'test',
+                max_price: '0',
+                min_price: '0'
+            }
+        };
         const res = {
             status: jest.fn().mockReturnThis(),
             json: jest.fn()
@@ -336,13 +451,19 @@ describe('getAllProducts function', () => {
     });
 
     it('should return 500 if an error occurs during database operation', async () => {
-        const req = {};
+        const req = {
+            body: {
+                search_name: 'test',
+                max_price: '0',
+                min_price: '0'
+            }
+        };
         const res = {
             status: jest.fn().mockReturnThis(),
             json: jest.fn()
         };
 
-        models.product.findAll.mockRejectedValue(new Error('Database error'));
+        models.sequelize.query.mockRejectedValue(new Error('Database error'));
 
         await getAllProducts(req, res);
 
