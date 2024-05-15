@@ -10,6 +10,7 @@ jest.mock('bcrypt');
 
 const createTokenUser = jest.fn();
 
+// Group of unit tests that test the function getUser
 describe('getUser function', () => {
     it('should return 200 and the user object if the user is found', async () => {
         const mockUser = { 
@@ -66,6 +67,7 @@ describe('getUser function', () => {
     });
 });
 
+// Group of unit tests that test the function createUser
 describe('createUser function', () => {
     it('should return 200 and the user object if the user is created successfully', async () => {
         const mockUser = { 
@@ -186,6 +188,7 @@ describe('createUser function', () => {
     });
 });
 
+// Group of unit tests that test the function getAllUsers
 describe('getAllUsers function', () => {
     it('should return 200 and an array of users if users are found', async () => {
         const mockUsers = [
@@ -228,6 +231,7 @@ describe('getAllUsers function', () => {
     });
 })
 
+// Group of unit tests that test the function deleteUser
 describe('deleteUser function', () => {
     it('should return 200 and success message if user is deleted successfully', async () => {
         const userId = '1';
@@ -266,6 +270,7 @@ describe('deleteUser function', () => {
     });
 });
 
+// Group of unit tests that test the function editUser
 describe('editUser function', () => {
     it('should return 200 and success message if user is updated successfully', async () => {
         const userId = '1';
@@ -443,6 +448,7 @@ describe('editUser function', () => {
     });
 })
 
+// Group of unit tests that test the function loginUser
 describe('loginUser function', () => {
     beforeEach(() => {
         jest.clearAllMocks();

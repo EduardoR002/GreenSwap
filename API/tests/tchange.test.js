@@ -6,6 +6,7 @@ const { createTypeChange, getAllTypes, editTypeChange } = require('../controller
 
 jest.mock('../models');
 
+// Group of unit tests that test the function createTypeChange
 describe('createTypeChange function', () => {
     it('should return 200 and the type change object if the type change is created successfully', async () => {
         const mockTypeChange = { 
@@ -78,6 +79,7 @@ describe('createTypeChange function', () => {
     });
 });
 
+// Group of unit tests that test the function getAllTypes
 describe('getAllTypes function', () => {
     it('should return 200 and an array of types if types are found', async () => {
         const types = [
@@ -138,6 +140,7 @@ describe('getAllTypes function', () => {
     });
 });
 
+// Group of unit tests that test the function editTypeChange
 describe('editTypeChange function', () => {
     it('should return 200 and the updated type change if it exists and is successfully updated', async () => {
         const idtypechange = '1';

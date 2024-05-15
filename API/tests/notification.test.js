@@ -6,6 +6,7 @@ const { createNotification, getAllNotifications } = require('../controllers/noti
 
 jest.mock('../models');
 
+// Group of unit tests that test the function createNotification
 describe('createNotification function', () => {
     it('should return 200 and the created notification if successful', async () => {
         const mockNotification = {
@@ -149,6 +150,7 @@ describe('createNotification function', () => {
     });
 });
 
+// Group of unit tests that test the function getAllNotifications
 describe('getAllNotifications function', () => {
     it('should return 200 and an array of notifications if found', async () => {
         const notifications = [{

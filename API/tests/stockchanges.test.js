@@ -6,6 +6,7 @@ const stockChangeController = require('../controllers/stockchanges.controller');
 
 jest.mock('../models');
 
+// Group of unit tests that test the function createStockChange
 describe('createStockChange function', () => {
     it('should return 200 and the stock change object if the stock change is created successfully', async () => {
         const mockTypeChange = { 
@@ -127,6 +128,7 @@ describe('createStockChange function', () => {
     });
 });
 
+// Group of unit tests that test the function getAllStockChanges
 describe('getAllStockChanges function', () => {
     it('should return 200 and an array of stock changes if stock changes are found', async () => {
         const mockStockChanges = [
@@ -187,6 +189,7 @@ describe('getAllStockChanges function', () => {
     });
 });
 
+// Group of unit tests that test the function editChangeStock
 describe('editChangeStock function', () => {
     it('should return 200 and the updated stock change if it exists and is successfully updated', async () => {
         const mockStockChange = { 

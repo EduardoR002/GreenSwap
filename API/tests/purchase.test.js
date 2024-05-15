@@ -10,6 +10,7 @@ const {
 
 jest.mock('../models');
 
+// Group of unit tests that test the function createPurchase
 describe('createPurchase function', () => {
     it('should return 200 and the created purchase if successful', async () => {
         const mockPurchase = {
@@ -158,6 +159,7 @@ describe('createPurchase function', () => {
     });
 });
 
+// Group of unit tests that test the function getAllPurchases
 describe('getAllPurchases function', () => {
     it('should return 200 and an array of purchases if found', async () => {
         const purchases = [{
@@ -228,6 +230,7 @@ describe('getAllPurchases function', () => {
     });
 });
 
+// Group of unit tests that test the function editPurchase
 describe('editPurchase function', () => {
     it('should return 200 and the updated purchase if successful', async () => {
         const mockUpdatedPurchase = {

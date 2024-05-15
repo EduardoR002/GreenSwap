@@ -6,6 +6,7 @@ const { createCertifier, getCertifier, getAllCertifiers, editCertifier } = requi
 
 jest.mock('../models');
 
+// Group of unit tests that test the function createCertifier
 describe('createCertifier function', () => {
     it('should return 200 and the created certifier if successful', async () => {
         const mockCertifier = {
@@ -87,6 +88,7 @@ describe('createCertifier function', () => {
     });
 });
 
+// Group of unit tests that test the function getCertifier
 describe('getCertifier function', () => {
     it('should return 200 and the certifier data if found', async () => {
         const mockCertifier = {
@@ -161,6 +163,7 @@ describe('getCertifier function', () => {
     });
 });
 
+// Group of unit tests that test the function getAllCertifiers
 describe('getAllCertifiers function', () => {
     beforeEach(() => {
         jest.clearAllMocks();
@@ -233,6 +236,7 @@ describe('getAllCertifiers function', () => {
     });
 });
 
+// Group of unit tests that test the function editCertifier
 describe('editCertifier function', () => {
     it('should return 200 and the updated certifier data if it exists and is successfully updated', async () => {
         const certifierId = '1';
