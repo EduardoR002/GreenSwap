@@ -37,7 +37,6 @@ function Register() {
           else if(data.message === "Phone number already exists"){
             alert("Phone number already exist")
           }
-          
         }
       } catch (error) {
         console.error('Erro:', error.message);

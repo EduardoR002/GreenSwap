@@ -79,8 +79,25 @@ async function renewToken(req, res){
     }
 }
 
+async function validateToken(req, res){
+    const token = req.body.token;
+    try {
+        jwt.verify(token, '0f1ab83a576c30f57aa5c33de4009cc923923ac041f6f63af8daa1a5ad53254a');
+        return res.status(200).json({ 
+            message: "Token válido",
+            token: token 
+        });
+    } catch (error) {
+        console.error("Erro ao validar token:", error);
+        return res.status(403).json({ 
+            message: "Token inválido" 
+        });
+    }
+}
+
 module.exports = {
     createToken: createToken,
     deleteToken: deleteToken,
-    renewToken: renewToken
+    renewToken: renewToken,
+    validateToken: validateToken
 };

@@ -1,9 +1,53 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import '../CSS/logIn.css'
 import logo from '../images/GreenSwap.png'
 import { Link } from "react-router-dom";
 
+async function validateToken() {
+    const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    console.log(token);
+    const formData = {
+        token : token
+    }
+    const response = await fetch('http://localhost:3000/tokens/validate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    });
+
+    if (response.status === 200) {
+        window.location.href = './home';
+    }
+}
+
 function Login(){
+    useEffect(() => {
+        validateToken();
+    }, []);
+    const loginUser = async() => {
+        const formData = {
+            email: document.getElementById('email-04').value,
+            password: document.getElementById('password-04').value
+        }
+        try {
+            const res = await fetch('http://localhost:3000/users/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData),
+            });
+            if (res.status === 200) {
+                const data = await res.json();
+                document.cookie = `token=${data.token}; path/`;
+                window.location.href = './Home.js';
+            }
+        } catch (error) {
+            console.error('Erro:', error.message);
+        }
+    }
     return(
         <>
             <div id="bg-04" />
@@ -41,7 +85,7 @@ function Login(){
                     placeholder="Password"
                     />
                 </div>
-                <button className="poppins-regular button-04" onclick="login()">
+                <button className="poppins-regular button-04" onClick={loginUser}>
                     Login
                 </button>
                 <span className="poppins-regular linknote-04">
