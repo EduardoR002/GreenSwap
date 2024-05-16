@@ -58,3 +58,8 @@
     color: #042C3B;
     font-weight: 600;
 }
+
+.navbar-position {
+    position: fixed;
+    top: 0;
+  }

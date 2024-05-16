@@ -3,6 +3,7 @@ import '../CSS/productRegist.css'
 import logo from '../images/GreenSwap.png'
 import { Link } from "react-router-dom";
 
+
 //Function that will present user Regist page of the website
 function ProductRegister() {
     const handleProductRegister = async () => {
@@ -45,6 +46,7 @@ function ProductRegister() {
     }
     return(
         <>
+        
         <div className="main-07">
           {/* Form */}
           <div className="formDiv-07">

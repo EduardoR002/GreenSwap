@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import GreenSwap from '../images/GreenSwap.png';
 import '../CSS/navbar.css';
 
@@ -15,8 +16,8 @@ function Navbar() {
                 <svg xmlns="http://www.w3.org/2000/svg" width="145" height="145" viewBox="0 0 145 145" fill="none" >
                     <path d="M145 72.5C145 112.541 112.541 145 72.5 145C32.4594 145 0 112.541 0 72.5C0 32.4594 32.4594 0 72.5 0C112.541 0 145 32.4594 145 72.5Z" fill="#042C3B"/>
                 </svg>
-                <a className='a-05' href="home.html">
-                    <img src={GreenSwap} className="icon-05" alt="GreenSwap Icon" />
+                <a className='a-05'>
+                <Link to={"../home"}><img src={GreenSwap} className="icon-05" alt="GreenSwap Icon" /></Link>
                 </a>
             </div>
             <div className="full-section-container-05">
@@ -25,21 +26,20 @@ function Navbar() {
                         <span className="material-symbols-outlined navbar-symbols-05">
                             social_leaderboard
                         </span>
-                        <a className="a-05 poppins-regular" href="ranking.html">Ranking</a>
+                        <a className="a-05 poppins-regular"> <Link to={'../ranking'}>Ranking</Link></a>
                     </div>
                     <div className="section-05">
-                        <a className="a-05 poppins-regular" href="orders.html">Orders</a>
+                        <a className="a-05 poppins-regular"> <Link to={'../orders'}>Orders</Link></a>
                     </div>
                 </div>
                 <div className="right-section-container-05">
                     <div className="section-05">
-                        <a className="a-05 poppins-regular" href="aboutus.html">About Us</a>
+                        <a className="a-05 poppins-regular"><Link to={'../aboutUs'}>About Us</Link></a>
                     </div>
                     <div className="section-05">
                         <a className='a-05' href="profileView.html">
-                            <span className="material-symbols-outlined navbar-symbols-05">
-                                person
-                            </span>
+                        <span className="material-symbols-outlined navbar-symbols-05"><Link to="../profileView">Person</Link>
+                                </span>
                         </a>
                         <span className="navbar-symbols-05">|  </span>
                         <a className='a-05' href="cart.html">

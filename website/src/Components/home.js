@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../CSS/home.css';
 import '../CSS/navbar.css';
 import { Link } from "react-router-dom";
+import '../CSS/navbar.css';
 import Cookies from 'js-cookie';
 
 function getCookie(name){
@@ -35,6 +36,9 @@ function Home() {
 
     return (
       <>
+      <div>
+      {/*<Navbar />*/}
+      </div>
 
       {/*não apagar, é só pra testar os links e páginas */}
       <div>

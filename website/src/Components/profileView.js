@@ -1,11 +1,24 @@
 import React, { useRef }  from "react";
 import '../CSS/profileView.css'
 import { Link } from "react-router-dom";
+import '../CSS/navbar.css';
+import Navbar from './navbar';
 
 //Function that will present  user profile page on website
 function ProfileView() {
 
     return (
+      <div className="navbar-position">
+        
+      <Navbar />
+
+
+      <br></br>
+           <br></br>
+           <br></br>
+           <br></br>
+           <br></br>
+           
         <div>
           <div className="profile">
             <img className="profile-pic" src="../images/exemploPerfil.png" alt="Foto de Perfil" />
@@ -64,6 +77,7 @@ function ProfileView() {
             </div>
           </div>
         </div>
+      </div>
       );
     }
 
