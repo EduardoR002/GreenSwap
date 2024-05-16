@@ -62,4 +62,11 @@
 .navbar-position {
     position: fixed;
     top: 0;
+    width: 100%;
+
+  }
+
+  .Link {
+    text-decoration: none; /* Remove o sublinhado */
+    color: inherit;
   }

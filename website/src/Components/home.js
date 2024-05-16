@@ -3,6 +3,7 @@ import '../CSS/home.css';
 import '../CSS/navbar.css';
 import { Link } from "react-router-dom";
 import '../CSS/navbar.css';
+import Navbar from './navbar';
 import Cookies from 'js-cookie';
 
 function getCookie(name){
@@ -19,7 +20,8 @@ function getCookie(name){
 }
 
 function Home() {
-    const [products, setProducts] = useState([]);
+   
+{/*const [products, setProducts] = useState([]);
 
     useEffect(() => {
         getAllProducts(); // Chama a função getAllProducts() assim que o componente for montado
@@ -33,11 +35,12 @@ function Home() {
             console.error('Erro ao buscar produtos:', error);
         }
     }
+*/} 
 
     return (
       <>
-      <div>
-      {/*<Navbar />*/}
+      <div className="navbar-position"> 
+      <Navbar />
       </div>
 
       {/*não apagar, é só pra testar os links e páginas */}

@@ -26,23 +26,23 @@ function Navbar() {
                         <span className="material-symbols-outlined navbar-symbols-05">
                             social_leaderboard
                         </span>
-                        <a className="a-05 poppins-regular"> <Link to={'../ranking'}>Ranking</Link></a>
+                        <a className="a-05 poppins-regular"> <Link to={'../ranking'}  className="Link">Ranking</Link></a>
                     </div>
                     <div className="section-05">
-                        <a className="a-05 poppins-regular"> <Link to={'../orders'}>Orders</Link></a>
+                        <a className="a-05 poppins-regular"> <Link to={'../orders'}  className="Link">Orders</Link></a>
                     </div>
                 </div>
                 <div className="right-section-container-05">
                     <div className="section-05">
-                        <a className="a-05 poppins-regular"><Link to={'../aboutUs'}>About Us</Link></a>
+                        <a className="a-05 poppins-regular"><Link to={'../aboutUs'}  className="Link">About Us</Link></a>
                     </div>
                     <div className="section-05">
-                        <a className='a-05' href="profileView.html">
-                        <span className="material-symbols-outlined navbar-symbols-05"><Link to="../profileView">Person</Link>
+                        <a className='a-05'>
+                        <span className="material-symbols-outlined navbar-symbols-05"><Link to="../profileView"  className="Link">Person</Link>
                                 </span>
                         </a>
                         <span className="navbar-symbols-05">|  </span>
-                        <a className='a-05' href="cart.html">
+                        <a className='a-05'>
                             <span className="material-symbols-outlined navbar-symbols-05">
                                 shopping_cart
                             </span>

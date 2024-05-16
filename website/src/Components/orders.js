@@ -14,7 +14,7 @@ function Orders() {
       <Navbar />
 
     
-      <p>Ranking Page</p>
+      <p>Orders Page</p>
 
 
       </div>
