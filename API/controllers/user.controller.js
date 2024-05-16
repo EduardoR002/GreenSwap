@@ -228,7 +228,8 @@ function getCookieTTL(ttl){
 async function loginUser(req, res) {
     try {
         const { email, password } = req.body;
-
+        const hour = 3600000;
+        const expirationDate = new Date(Date.now() + hour);
         // Find user by email
         const user = await models.user.findOne({ where: { email: email } });
 
@@ -256,6 +257,7 @@ async function loginUser(req, res) {
                 httpOnly: true,
                 secure: true,
                 sameSite: 'Strict',
+                expires: expirationDate
             });
 
             return res.status(200).json({
@@ -281,7 +283,8 @@ async function loginUser(req, res) {
                 res.cookie('token', token, {
                     httpOnly: true,
                     secure: true,
-                    sameSite: 'Strict'
+                    sameSite: 'Strict',
+                    expires: expirationDate
                 });
                 return res.status(200).json({
                     message: "Login successful",
@@ -294,7 +297,8 @@ async function loginUser(req, res) {
                 res.cookie('token', token, {
                     httpOnly: true,
                     secure: true,
-                    sameSite: 'Strict'
+                    sameSite: 'Strict',
+                    expires: expirationDate
                 });
                 return res.status(200).json({
                     message: "Login successful",

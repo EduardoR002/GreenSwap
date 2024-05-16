@@ -41,8 +41,10 @@ function Login(){
             });
             if (res.status === 200) {
                 const data = await res.json();
-                document.cookie = `token=${data.token}; path/`;
-                window.location.href = './Home.js';
+                const expirationDate = new Date();
+                expirationDate.setHours(expirationDate.getHours() + 1); // Adiciona 1 hora à hora atual
+                document.cookie = `token=${data.token}; expires=${expirationDate.toUTCString()}; path=/; secure; SameSite=Strict`;
+                window.location.href = './home';
             }
         } catch (error) {
             console.error('Erro:', error.message);
