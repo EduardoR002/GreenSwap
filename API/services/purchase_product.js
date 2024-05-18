@@ -95,8 +95,6 @@ async function purchaseWithProposal(req, res) {
         });
     }
 }
-
-
     module.exports = {
         purchase:purchase,
         purchaseWithProposal:purchaseWithProposal
