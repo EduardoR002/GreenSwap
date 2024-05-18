@@ -2,21 +2,19 @@ import React, { useRef }  from "react";
 import '../CSS/aboutUs.css'
 import logo from '../images/VerDev.png'
 import { Link } from "react-router-dom";
+import Navbar from './navbar';
 
 //Function that will present About Us page of the website
 function AboutUs() {
 
     return (
-       
-        <div>
-           <br></br>
-           <br></br>
-           <br></br>
-           <br></br>
-           <br></br>
-           <br></br>
-           <br></br>
-           <br></br>
+
+      <div className="navbar-position">
+        
+      <Navbar />
+  
+
+
            <br></br>
            <br></br>
            <br></br>
@@ -53,7 +51,9 @@ function AboutUs() {
           <img className="verDev-09" src={logo}/>
 
           </div>
-        </div>
+
+      </div>
+
       );
     }
 

@@ -54,10 +54,9 @@ const router = createBrowserRouter([
     element: <ProfileView/>
   },
  
-
   {
-    path:'orders',
-    elements: <Orders />
+    path: 'orders',
+    element: <Orders />
   },
 
   {
@@ -69,8 +68,6 @@ const router = createBrowserRouter([
     path: 'aboutUs',
     element: <AboutUs />
   },
-
-
 
   /*
 
