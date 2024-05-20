@@ -1,3 +1,10 @@
+.title-07{
+    font-size: 300%;
+    text-align: center;
+    font-weight: bold;
+    font-family: "Poppins", sans-serif;
+}
+
 .profile {
     background-image: url('../images/profileBk.png');
     margin-left: 2%; 

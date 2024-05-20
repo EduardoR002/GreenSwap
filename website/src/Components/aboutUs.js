@@ -9,17 +9,12 @@ function AboutUs() {
 
     return (
 
-      <div className="navbar-position">
-        
-      <Navbar />
-  
+      <div className="navbar-position"> {/* Navbar common to all pages*/}
+      <Navbar /> <br></br> 
 
+      {/* Page title */}
+      <h1 className="title-07">About Us</h1>
 
-           <br></br>
-           <br></br>
-           <br></br>
-           <br></br>
-           <br></br>
           <div className="cont-09">
             <h1 className="titles-09">GreenSwap:</h1>
             

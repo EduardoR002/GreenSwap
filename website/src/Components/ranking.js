@@ -10,8 +10,11 @@ function Ranking() {
     return (
      
 
-        <div className="navbar-position"> 
-        <Navbar />
+      <div className="navbar-position"> {/* Navbar common to all pages*/}
+      <Navbar /> <br></br> 
+
+      {/* Page title */}
+      <h1 className="title-07">Ranking</h1>
 
       
         <p>Ranking Page</p>

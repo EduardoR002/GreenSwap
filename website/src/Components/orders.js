@@ -10,11 +10,11 @@ function Orders() {
   return (
    
 
-      <div className="navbar-position"> 
-      <Navbar />
+    <div className="navbar-position"> {/* Navbar common to all pages*/}
+    <Navbar /> <br></br> 
 
-    
-      <p>Orders Page</p>
+    {/* Page title */}
+    <h1 className="title-07">Orders</h1>
 
 
       </div>

@@ -8,16 +8,12 @@ import Navbar from './navbar';
 function ProfileView() {
 
     return (
-      <div className="navbar-position">
-        
-      <Navbar />
 
+      <div className="navbar-position"> {/* Navbar common to all pages*/}
+        <Navbar /> <br></br> 
 
-      <br></br>
-           <br></br>
-           <br></br>
-           <br></br>
-           <br></br>
+        {/* Page title */}
+        <h1 className="title-07">Profile</h1>
            
         <div>
           <div className="profile">
