@@ -45,9 +45,6 @@ function Home() {
 
       {/*não apagar, é só pra testar os links e páginas */}
       <div>
-      <Link to={'../register'}>Register</Link>
-      <p></p>
-      <Link to={'../logIn'}>Login</Link>
       <p></p>
       <Link to={'../productRegist'}>Regist Product</Link>
       <p></p>
@@ -62,6 +59,7 @@ function Home() {
       <Link to={'../aboutUs'}>About Us</Link>     
       <p></p>
     </div>
+
 
       </> 
     );

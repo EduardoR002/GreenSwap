@@ -70,3 +70,35 @@
     text-decoration: none; /* Remove o sublinhado */
     color: inherit;
   }
+
+  .login {
+    width: 125%;
+    color: #042C3B;
+    background-color: #fffefe;
+    border: 2px solid #042C3B;
+    border-radius: 5px;
+    font-weight: bold;
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    font-size: 200%;
+  }
+
+  .login:hover {
+    color: blue;
+  }
+
+  .regist {
+    width: 125%;
+    background-color: #fffefe;
+    border: 2px solid #042C3B;
+    border-radius: 5px;
+    color: #042C3B;
+    font-weight: bold;
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    font-size: 80%;
+  }
+  
+  .regist:hover {
+    color: blue;
+  }

@@ -48,6 +48,20 @@ function Navbar() {
                             </span>
                         </a>
                     </div>
+
+                    <div className="main-log">
+                    <div className="login">
+                        <a>
+                            <Link to="../logIn" className="Link">Login</Link><br></br>
+                        </a>
+                    </div>
+
+                    <div className="regist">
+                        <a>
+                            <Link to="../register" className="Link">New here? Create account</Link> 
+                        </a>        
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>
