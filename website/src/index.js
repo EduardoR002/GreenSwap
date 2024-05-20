@@ -20,7 +20,7 @@ import AboutUs from './Components/aboutUs';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Register />,
+    element: <Home />,
     errorElement: <E404 />
   },
 
