@@ -1,0 +1,51 @@
+.sellerOptions {
+    padding: 5px 20px;
+    font-size: 150%;
+    font-family: "Poppins", sans-serif;
+    border: none;
+    background-color: #012837; 
+    color: #fff; 
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    margin-left: 85%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 10%;
+}
+
+.sellerOptions:hover {
+    transform: scale(1.05);
+    background-color: #011c25;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    width: 30%;
+}
+
+.search-input {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #012837;
+    border-radius: 10px 0 0 10px; 
+    width:60%;
+}
+
+.search-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 2px solid #012837;
+    background-color: #012837;
+    color: #fff;
+    border-radius: 0 10px 10px 0; /* Cantos arredondados apenas à direita */
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #011c25;
+}

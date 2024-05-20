@@ -13,6 +13,7 @@ import SellerRegister from './Components/sellerRegist';
 import Orders from './Components/orders';
 import Ranking from './Components/ranking';
 import AboutUs from './Components/aboutUs';
+import SellerOptions from './Components/sellerOptions';
 
 
 
@@ -37,6 +38,11 @@ const router = createBrowserRouter([
   {
     path: 'home',
     element: <Home />
+  },
+
+  {
+    path: 'sellerOptions',
+    element: <SellerOptions />
   },
 
   {

@@ -139,7 +139,7 @@ function ProductRegister() {
 
             {/*Button that will regist the new product */}
             <div className="div-button">
-            <button className="poppins-regular button-07" onClick={handleProductRegister}>Regist Product</button>
+            <button className="poppins-regular button-07" onClick={handleProductRegister}>Register Product</button>
             </div>
             <br></br>
           </div>

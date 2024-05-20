@@ -41,26 +41,25 @@ function Home() {
       <>
       <div className="navbar-position"> 
       <Navbar />
-      </div>
+      
+        <br></br>
 
-      {/*não apagar, é só pra testar os links e páginas */}
-      <div>
-      <p></p>
-      <Link to={'../productRegist'}>Regist Product</Link>
-      <p></p>
-      <Link to={'../sellerRegist'}>Regist Seller</Link>
-      <p></p>
-      <Link to={'../profileView'}>View Profile</Link>
-      <p></p>
-      <Link to={'../orders'}>Orders</Link>
-      <p></p>
-      <Link to={'../ranking'}>Ranking</Link>
-      <p></p>
-      <Link to={'../aboutUs'}>About Us</Link>     
-      <p></p>
+        {/* This div will only appear if the user is logged as a seller, and will send user to seller options page*/}
+        <div className="sellerOptions">
+            <Link to={'../sellerOptions'} className="Link">Seller Options</Link>
+        </div>
+
+        <br></br>
+        
+        <div className="search-container">
+            <input type="text" className="search-input" placeholder="Search..." />
+            <button className="search-button">Search</button>
+        </div>
+        
+      <br></br>
+
+
     </div>
-
-
       </> 
     );
 }
