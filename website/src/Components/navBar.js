@@ -26,7 +26,7 @@ function Navbar() {
                         <a className="a-05 poppins-regular"> <Link to={'../ranking'}  className="Link">Ranking</Link></a>
                     </div>
                     <div className="section-05">
-                        <a className="a-05 poppins-regular"> <Link to={'../orders'}  className="Link">Favorites</Link></a>
+                        <a className="a-05 poppins-regular"> <Link to={'../favorites'}  className="Link">Favorites</Link></a>
                     </div>
                     <div className="section-05">
                         <a className="a-05 poppins-regular"> <Link to={'../orders'}  className="Link">Orders</Link></a>
@@ -43,8 +43,7 @@ function Navbar() {
                         </a>
                         <span className="navbar-symbols-05">|  </span>
                         <a className='a-05'>
-                            <span className="material-symbols-outlined navbar-symbols-05">
-                                shopping_cart
+                            <span className="material-symbols-outlined navbar-symbols-05"><Link to="../buy"  className="Link">shopping_cart</Link>
                             </span>
                         </a>
                     </div>

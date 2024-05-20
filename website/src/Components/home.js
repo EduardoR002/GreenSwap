@@ -21,6 +21,10 @@ function getCookie(name){
 
 function Home() {
    
+
+    // Will change a button presentation
+    const [isSellerLoggedIn, setIsSellerLoggedIn] = useState(true);
+
 {/*const [products, setProducts] = useState([]);
 
     useEffect(() => {
@@ -44,10 +48,17 @@ function Home() {
       
         <br></br>
 
-        {/* This div will only appear if the user is logged as a seller, and will send user to seller options page*/}
-        <div className="sellerOptions">
-            <Link to={'../sellerOptions'} className="Link">Seller Options</Link>
-        </div>
+       
+        {/* Condition that will show for user a button if he is logged as a seller or other button if he is logged as a user*/}
+        {isSellerLoggedIn ? (
+                <div className="sellerOptions">
+                    <Link to={'../sellerOptions'} className="Link">Seller Options</Link>
+                </div>
+            ) : (
+                <div className="sellerOptions">
+                    <Link to={'../sellerRegist'} className="Link">Be a Seller</Link>
+                </div>
+            )}
 
         <br></br>
         

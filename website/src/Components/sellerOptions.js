@@ -19,13 +19,13 @@ function SellerOptions() {
     <div className="containerOption">
         
         <div className="options">
-        <Link  className="Link">My Products</Link>
+        <Link  to={'../sellerProducts'} className="Link">My Products</Link>
         </div>
 
         <br></br> 
 
         <div className="options">
-        <Link className="Link">My Orders</Link>
+        <Link to={'../sellerOrders'} className="Link">My Orders</Link>
         </div>
 
         <br></br> 

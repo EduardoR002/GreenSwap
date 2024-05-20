@@ -39,9 +39,9 @@ function AboutUs() {
           
             <h1 className="titles-09">Contacts:</h1>
           
-          <p className="text-09">&emsp;<u>Email</u>:VerDev@gmail.com</p>
-          <p className="text-09">&emsp;<u>Telephone</u>: 253270996</p>
-          <p className="text-09">&emsp;<u>Location</u>: Rua dos Sebosos, Barcelos 4705-670</p>
+          <p className="text-09">&emsp;<b><u>Email</u></b>: VerDev@gmail.com</p>
+          <p className="text-09">&emsp;<b><u>Telephone</u></b>: 253270996</p>
+          <p className="text-09">&emsp;<b><u>Location</u></b>: Rua dos Sebosos, Barcelos 4705-670</p>
           
           <img className="verDev-09" src={logo}/>
 

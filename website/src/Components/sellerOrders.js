@@ -1,11 +1,11 @@
 import React, { useRef }  from "react";
-import '../CSS/ranking.css'
+import '../CSS/sellerOrders.css'
 import { Link } from "react-router-dom";
 import '../CSS/navbar.css';
 import Navbar from './navbar';
 
 //Function that will present About Us page of the website
-function Ranking() {
+function SellerOrders() {
 
     return (
      
@@ -14,7 +14,7 @@ function Ranking() {
       <Navbar /> <br></br> 
 
       {/* Page title */}
-      <h1 className="title-07">Ranking</h1>
+      <h1 className="title-07">Your Orders</h1>
 
 
 
@@ -22,4 +22,4 @@ function Ranking() {
       );
     }
 
-export default Ranking;
+export default SellerOrders;

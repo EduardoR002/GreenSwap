@@ -3,11 +3,12 @@
   text-align: center;
   font-weight: bold;
   font-family: "Poppins", sans-serif;
+  color:#042C3B;
 }
 
 .cont-09 {
     margin: 0 auto;
-    width: 80%;
+    width: 94%;
     height: 60%;
     padding: 20px;
     border: 5px solid #042C3B;
@@ -27,13 +28,13 @@
   }
 
   .text-09 {
-    font-size: 120%;
+    font-size: 125%;
   }
 
   .verDev-09 {
     width: 20%;
     height: 20%;
     position: absolute;
-    left: 65%;
-    top: 75%;
+    left: 70%;
+    top: 80%;
   }

@@ -8,10 +8,14 @@ import E404 from './Components/e404'
 import Login from './Components/logIn'
 import Home from './Components/home'
 import ProfileView from './Components/profileView';
+import Buy from './Components/buy';
 import ProductRegister from './Components/productRegist';
 import SellerRegister from './Components/sellerRegist';
+import SellerOrders from './Components/sellerOrders';
+import SellerProducts from './Components/sellerProducts';
 import Orders from './Components/orders';
 import Ranking from './Components/ranking';
+import Favorites from './Components/favorites';
 import AboutUs from './Components/aboutUs';
 import SellerOptions from './Components/sellerOptions';
 
@@ -56,8 +60,23 @@ const router = createBrowserRouter([
   },
 
   {
+    path: 'sellerProducts',
+    element: <SellerProducts />
+  },
+
+  {
+    path: 'sellerOrders',
+    element: <SellerOrders />
+  },
+
+  {
     path: 'profileView',
     element: <ProfileView/>
+  },
+
+  { 
+    path: 'buy',
+    element: <Buy />
   },
  
   {
@@ -71,25 +90,15 @@ const router = createBrowserRouter([
   },
 
   {
+    path: 'favorites',
+    element: <Favorites />
+  },
+
+  {
     path: 'aboutUs',
     element: <AboutUs />
   },
 
-  /*
-
-  {
-    path: 'profileEdit'
-    element: <ProfileEdit/>
-  }
-
-
-  {
-    path: 'productView'
-    element: <ProductView />
-  }
-
-
-  */
 ]);
 // #endregion
 
