@@ -23,10 +23,10 @@ function Navbar() {
             <div className="full-section-container-05">
                 <div className="left-section-container-05">
                     <div className="section-05">
-                        <span className="material-symbols-outlined navbar-symbols-05">
-                            social_leaderboard
-                        </span>
                         <a className="a-05 poppins-regular"> <Link to={'../ranking'}  className="Link">Ranking</Link></a>
+                    </div>
+                    <div className="section-05">
+                        <a className="a-05 poppins-regular"> <Link to={'../orders'}  className="Link">Favorites</Link></a>
                     </div>
                     <div className="section-05">
                         <a className="a-05 poppins-regular"> <Link to={'../orders'}  className="Link">Orders</Link></a>
@@ -36,7 +36,7 @@ function Navbar() {
                     <div className="section-05">
                         <a className="a-05 poppins-regular"><Link to={'../aboutUs'}  className="Link">About Us</Link></a>
                     </div>
-                    <div className="section-05">
+                    <div className="section-05-2">
                         <a className='a-05'>
                         <span className="material-symbols-outlined navbar-symbols-05"><Link to="../profileView"  className="Link">Person</Link>
                                 </span>
@@ -58,7 +58,7 @@ function Navbar() {
 
                     <div className="regist">
                         <a>
-                            <Link to="../register" className="Link">New here? Create account</Link> 
+                            <Link to="../register" className="Link">New? Create an account</Link> 
                         </a>        
                     </div>
                     </div>

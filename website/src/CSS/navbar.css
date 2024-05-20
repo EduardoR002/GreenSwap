@@ -59,6 +59,22 @@
     font-weight: 600;
 }
 
+.section-05:hover {
+  transform: scale(1.1);
+  color: #011c25;
+}
+
+.navbar-symbols-05 {
+  font-size: 55px;
+  color: #042C3B;
+}
+
+.navbar-symbols-05:hover {
+  transform: scale(1.1);
+  color: #011c25;
+}
+
+
 .navbar-position {
     position: fixed;
     top: 0;
@@ -66,10 +82,11 @@
 
   }
 
-  .Link {
-    text-decoration: none; /* Remove o sublinhado */
+.Link {
+    text-decoration: none;
     color: inherit;
-  }
+    transition: transform 0.3s ease, color 0.3s ease;
+}
 
   .login {
     width: 125%;

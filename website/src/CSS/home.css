@@ -49,3 +49,13 @@
 .search-button:hover {
     background-color: #011c25;
 }
+
+.productsHome {
+    margin: 20px auto;
+    width: 94%;
+    background-color: #4CCC7B;
+    padding: 20px;
+    border-radius: 8px;
+    border: 5px solid #042C3B;
+    text-align: center;
+}

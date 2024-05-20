@@ -39,7 +39,7 @@ function Home() {
 
     return (
       <>
-      <div className="navbar-position"> 
+      <div className="navbar-position"> {/* Navbar common to all pages*/}
       <Navbar />
       
         <br></br>
@@ -51,12 +51,19 @@ function Home() {
 
         <br></br>
         
+        {/* Search bar, for user search for products*/}
         <div className="search-container">
             <input type="text" className="search-input" placeholder="Search..." />
             <button className="search-button">Search</button>
         </div>
         
-      <br></br>
+        <br></br>
+
+        {/* Div where will apear  diverse products*/}
+        <div className="productsHome">
+
+        <p>Aqui vão aparecer os produtos da home page</p>
+        </div>
 
 
     </div>
