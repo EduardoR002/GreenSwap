@@ -119,7 +119,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "usernotification_idx",
         using: "BTREE",
         fields: [
-          { name: userId},
+          { name: "userId" },
         ]
       },
     ]

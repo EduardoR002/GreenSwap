@@ -2,6 +2,14 @@ const models = require('../models');
 
 async function deliverDirectPurchase(req, res) {
     const idpurchase = req.body;
+
+    const purchase = await models.purchase.findByPk(idpurchase);
+
+    if (!purchase) {
+        return res.status(404).json({
+            message: "Purchase not found"
+        });
+    }
 }
 
 async function createDirectPurchase(req, res) {
