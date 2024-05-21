@@ -5,7 +5,7 @@ const router = Router();
 
 router.post("/create", createProduct);
 router.put("/get/:idproduct",getProduct);
-router.get("/getall", getAllProducts);
+router.post("/getall", getAllProducts);
 router.put("/editproduct/:idproduct",editProduct);
 router.put("/editstockproduct/:idproduct",editProductStock);
 
