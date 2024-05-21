@@ -111,7 +111,7 @@ async function getAllProducts(req, res) {
         const products = await models.sequelize.query(
             'CALL getAllProducts(:search_name, :max_price, :min_price)',
             {
-                replacements: { search_name, max_price, min_price },
+                replacements: { search_name: search_name, max_price: max_price, min_price: min_price },
                 type: models.sequelize.QueryTypes.SELECT
             }
         );
