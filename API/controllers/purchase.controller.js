@@ -1,5 +1,9 @@
 const models = require('../models');
 
+async function deliverDirectPurchase(req, res) {
+    const idpurchase = req.body;
+}
+
 async function createDirectPurchase(req, res) {
     try {
         const { buydate, quantity, price, idproduct, idUser } = req.body;

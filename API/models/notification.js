@@ -58,6 +58,14 @@ module.exports = function(sequelize, DataTypes) {
     for_field: {
       type: DataTypes.STRING(45),
       allowNull: false,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'user',
+        key: 'idUser'
+      }
     }
   }, {
     sequelize,
@@ -105,6 +113,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "idrequest" },
+        ]
+      },
+      {
+        name: "usernotification_idx",
+        using: "BTREE",
+        fields: [
+          { name: userId},
         ]
       },
     ]
