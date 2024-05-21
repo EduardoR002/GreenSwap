@@ -1,18 +1,18 @@
 const models = require('../models');
 
-// Async function to create a new notification
+// Função assíncrona para criar uma nova notificação
 async function createNotification(req, res) {
-    const { date, idtypenotification, idpurchase, idproposal, idcertificate, idrequest } = req.body;
+    const { date, idtypenotification, idpurchase, idproposal, idcertificate, idrequest, description, for_field, userId } = req.body;
 
-    // Check if any field is empty
-    if (!date || !idtypenotification) {
+    // Verifica se os campos obrigatórios estão preenchidos
+    if (!date || !idtypenotification || !description || !for_field || !userId) {
         return res.status(422).json({
-            message: "Date and Type Notification ID are required"
+            message: "Date, Type Notification ID, Description, For Field, and User ID are required"
         });
     }
 
     try {
-        // Check if the referenced type notification exists
+        // Verifica se a notificação de tipo referenciada existe
         const typeNotification = await models.typenotification.findByPk(idtypenotification);
         if (!typeNotification) {
             return res.status(404).json({
@@ -20,7 +20,7 @@ async function createNotification(req, res) {
             });
         }
 
-        // Check if the referenced IDs exist
+        // Verifica se os IDs referenciados existem
         if (idpurchase) {
             const purchase = await models.purchase.findByPk(idpurchase);
             if (!purchase) {
@@ -57,14 +57,25 @@ async function createNotification(req, res) {
             }
         }
 
-        // Create the notification
+        // Verifica se o usuário referenciado existe
+        const user = await models.user.findByPk(userId);
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        // Cria a notificação
         const newNotification = await models.notification.create({
             date,
             idtypenotification,
             idpurchase,
             idproposal,
             idcertificate,
-            idrequest
+            idrequest,
+            description,
+            for_field,
+            userId
         });
 
         res.status(200).json({
@@ -78,7 +89,6 @@ async function createNotification(req, res) {
         });
     }
 }
-
 
 // Async function to get all notifications
 async function getAllNotifications(req, res) {
