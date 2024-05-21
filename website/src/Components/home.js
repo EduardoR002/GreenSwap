@@ -61,6 +61,7 @@ function Home() {
             )}
 
         <br></br>
+        <br></br>
         
         {/* Search bar, for user search for products*/}
         <div className="search-container">

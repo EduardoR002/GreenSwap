@@ -65,7 +65,7 @@
 }
 
 .navbar-symbols-05 {
-  font-size: 55px;
+  font-size: 270%;
   color: #042C3B;
 }
 
@@ -89,7 +89,7 @@
 }
 
   .login {
-    width: 125%;
+    width: 110%;
     color: #042C3B;
     background-color: #fffefe;
     border: 2px solid #042C3B;
@@ -105,7 +105,7 @@
   }
 
   .regist {
-    width: 125%;
+    width: 110%;
     background-color: #fffefe;
     border: 2px solid #042C3B;
     border-radius: 5px;
