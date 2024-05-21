@@ -45,8 +45,6 @@ function ProductRegister() {
       <div className="navbar-position"> {/* Navbar common to all pages*/}
         <Navbar />
 
-        {/* Page title */}
-        <h1 className="title-07">New Product</h1>
         
        
           {/*Div where the input is located, for the seller to place their product photo*/}
@@ -122,7 +120,7 @@ function ProductRegister() {
                 </label>
             </div>
 
-            <div className="input-box-07" style={{ width: '60%'}}>
+            <div className="input-box-07" style={{ width: '65%'}}>
             <label className= "label-forms" htmlFor="price">Description:
                 <input
                 className="poppins-regular input-07"
@@ -131,17 +129,14 @@ function ProductRegister() {
                 placeholder=""
                 />
                 </label>
-
+          
             </div>
 
-            <br></br>
-            <br></br>
 
             {/*Button that will regist the new product */}
             <div className="div-button">
             <button className="poppins-regular button-07" onClick={handleProductRegister}>Register Product</button>
             </div>
-            <br></br>
           </div>
 
             <br></br>

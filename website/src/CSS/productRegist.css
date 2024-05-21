@@ -6,6 +6,7 @@
 }
 
 .div-photo{
+    margin-top: 3%;
     margin-left: 2%; 
     background-color: #4CCC7B;
     width: 30%;
@@ -28,8 +29,9 @@
 }
 
 .div-forms{
+    margin-top: 3%;
     margin-right: 2%; 
-    width: 55%;
+    width: 56%;
     background-color: #4CCC7B;
     padding: 20px;
     border-radius: 8px;
@@ -56,7 +58,7 @@
 }
 
 .label-forms {
-    font-size: 170%;
+    font-size: 100%;
     display: block;
     width: 100%;
     margin: 0 auto;
@@ -67,7 +69,7 @@
 }
 
 .input-box-07 {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     width: 30%;
     margin: auto;
 }
@@ -80,7 +82,7 @@
 .input-box-07 input {
     text-align: center;
     background-color: rgb(255, 255, 255);
-    width: 100%;
+    width: 90%;
     padding: 10px;
     border: 2px solid #042C3B;
     border-radius: 5px;
@@ -104,15 +106,17 @@
 }
 
 .button-07{
+    margin-top: 1%;
+    margin-left: auto;
+    margin-right: auto;
     padding: 5px 20px;
-    font-size: 150%;
+    font-size: 140%;
     border: none;
     background-color: #012837; 
     color: #fff; 
     border-radius: 10px;
     cursor: pointer;
     text-align: center;
-    margin: 0 auto;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
