@@ -11,10 +11,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(45),
       allowNull: false,
       unique: "name_UNIQUE"
-    },
-    description: {
-      type: DataTypes.STRING(45),
-      allowNull: false
     }
   }, {
     sequelize,

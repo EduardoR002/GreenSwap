@@ -1,5 +1,35 @@
 const models = require('../models');
 
+async function createDirectPurchase(req, res) {
+    try {
+        const { buydate, quantity, price, idproduct, idUser } = req.body;
+
+        const result = await models.sequelize.query(
+            'CALL createDirectPurchase(:in_buydate, :in_quantity, :in_price, :in_idproduct, :in_iduser)',
+            {
+                replacements: { in_buydate: buydate, in_quantity: quantity, in_price: price, in_idproduct: idproduct, in_iduser: idUser },
+                type: models.sequelize.QueryTypes.SELECT
+            }
+        );
+
+        if (result && result.length > 0 && result[0][0].message === 'Purchase created successfully') {
+            res.status(200).json({
+                message: "Purchase created successfully"
+            });
+        } else {
+            res.status(500).json({
+                message: result[0][0].message
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error.message
+        })
+    }
+    
+}
+
 // Async function to create a purchase
 async function createPurchase(req, res) {
     const { buydate, previewdate, definitivedate, quantity, price, futurepurchase, idproduct, idtypepurchase, iduser, startday, idpurchasestate } = req.body;
@@ -18,6 +48,8 @@ async function createPurchase(req, res) {
             message: "All fields are required"
         });
     }
+
+    previewdate = buydate + 7 * 24 * 60 * 60 * 1000;
 
     const newPurchase = {
         buydate,
@@ -46,7 +78,7 @@ async function createPurchase(req, res) {
                 message: "Product, Purchase Type, or Purchase State not found"
             });
         }
-
+        
         // Create purchase
         const createdPurchase = await models.purchase.create(newPurchase);
 
@@ -149,5 +181,6 @@ async function editPurchase(req, res) {
 module.exports = {
     createPurchase: createPurchase,
     getAllPurchases: getAllPurchases,
-    editPurchase: editPurchase
+    editPurchase: editPurchase,
+    createDirectPurchase: createDirectPurchase
 };

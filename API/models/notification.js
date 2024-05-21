@@ -50,6 +50,14 @@ module.exports = function(sequelize, DataTypes) {
         model: 'requestseller',
         key: 'idrequestseller'
       }
+    },
+    description: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    for_field: {
+      type: DataTypes.STRING(45),
+      allowNull: false,
     }
   }, {
     sequelize,
