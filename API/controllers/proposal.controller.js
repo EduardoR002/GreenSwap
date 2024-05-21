@@ -1,5 +1,6 @@
 const models = require('../models');
 
+
 // Async function to create a new proposal
 async function createProposal(req, res) {
     const { newprice, iduser, idproduct, idproposalstate, idproposaltype, quantity, futuredate, startday } = req.body;
