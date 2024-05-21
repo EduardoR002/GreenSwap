@@ -12,8 +12,6 @@ function ProfileView() {
       <div className="navbar-position"> {/* Navbar common to all pages*/}
         <Navbar />
 
-        {/* Page title */}
-        <h1 className="title-07">Profile</h1>
            
         <div>
           <div className="profile">

@@ -6,6 +6,7 @@
 }
 
 .profile {
+    margin-top: 3%;
     background-image: url('../images/profileBk.png');
     margin-left: 2%; 
     background-color: #4CCC7B;
@@ -43,7 +44,8 @@ label {
     font-family: "Poppins", sans-serif;
 }
 
-.yourProducts {
+.yourProducts { 
+    margin-top: 3%;
     margin-right: 2%; 
     width: 64%;
     height:68%;
