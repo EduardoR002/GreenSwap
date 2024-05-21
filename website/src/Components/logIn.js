@@ -50,6 +50,7 @@ function Login(){
             console.error('Erro:', error.message);
         }
     }
+    
     return(
         <>
             <div id="bg-04" />
