@@ -10,7 +10,7 @@ function ProfileView() {
     return (
 
       <div className="navbar-position"> {/* Navbar common to all pages*/}
-        <Navbar /> <br></br> 
+        <Navbar />
 
         {/* Page title */}
         <h1 className="title-07">Profile</h1>

@@ -10,13 +10,11 @@ function AboutUs() {
     return (
 
       <div className="navbar-position"> {/* Navbar common to all pages*/}
-      <Navbar /> <br></br> 
+      <Navbar />
 
-      {/* Page title */}
-      <h1 className="title-07">About Us</h1>
 
           <div className="cont-09">
-            <h1 className="titles-09">GreenSwap:</h1>
+            <h1 className="titles-09">➤ GreenSwap:</h1>
             
             
             <p className="text-09">
@@ -25,9 +23,8 @@ function AboutUs() {
               and sustainable origin, while consumers can explore a wide variety of options and make their purchases conveniently and securely.
             </p>
             
-            <br />
             
-            <h1 className="titles-09">VerDev:</h1>
+            <h1 className="titles-09">➤ VerDev:</h1>
             
             <p className="text-09">
               &emsp;&emsp;&emsp;VerDev is a forward-thinking tech company driven by a passion for environmental sustainability. Our dedicated team of developers is committed to crafting innovative software 
@@ -35,9 +32,8 @@ function AboutUs() {
               redefine the intersection of technology and environmentalism, setting new standards for sustainable innovation.
             </p>
           
-          <br />
           
-            <h1 className="titles-09">Contacts:</h1>
+            <h1 className="titles-09">➤ Contacts:</h1>
           
           <p className="text-09">&emsp;<b><u>Email</u></b>: VerDev@gmail.com</p>
           <p className="text-09">&emsp;<b><u>Telephone</u></b>: 253270996</p>
