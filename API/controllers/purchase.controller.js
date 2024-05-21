@@ -44,7 +44,7 @@ async function createDirectPurchase(req, res) {
 
 // Async function to create a purchase
 async function createPurchase(req, res) {
-    const { buydate, previewdate, definitivedate, quantity, price, futurepurchase, idproduct, idtypepurchase, iduser, startday, idpurchasestate } = req.body;
+    const { buydate,  definitivedate, quantity, price, futurepurchase, idproduct, idtypepurchase, iduser, startday, idpurchasestate } = req.body;
 
     // Check if quantity and price is greater than zero
     if (quantity <= 0 || price <= 0) {
@@ -61,7 +61,7 @@ async function createPurchase(req, res) {
         });
     }
 
-    previewdate = buydate + 7 * 24 * 60 * 60 * 1000;
+    const previewdate = buydate + 7 * 24 * 60 * 60 * 1000;
 
     const newPurchase = {
         buydate,
