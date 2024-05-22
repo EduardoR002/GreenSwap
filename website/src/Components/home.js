@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../CSS/home.css';
 import '../CSS/navbar.css';
 import { Link } from "react-router-dom";
@@ -20,11 +20,10 @@ function getCookie(name){
 }
 
 function Home() {
-
-    const [products, setProducts] = useState([]);
-
     // Will change a button presentation
     const [isSellerLoggedIn, setIsSellerLoggedIn] = useState(true);
+
+    const [products, setProducts] = useState([]);
 
     async function getProducts() {
         const formData = {
@@ -57,6 +56,10 @@ function Home() {
         }
     }
 
+    useEffect(() => {
+        getProducts();
+    }, []); // O array vazio como segundo argumento garante que o efeito só execute uma vez após a montagem
+
     return (
         <>
             <div className="navbar-position"> {/* Navbar common to all pages*/}
@@ -87,7 +90,7 @@ function Home() {
                 <br></br>
 
                 {/* Div where will apear  diverse products*/}
-                <div className="productsHome-03" onLoad={getProducts}>
+                <div className="productsHome-03">
 
                     {products.map((product, index) => (
                         <div className='product-container-03' key={index}>
@@ -102,6 +105,7 @@ function Home() {
                             </div>
                         </div>
                     ))}
+
                     {/*<p>Aqui vão aparecer os produtos da home page</p>*/}
                 </div>
 
