@@ -286,7 +286,6 @@ async function loginUser(req, res) {
                 httpOnly: true,
                 secure: true,
                 sameSite: 'Strict',
-                expires: expirationDate
             });
 
             return res.status(200).json({
@@ -313,7 +312,6 @@ async function loginUser(req, res) {
                     httpOnly: true,
                     secure: true,
                     sameSite: 'Strict',
-                    expires: expirationDate
                 });
                 return res.status(200).json({
                     message: "Login successful",
@@ -327,7 +325,6 @@ async function loginUser(req, res) {
                     httpOnly: true,
                     secure: true,
                     sameSite: 'Strict',
-                    expires: expirationDate
                 });
                 return res.status(200).json({
                     message: "Login successful",
