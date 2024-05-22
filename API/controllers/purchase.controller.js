@@ -218,23 +218,49 @@ async function editPurchase(req, res) {
 async function cancelPeriodicPurchase(req, res){
     const { purchaseId } = req.body;
 
-    const purchase = await models.purchase.findByPk(purchaseId);
+    try {
+        const { purchaseId } = req.body;
 
-    const updatedpurchase = purchase;
-
-    purchase.idpurchasestate = 5;
-    await purchase.save();
-
-    await models.sequelize.query(
-        'CALL createNotification(:in_date, :in_idtypenotification, :in_idpurchase, :in_idproposal, :in_idcertificate, :in_idrequest, :in_description, :in_for, :in_userid)',
-        {
-            replacements: {in_date: new Date(), in_idtypenotification: 1, in_idpurchase: updatedpurchase.idpurchase, in_idproposal: null, in_idcertificate: null, in_idrequest: null, in_description: 'Periodic purchase canceled', in_for: 'user', in_userid: updatedpurchase.iduser}
+        if (!purchaseId) {
+            return res.status(400).json({ message: "purchaseId is required" });
         }
-    );
 
-    return res.status(200).json({
-        message: "Periodic purchased canceled successfully",
-    });
+        const purchase = await models.purchase.findByPk(purchaseId);
+
+        if (!purchase) {
+            return res.status(404).json({ message: "Purchase not found" });
+        }
+        purchase.idpurchasestate = 5;
+        await purchase.save();
+
+        // Create notification
+        await models.sequelize.query(
+            'CALL createNotification(:in_date, :in_idtypenotification, :in_idpurchase, :in_idproposal, :in_idcertificate, :in_idrequest, :in_description, :in_for, :in_userid)',
+            {
+                replacements: {
+                    in_date: new Date(),
+                    in_idtypenotification: 1,
+                    in_idpurchase: purchase.idpurchase,
+                    in_idproposal: null,
+                    in_idcertificate: null,
+                    in_idrequest: null,
+                    in_description: 'Periodic purchase canceled',
+                    in_for: 'user',
+                    in_userid: purchase.iduser
+                }
+            }
+        );
+        // Return success response
+        return res.status(200).json({
+            message: "Periodic purchase canceled successfully",
+        });
+    } catch (error) {
+        // Return error response
+        return res.status(500).json({
+            message: "An error occurred",
+            error: error.message,
+        });
+    }
 }
 
 module.exports = {
