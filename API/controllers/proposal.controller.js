@@ -37,9 +37,9 @@ async function createDirectProposal(req, res) {
 }
 
 async function acceptProposal(req, res) {
-    const proposalId = req.body;
+    const { idproposal } = req.body;
     try {
-        const proposal = await models.proposal.findByPk(proposalId);
+        const proposal = await models.proposal.findByPk(idproposal);
 
         const proposalUpdated = proposal;
 
@@ -49,9 +49,9 @@ async function acceptProposal(req, res) {
         const updatedproposal = await proposal.save();
 
         await models.sequelize.query(
-            'CALL createNotification (:in_date, :in_idtypenotification, :in_idpurchase, :in_idproposal, :in_idcertificate, :in_idrequest, :in_description, :in_for, :in_userid',
+            'CALL createNotification (:in_date, :in_idtypenotification, :in_idpurchase, :in_idproposal, :in_idcertificate, :in_idrequest, :in_description, :in_for, :in_userid)',
             {
-                replacements: {in_date: new Date(), in_idtypenotification: 2, in_idpurchase: null, in_idproposal: updatedproposal.proposalId, in_idcertificate: null, in_idrequest: null, in_description: "Proposal accepted", in_for: "user", in_userid: proposal.iduser},
+                replacements: {in_date: new Date(), in_idtypenotification: 2, in_idpurchase: null, in_idproposal: updatedproposal.idproposal, in_idcertificate: null, in_idrequest: null, in_description: "Proposal accepted", in_for: "user", in_userid: proposal.iduser},
                 type: models.sequelize.QueryTypes.INSERT
             }
         );
@@ -59,13 +59,45 @@ async function acceptProposal(req, res) {
         await models.sequelize.query(
             'CALL createDirectPurchase(:in_buydate, :in_quantity, :in_price, :in_idproduct, :in_iduser)',
             {
-                replacements: { in_buydate: new Date(), in_quantity: proposal.quantity, in_price: proposal.newprice, in_idproduct: proposal.idproduct, in_iduser: proposal.iduser },
+                replacements: {in_buydate: new Date(), in_quantity: proposal.quantity, in_price: proposal.newprice, in_idproduct: proposal.idproduct, in_iduser: proposal.iduser },
                 type: models.sequelize.QueryTypes.SELECT
             }
         );
 
         res.status(200).json({
             message: "Proposal accepted with success"
+        })
+        
+    } catch (error) {
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error.message
+        });
+    }
+}
+
+async function refuseProposal(req, res) {
+    const { idproposal } = req.body;
+    try {
+        const proposal = await models.proposal.findByPk(idproposal);
+
+        const proposalUpdated = proposal;
+
+        proposalUpdated.idproposalstate = 3;
+
+        Object.assign(proposal, proposalUpdated);
+        const updatedproposal = await proposal.save();
+
+        await models.sequelize.query(
+            'CALL createNotification (:in_date, :in_idtypenotification, :in_idpurchase, :in_idproposal, :in_idcertificate, :in_idrequest, :in_description, :in_for, :in_userid)',
+            {
+                replacements: {in_date: new Date(), in_idtypenotification: 2, in_idpurchase: null, in_idproposal: updatedproposal.idproposal, in_idcertificate: null, in_idrequest: null, in_description: "Proposal refused", in_for: "user", in_userid: proposal.iduser},
+                type: models.sequelize.QueryTypes.INSERT
+            }
+        );
+
+        res.status(200).json({
+            message: "Proposal refused with success"
         })
         
     } catch (error) {
@@ -217,5 +249,6 @@ module.exports = {
     createProposal: createProposal,
     getAllProposals: getAllProposals,
     editProposal: editProposal,
-    acceptProposal: acceptProposal
+    acceptProposal: acceptProposal,
+    refuseProposal: refuseProposal
 };
