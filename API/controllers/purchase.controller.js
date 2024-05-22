@@ -230,7 +230,7 @@ async function cancelPeriodicPurchase(req, res){
     await models.sequelize.query(
         'CALL createNotification(:in_date, :in_idtypenotification, :in_idpurchase, :in_idproposal, :in_idcertificate, :in_idrequest, :in_description, :in_for, :in_userid)',
         {
-            replacements: {in_date: Date(), in_idtypenotification: 1, in_idpurchase: updatedpurchase.purchaseId, in_idproposal: null, in_idcertificate: null, in_idrequest: null, in_description: 'Periodic purchase canceled', in_for: 'user', in_userid: updatedpurchase.idUser}
+            replacements: {in_date: new Date(), in_idtypenotification: 1, in_idpurchase: updatedpurchase.idpurchase, in_idproposal: null, in_idcertificate: null, in_idrequest: null, in_description: 'Periodic purchase canceled', in_for: 'user', in_userid: updatedpurchase.iduser}
         }
     );
 
