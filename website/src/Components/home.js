@@ -22,7 +22,6 @@ function getCookie(name){
 function Home() {
     // Will change a button presentation
     const [isSellerLoggedIn, setIsSellerLoggedIn] = useState(true);
-
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
@@ -94,7 +93,9 @@ function Home() {
 
                     {products.map((product, index) => (
                         <div className='product-container-03' key={index}>
-                            <img className='product-img-03' src='https://picsum.photos/328/204'/>
+                            <Link to={'../products/'+product.idproduct}  className="Link">
+                                <img className='product-img-03' src='https://picsum.photos/328/204'/>
+                            </Link>
                             <span className='poppins-regular product-h1-03'>{product.name}</span>
                             <span className='poppins-regular product-h2-03'>{product.price}€/kg</span>
                             <div className='seller-03'>
