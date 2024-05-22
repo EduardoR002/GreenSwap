@@ -63,7 +63,7 @@ async function getAllCertificates(req, res) {
 
 // Async function used to accept a seller certification request
 async function acceptSellerRequest(req, res) {
-    const { idrequestseller } = req.body; 
+    const { idrequestseller } = req.body;
     try {
         // Find the request by its ID
         const request = await models.requestseller.findByPk(idrequestseller);
@@ -73,22 +73,31 @@ async function acceptSellerRequest(req, res) {
             return res.status(404).json({ message: "Request not found" });
         }
 
+        // Check if the user associated with the request exists
+        const user = await models.user.findByPk(request.userId);
+        if (!user) {
+            // If the user doesn't exist, change the request's state to "refused"
+            request.idstate = 3;
+            await request.save();
+            return res.status(400).json({ message: "User not found. Request automatically refused." });
+        }
+
         // Check if the request's state is "pending"
-        if (request.request_state !== 1) { 
+        if (request.idstate !== 1) {
             return res.status(400).json({ message: "Request is not in pending state" });
         }
 
         // Update the request's state to "accepted"
-        request.request_state = 2; 
+        request.idstate = 2;
 
         // Save the updated request
         await request.save();
 
         // Create an acceptance notification
         await models.sequelize.query(
-            'CALL createNotification (:in_date, :in_idtypenotification, :in_idpurchase, :in_idproposal, :in_idcertificate, :in_idrequest, :in_description, :in_for, :in_userid)',
+            'CALL createNotification (:in_date, :in_idtypenotification, :in_idpurchase, :in_idproposal, :in_idcertificate, :in_idrequest, :in_description, :in_for, :in_iduser)',
             {
-                replacements: { in_date: new Date(), in_idtypenotification: 4, in_idpurchase: null, in_idproposal: null, in_idcertificate: null, in_idrequest: idrequestseller, in_description: "Rquest to be a seller accepted", in_for: "user", in_userid: request.userId },
+                replacements: { in_date: new Date(), in_idtypenotification: 4, in_idpurchase: null, in_idproposal: null, in_idcertificate: null, in_idrequest: idrequestseller, in_description: "Request to be a seller accepted", in_for: "user", in_userid: request.userId },
                 type: models.sequelize.QueryTypes.INSERT
             }
         );
@@ -104,7 +113,7 @@ async function acceptSellerRequest(req, res) {
 
 // Async function used to refuse a seller certification request
 async function refuseSellerRequest(req, res) {
-    const { idrequestseller } = req.body; // 
+    const { idrequestseller } = req.body;
     try {
         // Find the request by its ID
         const request = await models.requestseller.findByPk(idrequestseller);
@@ -115,21 +124,27 @@ async function refuseSellerRequest(req, res) {
         }
 
         // Check if the request's state is "pending"
-        if (request.request_state !== 1) { 
+        if (request.idstate !== 1) { 
             return res.status(400).json({ message: "Request is not in pending state" });
         }
 
         // Update the request's state to "refused"
-        request.request_state = 3; 
+        request.idstate = 3; 
 
         // Save the updated request
         await request.save();
+
+        // Check if user ID exists in the users table
+        const user = await models.user.findByPk(request.userId);
+        if (!user) {
+            return res.status(400).json({ message: "User not found" });
+        }
 
         // Create a refusal notification
         await models.sequelize.query(
             'CALL createNotification (:in_date, :in_idtypenotification, :in_idpurchase, :in_idproposal, :in_idcertificate, :in_idrequest, :in_description, :in_for, :in_userid)',
             {
-                replacements: { in_date: new Date(), in_idtypenotification: 4, in_idpurchase: null, in_idproposal: null, in_idcertificate: null, in_idrequest: idrequestseller, in_description: "Rquest to be a seller cancelled", in_for: "user", in_userid: request.userId },
+                replacements: { in_date: new Date(), in_idtypenotification: 4, in_idpurchase: null, in_idproposal: null, in_idcertificate: null, in_idrequest: idrequestseller, in_description: "Request to be a seller cancelled", in_for: "user", in_userid: request.userId },
                 type: models.sequelize.QueryTypes.INSERT
             }
         );
@@ -148,5 +163,5 @@ module.exports = {
     createCertificate: createCertificate,
     getAllCertificates: getAllCertificates,
     acceptSellerRequest: acceptSellerRequest,
-    refuseSellerRequest:refuseSellerRequest
+    refuseSellerRequest: refuseSellerRequest
 };
