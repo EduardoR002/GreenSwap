@@ -39,7 +39,7 @@ async function createDirectProposal(req, res) {
 async function acceptProposal(req, res) {
     const proposalId = req.body;
     try {
-        const proposal = models.proposal.findByPk(proposalId);
+        const proposal = await models.proposal.findByPk(proposalId);
 
         const proposalUpdated = proposal;
 
