@@ -63,50 +63,25 @@ async function getAllCertificates(req, res) {
 
 // Async function used to accept a seller certification request
 async function acceptSellerRequest(req, res) {
-    const { idrequestseller } = req.body;
+    const { idrequestseller, idcertifier } = req.body;
+
     try {
-        // Find the request by its ID
-        const request = await models.requestseller.findByPk(idrequestseller);
 
-        // Check if the request exists
-        if (!request) {
-            return res.status(404).json({ message: "Request not found" });
-        }
-
-        // Check if the user associated with the request exists
-        const user = await models.user.findByPk(request.userId);
-        if (!user) {
-            // If the user doesn't exist, change the request's state to "refused"
-            request.idstate = 3;
-            await request.save();
-            return res.status(400).json({ message: "User not found. Request automatically refused." });
-        }
-
-        // Check if the request's state is "pending"
-        if (request.idstate !== 1) {
-            return res.status(400).json({ message: "Request is not in pending state" });
-        }
-
-        // Update the request's state to "accepted"
-        request.idstate = 2;
-
-        // Save the updated request
-        await request.save();
-
-        // Create an acceptance notification
+        // Chama a stored procedure para aceitar a solicitação de vendedor
         await models.sequelize.query(
-            'CALL createNotification (:in_date, :in_idtypenotification, :in_idpurchase, :in_idproposal, :in_idcertificate, :in_idrequest, :in_description, :in_for, :in_iduser)',
+            'CALL acceptSellerRequest(:in_idrequestseller, :in_idcertifier)',
             {
-                replacements: { in_date: new Date(), in_idtypenotification: 4, in_idpurchase: null, in_idproposal: null, in_idcertificate: null, in_idrequest: idrequestseller, in_description: "Request to be a seller accepted", in_for: "user", in_userid: request.userId },
-                type: models.sequelize.QueryTypes.INSERT
+                replacements: {
+                    in_idrequestseller: idrequestseller,
+                    in_idcertifier: idcertifier
+                }
             }
         );
 
-        // Send success response
+        // Envia a resposta de sucesso
         return res.status(200).json({ message: "Seller certification request accepted successfully" });
-
     } catch (error) {
-        // Handle any errors
+        // Trata qualquer erro
         return res.status(500).json({ message: "Something went wrong", error: error.message });
     }
 }
