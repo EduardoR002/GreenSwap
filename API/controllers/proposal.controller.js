@@ -43,6 +43,8 @@ async function acceptProposal(req, res) {
 
         const proposalUpdated = proposal;
 
+        proposalUpdated.idproposalstate = 2;
+
         Object.assign(proposal, proposalUpdated);
         const updatedproposal = await proposal.save();
 
