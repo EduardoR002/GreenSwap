@@ -9,10 +9,10 @@ let vt_res = await validateToken();
 const role = vt_res.role;
 const loggedin = vt_res.role;
 
-
+// Function that will logout user from website, deleting is token
 const Logout = async () => {
+
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-    console.log(token);
 
     const formData = { 
         token: token 
@@ -32,7 +32,7 @@ const Logout = async () => {
             document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             console.log("Usuário deslogado com sucesso");
             // Redirecionar para a página de login ou home
-            window.location.href = './login';
+            window.location.href = './home';
         } else {
             console.error("Falha ao deslogar");
             // Lidar com falha no logout
@@ -77,10 +77,21 @@ function Navbar() {
                         <a className="a-05 poppins-regular"> <Link to={'../favorites'}  className="Link">Proposal</Link></a>
                     </div>
                 </div>
+
                 <div className="right-section-container-05">
-                    <div className='section-05'>
-                        <button className='seller-button' >Seller Mode</button>
-                    </div>
+
+                 {/* If user is logged and its a seller it will apear Button of Seller Mode, if not will appear a button for got to seller regist page*/}
+                 {loggedin && role =="seller" ? (
+                            <div className='section-05'>
+                                <button className="seller-button"> <Link to={'../sellerOptions'}  className="Link">Seller Options</Link></button>
+                            </div>
+                ) : (
+
+
+                        <div className='section-05'>
+                             <button className="seller-button"> <Link to={'../sellerRegist'}  className="Link">Be a Seller</Link></button>
+                        </div>
+                )}
 
                     <div className="section-05-2">
                         <a className='a-05'>
