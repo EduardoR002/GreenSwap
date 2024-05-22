@@ -146,29 +146,25 @@ async function getProds() {
 }
 
 // Função para gerar rotas de produtos dinamicamente
-const generateProductRoutes = () => {
-  
-  
+const generateProductRoutes = async () => {
+  try {
+    const product = await getProds();
+    console.log(product);
 
-  const product = getProds();
-  
-  console.log(product)
+    const productRoutes = [];
 
+    for (let i = 1; i <= product.length; i++) {
+      productRoutes.push({
+        path: `products/${product[i - 1].idproduct}`,
+        element: <Home />, // Replace <Home /> with the appropriate component for product details
+      });
+    }
 
-  const productRoutes = [];
-  
-
-
-
-
-
-  for (let i = 1; i <= 9; i++) {
-    productRoutes.push({
-      path: `products/${i}`,
-      element: <Home />, // Substitua <Home /> pelo componente apropriado para detalhes do produto
-    });
+    return productRoutes;
+  } catch (error) {
+    console.error('Error generating product routes:', error);
+    return []; // Return an empty array in case of error
   }
-  return productRoutes;
 };
 
 const prodRoutes = [
@@ -179,7 +175,7 @@ const prodRoutes = [
 ];
 
 // Combinando as rotas principais com as rotas de produtos geradas dinamicamente
-const combinedRoutes = [...mainRoutes, ...prodRoutes, ...generateProductRoutes()];
+const combinedRoutes = [...mainRoutes, ...prodRoutes, ...await generateProductRoutes()];
 
 // Criando o roteador
 const router = createBrowserRouter(createRoutesFromElements(
