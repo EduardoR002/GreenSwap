@@ -37,8 +37,35 @@ async function createDirectProposal(req, res) {
 }
 
 async function acceptProposal(req, res) {
+    const proposalId = req.body;
     try {
+        const proposal = models.proposal.findByPk(proposalId);
 
+        const proposalUpdated = proposal;
+
+        Object.assign(proposal, proposalUpdated);
+        const updatedproposal = await proposal.save();
+
+        await models.sequelize.query(
+            'CALL createNotification (:in_date, :in_idtypenotification, :in_idpurchase, :in_idproposal, :in_idcertificate, :in_idrequest, :in_description, :in_for, :in_userid',
+            {
+                replacements: {in_date: new Date(), in_idtypenotification: 2, in_idpurchase: null, in_idproposal: updatedproposal.proposalId, in_idcertificate: null, in_idrequest: null, in_description: "Proposal accepted", in_for: "user", in_userid: proposal.iduser},
+                type: models.sequelize.QueryTypes.INSERT
+            }
+        );
+
+        await models.sequelize.query(
+            'CALL createDirectPurchase(:in_buydate, :in_quantity, :in_price, :in_idproduct, :in_iduser)',
+            {
+                replacements: { in_buydate: new Date(), in_quantity: proposal.quantity, in_price: proposal.newprice, in_idproduct: proposal.idproduct, in_iduser: proposal.iduser },
+                type: models.sequelize.QueryTypes.SELECT
+            }
+        );
+
+        res.status(200).json({
+            message: "Proposal accepted with success"
+        })
+        
     } catch (error) {
         res.status(500).json({
             message: "Something went wrong",
@@ -187,5 +214,6 @@ module.exports = {
     createDirectProposal: createDirectProposal,
     createProposal: createProposal,
     getAllProposals: getAllProposals,
-    editProposal: editProposal
+    editProposal: editProposal,
+    acceptProposal: acceptProposal
 };
