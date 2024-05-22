@@ -15,7 +15,7 @@ function ProfileView() {
            
         <div>
           <div className="profile">
-            <img className="profile-pic" src="../images/exemploPerfil.png" alt="Foto de Perfil" />
+            <img className="profile-pic" src="https://fakeimg.pl/400x400/03000f/029904?text=Profile+Image" alt="Not Loaded" />
             <div className="profile-info">
               <label htmlFor="nome">Name:</label>
               <p id="nome">Pedro Daniel Fernandes Rei</p>
