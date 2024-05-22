@@ -1,7 +1,7 @@
 const models = require('../models');
 
 async function deliverPurchase(req, res) {
-    const idpurchase = req.body;
+    const { idpurchase } = req.body;
 
     try {
         const purchase = await models.purchase.findByPk(idpurchase);
