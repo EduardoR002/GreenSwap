@@ -1,6 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import {createBrowserRouter, RouterProvider, createRoutesFromElements, Route} from 'react-router-dom';
+import { validateToken } from './Components/home';
 
 //Component imports
 import Register from './Components/register'
@@ -18,6 +19,15 @@ import Ranking from './Components/ranking';
 import Favorites from './Components/favorites';
 import AboutUs from './Components/aboutUs';
 import SellerOptions from './Components/sellerOptions';
+import SellerProposals from './Components/sellerProposals';
+import Proposals from './Components/proposals';
+
+let vt_res = await validateToken();
+
+const role = vt_res.role;
+const isLoggedIn = vt_res.loggedin;
+
+console.log("This user is logged in? -> "+isLoggedIn+" Role: "+role);
 
 // #region Routes
 const mainRoutes = [
@@ -44,42 +54,52 @@ const mainRoutes = [
 
   {
     path: 'sellerOptions',
-    element: <SellerOptions />
+    element: (role === "seller") ? <SellerOptions /> : <Login />
   },
 
   {
     path: 'productRegist',
-    element: <ProductRegister />
+    element: (role === "seller") ? <ProductRegister /> : <Login/>
   },
 
   {
     path: 'sellerRegist',
-    element: <SellerRegister />
+    element: (role === "seller") ? <SellerRegister /> : <Login/>
   },
 
   {
     path: 'sellerProducts',
-    element: <SellerProducts />
+    element: (role === "seller") ? <SellerProducts /> : <Login/>
   },
 
   {
     path: 'sellerOrders',
-    element: <SellerOrders />
+    element: (role === "seller") ? <SellerOrders /> : <Login/>
+  },
+
+  {
+    path: 'sellerProposals',
+    element: (role === "seller") ? <SellerProposals /> : <Login/>
   },
 
   {
     path: 'profileView',
-    element: <ProfileView/>
+    element: isLoggedIn ? <ProfileView/> : <Login/>
   },
 
   { 
     path: 'buy',
-    element: <Buy />
+    element: isLoggedIn ? <Buy /> : <Login/>
   },
  
   {
     path: 'orders',
-    element: <Orders />
+    element: isLoggedIn ? <Orders /> : <Login/>
+  },
+
+  {
+    path: 'proposals',
+    element: isLoggedIn ? <Proposals /> : <Login/>
   },
 
   {
@@ -89,7 +109,7 @@ const mainRoutes = [
 
   {
     path: 'favorites',
-    element: <Favorites />
+    element: isLoggedIn ? <Favorites /> : <Login/>
   },
 
   {
@@ -152,11 +172,11 @@ async function getProds() {
 const generateProductRoutes = async () => {
   try {
     const product = await getProds();
-    console.log(product);
 
     const productRoutes = [];
 
-    console.log("Product length:", product.length);
+    console.log(product[0].idproduct)
+
     for (let i = 0; i <= product.length; i++) {
       productRoutes.push({
         path: `products/${product[i].idproduct}`,

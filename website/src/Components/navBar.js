@@ -2,6 +2,12 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import GreenSwap from '../images/GreenSwap.png';
 import '../CSS/navbar.css';
+import { validateToken } from './home'
+
+let vt_res = await validateToken();
+
+const role = vt_res.role;
+
 
 function Navbar() {
     return (
@@ -26,10 +32,10 @@ function Navbar() {
                         <a className="a-05 poppins-regular"> <Link to={'../ranking'}  className="Link">Ranking</Link></a>
                     </div>
                     <div className="section-05">
-                        <a className="a-05 poppins-regular"> <Link to={'../favorites'}  className="Link">Favorites</Link></a>
+                        <a className="a-05 poppins-regular"> <Link to={'../orders'}  className="Link">Orders</Link></a>
                     </div>
                     <div className="section-05">
-                        <a className="a-05 poppins-regular"> <Link to={'../orders'}  className="Link">Orders</Link></a>
+                        <a className="a-05 poppins-regular"> <Link to={'../favorites'}  className="Link">Proposal</Link></a>
                     </div>
                 </div>
                 <div className="right-section-container-05">

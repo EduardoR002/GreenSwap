@@ -233,10 +233,6 @@ async function editUser(req, res){
         } else {
             Object.assign(user, updatedUserData);
             const updatedUser = await user.save();
-            return res.status(200).json({
-                message: "User updated successfully",
-                user: updatedUser
-            });
         }
     } catch (error) {
         return res.status(500).json({
@@ -244,14 +240,6 @@ async function editUser(req, res){
             error: error
         });
     }
-}
-
-function getCookieTTL(ttl){
-    const date = new Date();
-    date.setTime(date.getTime() +  (ttl * 60 * 1000));
-    let expires = date.toUTCString();
-    //document.cookie = `${name}=${value}; ${expires}; path=/`
-    return expires;
 }
 
 /* Async function used to provide login to the user */
@@ -303,13 +291,11 @@ async function loginUser(req, res) {
             }
 
             const userId = user.idUser;
-            // Password matched, find seller
-            const seller = await models.seller.findOne({ where: { userId: userId }});
-            console.log(seller);
+            console.log(userId);
+            // Check if user is a seller
+            const seller = await models.seller.findOne({ where: { userId: userId } });
 
-            const sellerResponse = await getSellerLogin({ body: { sellerId: userId } });
-
-            if (!sellerResponse.status === 200) {
+            if (!seller) {
                 const token = await createToken(user.idUser, 'user');
                 res.cookie('token', token, {
                     httpOnly: true,
