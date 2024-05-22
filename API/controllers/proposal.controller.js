@@ -19,13 +19,14 @@ async function createDirectProposal(req, res) {
             }
         );
 
-        if (result && result.length > 0 && result[0].message === 'Proposal created successfully') {
-            res.status(200).json({
-                message: "Proposal created successfully"
-            });
-        } else {
+        if (!result) {
             res.status(500).json({
                 message: result[0] ? result[0].message : "Unknown error occurred"
+            });
+            
+        } else {
+            res.status(200).json({
+                message: "Proposal created successfully"
             });
         }
     } catch (error) {
@@ -94,13 +95,14 @@ async function createPeriodicProposal (req, res) {
             }
         );
 
-        if (result && result.length > 0 && result[0].message === 'Proposal created successfully') {
-            res.status(200).json({
-                message: "Proposal created successfully"
-            });
-        } else {
+        if (!result) {
             res.status(500).json({
                 message: result[0] ? result[0].message : "Unknown error occurred"
+            });
+            
+        } else {
+            res.status(200).json({
+                message: "Proposal created successfully"
             });
         }
     } catch (error) {
