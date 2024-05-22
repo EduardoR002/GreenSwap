@@ -99,10 +99,69 @@ const mainRoutes = [
 
 ];
 
+async function getProds() {
+  const product = {};
+
+  const formData = {
+    search_name: " ",
+    max_price: 0,
+    min_price: 0
+  };
+
+  try {
+    const res = await fetch('http://localhost:3000/product/getall', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) { // Verifica se o status da resposta está no intervalo 200-299
+      const products = Object.values(data.products[0]);
+      for (let i = 0; i < products.length; i++) {
+
+        product[i]={
+          "idproduct": products[i].idproduct,
+          "name": products[i].name,
+          "description": products[i].description,
+          "price": products[i].price,
+          "stock": products[i].stock,
+          "idtypeproduct": products[i].idtypeproduct,
+          "idseller": products[i].idseller,
+          "typeproduct": products[i].typeproduct,
+          "seller_name": products[i].seller_name
+        }
+      }
+      return product;
+
+    } else {
+      console.error('Failed to fetch products:', res.status, res.statusText);
+    }
+  } catch (error) {
+    console.error('Error:', error.message);
+  }
+}
+
 // Função para gerar rotas de produtos dinamicamente
 const generateProductRoutes = () => {
+  
+  
+
+  const product = getProds();
+  
+  console.log(product)
+
+
   const productRoutes = [];
   
+
+
+
+
+
   for (let i = 1; i <= 9; i++) {
     productRoutes.push({
       path: `products/${i}`,
