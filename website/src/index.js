@@ -96,11 +96,14 @@ const mainRoutes = [
     path: 'aboutUs',
     element: <AboutUs />
   },
-
+  {
+    path: 'products/:id', // Make sure the path includes a parameter for the product ID
+    element: <Home />, // Replace <ProductDetails /> with the appropriate component
+  }
 ];
 
 async function getProds() {
-  const product = {};
+  const product = [];
 
   const formData = {
     search_name: " ",
@@ -153,9 +156,10 @@ const generateProductRoutes = async () => {
 
     const productRoutes = [];
 
-    for (let i = 1; i <= product.length; i++) {
+    console.log("Product length:", product.length);
+    for (let i = 0; i <= product.length; i++) {
       productRoutes.push({
-        path: `products/${product[i - 1].idproduct}`,
+        path: `products/${product[i].idproduct}`,
         element: <Home />, // Replace <Home /> with the appropriate component for product details
       });
     }
