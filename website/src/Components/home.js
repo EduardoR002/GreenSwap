@@ -25,6 +25,10 @@ function Home() {
 
     const [products, setProducts] = useState([]);
 
+    useEffect(() => {
+        getProducts();
+    }, []); // O array vazio como segundo argumento garante que o efeito só execute uma vez após a montagem
+
     async function getProducts() {
         const formData = {
             search_name: " ",
@@ -55,10 +59,6 @@ function Home() {
             console.error('Error:', error.message);
         }
     }
-
-    useEffect(() => {
-        getProducts();
-    }, []); // O array vazio como segundo argumento garante que o efeito só execute uma vez após a montagem
 
     return (
         <>
