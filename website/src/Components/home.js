@@ -6,22 +6,73 @@ import '../CSS/navbar.css';
 import Navbar from './navbar';
 import Cookies from 'js-cookie';
 
-function getCookie(name){
-  const cDecoded = decodeURIComponent(document.cookie);
-  const cArray = cDecoded.split("; ");
-  let result = null;
-  
-  cArray.forEach(element => {
-      if(element.indexOf(name) == 0){
-          result = element.substring(name.length + 1)
-      }
-  })
-  return result;
+function validateToken() {
+    const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+
+    const formData = { token: token };
+
+    const response = fetch('http://localhost:3000/tokens/validate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    });
+
+    if (response.status === 200) {
+        window.location.href = './home';
+        return true;
+    } else {
+        return false;
+    }
 }
 
+// Function to get token from cookies
+function GetTokenFromCookies() {
+    const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
+    let tokenValidation;
+
+    if (validateToken()) {
+        tokenValidation = "valid";
+    } else {
+        tokenValidation = "invalid";
+    }
+
+    return { token, tokenValidation };
+}
+
+// Function that will present website home page
 function Home() {
-    // Will change a button presentation
-    const [isSellerLoggedIn, setIsSellerLoggedIn] = useState(true);
+    
+    const { token, tokenValidation } = GetTokenFromCookies();
+
+    console.log("OLAAAAAAAAAAAAAAAAAAAAAAAAA");
+    console.log(token);
+    console.log("OLAAAAAAAAAAAAAAAAAAAAAAAAA");
+
+    let loggedState = false;
+    let sellerPage = false;
+    let userRole = "user";
+
+    if (tokenValidation === "valid") {
+        loggedState = true;
+
+        if (userRole === "seller") {
+            sellerPage = true;
+        } else {
+            sellerPage = false;
+        }
+    } else {
+        loggedState = false;
+    }
+
+    console.log("Logged State: " + loggedState);
+    console.log("Seller Page: " + sellerPage);
+
+
+
+
+
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
@@ -67,7 +118,7 @@ function Home() {
                 <br></br>
             
                 {/* Condition that will show for user a button if he is logged as a seller or other button if he is logged as a user*/}
-                {isSellerLoggedIn ? (
+                {loggedState ? (
                         <div className="sellerOptions-03">
                             <Link to={'../sellerOptions'} className="Link">Seller Options</Link>
                         </div>

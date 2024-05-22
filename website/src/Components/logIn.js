@@ -3,12 +3,15 @@ import '../CSS/logIn.css'
 import logo from '../images/GreenSwap.png'
 import { Link } from "react-router-dom";
 
+{/* Function that will validate user token, if token is valid he will be redirected to website home page */}
 async function validateToken() {
+
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-    console.log(token);
+
     const formData = {
         token : token
     }
+
     const response = await fetch('http://localhost:3000/tokens/validate', {
         method: 'POST',
         headers: {
@@ -23,14 +26,16 @@ async function validateToken() {
 }
 
 function Login(){
-    useEffect(() => {
-        validateToken();
-    }, []);
+
+    {/* Token validation */}
+    useEffect(() => {validateToken();}, []);
+
     const loginUser = async() => {
         const formData = {
             email: document.getElementById('email-04').value,
             password: document.getElementById('password-04').value
         }
+
         try {
             const res = await fetch('http://localhost:3000/users/login', {
                 method: 'POST',
@@ -39,6 +44,7 @@ function Login(){
                 },
                 body: JSON.stringify(formData),
             });
+
             if (res.status === 200) {
                 const data = await res.json();
                 const expirationDate = new Date();
@@ -46,12 +52,14 @@ function Login(){
                 document.cookie = `token=${data.token}; expires=${expirationDate.toUTCString()}; path=/; secure; SameSite=Strict`;
                 window.location.href = './home';
             }
+            else { alert("Invalid credentials! Try again...")}
+
         } catch (error) {
             console.error('Erro:', error.message);
         }
-    }
+}
     
-    return(
+    return (
         <>
             <div id="bg-04" />
             <div className="main-04">
