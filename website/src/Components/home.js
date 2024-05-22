@@ -42,24 +42,6 @@ export async function validateToken() {
 // Function that will present website home page
 function Home() {
 
-    var loggedin;
-    var role;
-    useEffect(() => {
-        const fetchData = async () => {
-            const result = await validateToken();
-            if (result && result.loggedin) {
-                loggedin = true;
-                role = result.role;
-                console.log("User role:", role);
-            } else {
-                loggedin = false;
-                console.log("User not logged in");
-            }
-        };
-        fetchData();
-    }, []);
-
-
     const [products, setProducts] = useState([]);
 
     useEffect(() => {

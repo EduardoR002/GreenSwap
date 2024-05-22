@@ -7,9 +7,16 @@ import { validateToken } from './home'
 let vt_res = await validateToken();
 
 const role = vt_res.role;
+const loggedin = vt_res.role;
+
 
 
 function Navbar() {
+
+    console.log(loggedin);
+    console.log(role);
+
+
     return (
         <div className="navbar-container-05">
             <div className="tocenter-05">
