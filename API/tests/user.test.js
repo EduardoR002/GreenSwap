@@ -233,39 +233,69 @@ describe('getAllUsers function', () => {
 
 // Group of unit tests that test the function deleteUser
 describe('deleteUser function', () => {
-    it('should return 200 and success message if user is deleted successfully', async () => {
-        const userId = '1';
-        models.user.destroy.mockResolvedValue(1); // Assuming one row is deleted
+    let req, res;
 
-        const req = { params: { userId } };
-        const res = {
+    beforeEach(() => {
+        req = { params: { userId: '1' } };
+        res = {
             status: jest.fn().mockReturnThis(),
             json: jest.fn()
         };
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it('should return 200 and success message if user is deleted successfully', async () => {
+        models.requestseller.findOne.mockResolvedValue(null);  // No requestseller record
+        models.user.update.mockResolvedValue([1]);  // User marked for deletion
+        models.purchase.destroy.mockResolvedValue(1);
+        models.proposal.destroy.mockResolvedValue(1);
+        models.requestseller.destroy.mockResolvedValue(1);
 
         await deleteUser(req, res);
 
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({
-            message: 'User deleted successfully'
+            message: "User marked for deletion and related data deleted successfully"
         });
     });
 
     it('should return 404 if user is not found', async () => {
-        const userId = '1';
-        models.user.destroy.mockResolvedValue(0); // Assuming no rows are deleted
-
-        const req = { params: { userId } };
-        const res = {
-            status: jest.fn().mockReturnThis(),
-            json: jest.fn()
-        };
+        models.requestseller.findOne.mockResolvedValue(null);  // No requestseller record
+        models.user.update.mockResolvedValue([0]);  // User not found
 
         await deleteUser(req, res);
 
         expect(res.status).toHaveBeenCalledWith(404);
         expect(res.json).toHaveBeenCalledWith({
-            message: 'User not found'
+            message: "User not found"
+        });
+    });
+
+    it('should return 400 if user requestseller state is accepted', async () => {
+        models.requestseller.findOne.mockResolvedValue({ idState: 1 });
+        models.requeststate.findOne.mockResolvedValue({ state: 'accepted' });
+
+        await deleteUser(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({
+            message: "Cannot delete user because their request seller state is accepted"
+        });
+    });
+
+    it('should return 500 if an error occurs during database operation', async () => {
+        const errorMessage = "Database error";
+        models.requestseller.findOne.mockRejectedValue(new Error(errorMessage));
+
+        await deleteUser(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.json).toHaveBeenCalledWith({
+            message: "Something went wrong",
+            error: errorMessage
         });
     });
 });

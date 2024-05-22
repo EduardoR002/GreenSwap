@@ -120,32 +120,61 @@ async function getAllUsers(req, res){
 }
 
 // Async function used to delete one user
-async function deleteUser(req, res){
+async function deleteUser(req, res) {
     const userId = req.params.userId;
 
     try {
-        const deletedRows = await models.user.destroy({
+        // Get the idState from the requestseller table for the user
+        const requestSellerRecord = await models.requestseller.findOne({
+            where: { userId: userId }
+        });
+
+        if (requestSellerRecord) {
+            // Check the state in the requeststate table
+            const requestStateRecord = await models.requeststate.findOne({
+                where: { idState: requestSellerRecord.idState }
+            });
+
+            if (requestStateRecord && requestStateRecord.state === 'accepted') {
+                return res.status(400).json({
+                    message: "Cannot delete user because their request seller state is accepted"
+                });
+            }
+        }
+
+        // Soft-delete the user by updating a deletion flag and setting a deletion date
+        const softDeletedUser = await models.user.update({
+            deletionDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) // 30 days from now
+        }, {
             where: {
                 idUser: userId
             }
         });
 
-        if (deletedRows === 0) {
+        if (softDeletedUser[0] === 0) {
             return res.status(404).json({
                 message: "User not found"
             });
         }
 
+        // Immediately delete all related data
+        await Promise.all([
+            models.purchase.destroy({ where: { userId: userId } }),
+            models.proposal.destroy({ where: { userId: userId } }),
+            models.requestseller.destroy({ where: { userId: userId } })
+        ]);
+
         return res.status(200).json({
-            message: "User deleted successfully"
+            message: "User marked for deletion and related data deleted successfully"
         });
     } catch (error) {
         return res.status(500).json({
             message: "Something went wrong",
-            error: error
+            error: error.message
         });
     }
 }
+
 
 // Async function used to edit data from one user
 async function editUser(req, res){
@@ -257,7 +286,6 @@ async function loginUser(req, res) {
                 httpOnly: true,
                 secure: true,
                 sameSite: 'Strict',
-                expires: expirationDate
             });
 
             return res.status(200).json({
@@ -284,7 +312,6 @@ async function loginUser(req, res) {
                     httpOnly: true,
                     secure: true,
                     sameSite: 'Strict',
-                    expires: expirationDate
                 });
                 return res.status(200).json({
                     message: "Login successful",
@@ -298,7 +325,6 @@ async function loginUser(req, res) {
                     httpOnly: true,
                     secure: true,
                     sameSite: 'Strict',
-                    expires: expirationDate
                 });
                 return res.status(200).json({
                     message: "Login successful",
