@@ -7,7 +7,7 @@ router.post('/createDirectPurchase', createDirectPurchase);
 router.post("/create", createPurchase);
 router.get("/getall", getAllPurchases);
 router.put("/editproposal/:idproposal",editPurchase);
-router.post("/deliverDirectPurchase", deliverPurchase);
+router.post("/deliverPurchase", deliverPurchase);
 router.post("/cancelPeriodic", cancelPeriodicPurchase);
 
 
