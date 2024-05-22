@@ -66,11 +66,11 @@ function Home() {
             
                 {/* Condition that will show for user a button if he is logged as a seller or other button if he is logged as a user*/}
                 {isSellerLoggedIn ? (
-                        <div className="sellerOptions">
+                        <div className="sellerOptions-03">
                             <Link to={'../sellerOptions'} className="Link">Seller Options</Link>
                         </div>
                     ) : (
-                        <div className="sellerOptions">
+                        <div className="sellerOptions--03">
                             <Link to={'../sellerRegist'} className="Link">Be a Seller</Link>
                         </div>
                     )}
