@@ -22,7 +22,11 @@ async function deliverPurchase(req, res) {
         await models.sequelize.query(
             'CALL createNotification(:in_date, :in_idtypenotification, :in_idpurchase, :in_idproposal, :in_idcertificate, :in_idrequest, :in_description, :in_for, :in_userid)',
             {
+<<<<<<< HEAD
                 replacements: {in_date: Date(), in_idtypenotification: 1, in_idpurchase: updatedPurchase.idpurchase, in_idproposal: null, in_idcertificate: null, in_idrequest: null, in_description: 'Product on delivery', in_for: 'user', in_userid: updatedPurchase.iduser}
+=======
+                replacements: {in_date: new Date(), in_idtypenotification: 1, in_idpurchase: updatedPurchase.purchaseId, in_idproposal: null, in_idcertificate: null, in_idrequest: null, in_description: 'Product on delivery', in_for: 'user', in_userid: updatedPurchase.idUser}
+>>>>>>> d072df2d526f4e8e18b70b1464df173915dd86ea
             }
         );
 
