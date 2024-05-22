@@ -14,7 +14,43 @@ async function createDirectProposal(req, res) {
         const result = await models.sequelize.query(
             'CALL createDirectProposal(:in_newprice, :in_idproduct, :in_iduser, :in_quantity)',
             {
-                replacements: { in_newprice: newprice, in_idproduct: idproduct, in_iduser: iduser, ind_quantity: quantity },
+                replacements: { in_newprice: newprice, in_idproduct: idproduct, in_iduser: iduser, in_quantity: quantity },
+                type: models.sequelize.QueryTypes.SELECT
+            }
+        );
+
+        if (result && result.length > 0 && result[0].message === 'Proposal created successfully') {
+            res.status(200).json({
+                message: "Proposal created successfully"
+            });
+        } else {
+            res.status(500).json({
+                message: result[0] ? result[0].message : "Unknown error occurred"
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error.message
+        });
+    }
+}
+
+async function createFutureProposal (req, res) {
+    try {
+        const { newprice, idproduct, iduser, quantity, futurepurchase } = req.body;
+
+        // Check if price and quantity is greater than zero
+        if (newprice <= 0 || quantity <= 0) {
+            return res.status(422).json({
+                message: "Price or quantity must be greater than zero"
+            });
+        }
+
+        const result = await models.sequelize.query(
+            'CALL createFutureProposal(:in_newprice, :in_idproduct, :in_iduser, :in_quantity, :in_futurepurchase)',
+            {
+                replacements: { in_newprice: newprice, in_idproduct: idproduct, in_iduser: iduser, in_quantity: quantity, in_futurepurchase: futurepurchase},
                 type: models.sequelize.QueryTypes.SELECT
             }
         );
@@ -37,7 +73,7 @@ async function createDirectProposal(req, res) {
 }
 
 async function acceptProposal(req, res) {
-    const { idproposal } = req.body;
+    const { idproposal, type } = req.body;
     try {
         const proposal = await models.proposal.findByPk(idproposal);
 
@@ -56,13 +92,19 @@ async function acceptProposal(req, res) {
             }
         );
 
-        await models.sequelize.query(
-            'CALL createDirectPurchase(:in_buydate, :in_quantity, :in_price, :in_idproduct, :in_iduser)',
-            {
-                replacements: {in_buydate: new Date(), in_quantity: proposal.quantity, in_price: proposal.newprice, in_idproduct: proposal.idproduct, in_iduser: proposal.iduser },
-                type: models.sequelize.QueryTypes.SELECT
-            }
-        );
+        if (type === 'direct') {
+            await models.sequelize.query(
+                'CALL directProposaltoPurchase(:in_buydate, :in_quantity, :in_price, :in_idproduct, :in_iduser)',
+                {
+                    replacements: {in_buydate: new Date(), in_quantity: proposal.quantity, in_price: proposal.newprice, in_idproduct: proposal.idproduct, in_iduser: proposal.iduser },
+                    type: models.sequelize.QueryTypes.SELECT
+                }
+            );
+        }
+        else if (type === 'future') {
+            
+        }
+
 
         res.status(200).json({
             message: "Proposal accepted with success"
@@ -229,5 +271,6 @@ module.exports = {
     editProposal: editProposal,
     acceptProposal: acceptProposal,
     refuseProposal: refuseProposal,
-    cancelProposal: cancelProposal
+    cancelProposal: cancelProposal,
+    createFutureProposal: createFutureProposal
 };

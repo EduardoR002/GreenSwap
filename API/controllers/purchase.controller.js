@@ -1,6 +1,6 @@
 const models = require('../models');
 
-async function deliverDirectPurchase(req, res) {
+async function deliverPurchase(req, res) {
     const idpurchase = req.body;
 
     try {
@@ -65,6 +65,10 @@ async function createDirectPurchase(req, res) {
             error: error.message
         })
     }
+}
+
+async function createFuturePurchase(req, res) {
+    const { buydate, quantity, price, futurepurchase, idproduct, iduser} = req.body;
 }
 
 // Async function to create a purchase
@@ -219,5 +223,6 @@ module.exports = {
     createPurchase: createPurchase,
     getAllPurchases: getAllPurchases,
     editPurchase: editPurchase,
-    createDirectPurchase: createDirectPurchase
+    createDirectPurchase: createDirectPurchase,
+    deliverPurchase: deliverPurchase
 };
