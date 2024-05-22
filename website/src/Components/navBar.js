@@ -39,17 +39,13 @@ function Navbar() {
                     </div>
                 </div>
                 <div className="right-section-container-05">
-                    <div className="section-05">
-                        <a className="a-05 poppins-regular"><Link to={'../aboutUs'}  className="Link">About Us</Link></a>
+                    <div className='section-05'>
+                        <button className='seller-button' >Seller Mode</button>
                     </div>
+
                     <div className="section-05-2">
                         <a className='a-05'>
                         <span className="material-symbols-outlined navbar-symbols-05"><Link to="../profileView"  className="Link">Person</Link>
-                                </span>
-                        </a>
-                        <span className="navbar-symbols-05">|  </span>
-                        <a className='a-05'>
-                            <span className="material-symbols-outlined navbar-symbols-05"><Link to="../buy"  className="Link">shopping_cart</Link>
                             </span>
                         </a>
                     </div>
