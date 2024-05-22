@@ -13,5 +13,4 @@ router.post("/futureproposal", createFutureProposal);
 router.post("/periodicproposal", createPeriodicProposal);
 
 
-
 module.exports = router;
