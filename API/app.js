@@ -56,7 +56,6 @@ app.use((req, res, next) => {
 app.use("/tnotific", tnotificRoute);
 app.use("/tproduct", tproductRoute);
 app.use("/users", usersRoute);
-app.use("/tproduct", tproductRoute);
 app.use("/tchange", tchangeRoute);
 app.use("/tpurchase", tpurchaseRoute);
 app.use("/tproposal", tproposalRoute);

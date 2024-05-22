@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import {createBrowserRouter, RouterProvider, createRoutesFromElements, Route} from 'react-router-dom';
 
 //Component imports
 import Register from './Components/register'
@@ -19,10 +19,8 @@ import Favorites from './Components/favorites';
 import AboutUs from './Components/aboutUs';
 import SellerOptions from './Components/sellerOptions';
 
-
-
 // #region Routes
-const router = createBrowserRouter([
+const mainRoutes = [
   {
     path: '/',
     element: <Home />,
@@ -99,7 +97,50 @@ const router = createBrowserRouter([
     element: <AboutUs />
   },
 
-]);
+];
+
+// Função para gerar rotas de produtos dinamicamente
+const generateProductRoutes = () => {
+  const productRoutes = [];
+  
+  for (let i = 1; i <= 9; i++) {
+    productRoutes.push({
+      path: `products/${i}`,
+      element: <Home />, // Substitua <Home /> pelo componente apropriado para detalhes do produto
+    });
+  }
+  return productRoutes;
+};
+
+const prodRoutes = [
+  {
+    path: 'products',
+    element: <Home/>
+  }
+];
+
+// Combinando as rotas principais com as rotas de produtos geradas dinamicamente
+const combinedRoutes = [...mainRoutes, ...prodRoutes, ...generateProductRoutes()];
+
+// Criando o roteador
+const router = createBrowserRouter(createRoutesFromElements(
+  combinedRoutes.map(route => (
+    <Route key={route.path} path={route.path} element={route.element} errorElement={route.errorElement} />
+  ))
+));
+
+//-------------------------------------------STOP HERE-----------------------------------
+/*const prodRoutes = [
+  {
+    path: 'teste',
+    element: <Home/>
+  }
+];*/
+
+//const combinedRoutes = [...mainRoutes,...prodRoutes];
+
+//const router = createBrowserRouter(combinedRoutes);
+
 // #endregion
 
 const root = createRoot(document.getElementById('root')); // Use createRoot de react-dom/client
