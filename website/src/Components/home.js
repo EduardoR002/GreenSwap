@@ -6,6 +6,7 @@ import '../CSS/navbar.css';
 import Navbar from './navbar';
 import Cookies from 'js-cookie';
 
+// Function that will validate user token
 function validateToken() {
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 
@@ -20,7 +21,6 @@ function validateToken() {
     });
 
     if (response.status === 200) {
-        window.location.href = './home';
         return true;
     } else {
         return false;
@@ -29,7 +29,9 @@ function validateToken() {
 
 // Function to get token from cookies
 function GetTokenFromCookies() {
+
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
+
     let tokenValidation;
 
     if (validateToken()) {
@@ -41,19 +43,44 @@ function GetTokenFromCookies() {
     return { token, tokenValidation };
 }
 
+// Function that will get user role of the token
+async function GetuserRole() {
+
+    const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+
+    const formData = { token: token };
+
+    const response = fetch('http://localhost:3000/tokens/getrole', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    });
+
+    const data = await response.json();
+    return data.role;
+}
+
 // Function that will present website home page
 function Home() {
-    
+
+    // Get user token and check if token is valid
     const { token, tokenValidation } = GetTokenFromCookies();
 
-    console.log("OLAAAAAAAAAAAAAAAAAAAAAAAAA");
+    console.log("Token");
     console.log(token);
-    console.log("OLAAAAAAAAAAAAAAAAAAAAAAAAA");
 
+    // variable for manipulate thing that will apear if logged in or logged of
     let loggedState = false;
-    let sellerPage = false;
-    let userRole = "user";
 
+    // variable for manipulate things that will appear if logged as seller or not
+    let sellerPage = false;
+
+    // Get user Role from token
+    let userRole = GetuserRole();
+
+    // Change os variables 
     if (tokenValidation === "valid") {
         loggedState = true;
 
@@ -68,7 +95,6 @@ function Home() {
 
     console.log("Logged State: " + loggedState);
     console.log("Seller Page: " + sellerPage);
-
 
 
 
