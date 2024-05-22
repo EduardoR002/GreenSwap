@@ -66,6 +66,31 @@ async function getSeller(req, res) {
     }
 }
 
+async function getSellerLogin(req) {
+    const sellerId = req.body;
+
+    try {
+        const seller = await models.seller.findByPk(sellerId);
+        if (!seller) {
+            return {
+                status: 404,
+                message: "Seller not found"
+            };
+        }
+        return {
+            status: 200,
+            message: "Seller found successfully",
+            seller: seller
+        };
+    } catch (error) {
+        return {
+            status: 500,
+            message: "Something went wrong",
+            error: error.message
+        };
+    }
+}
+
 /// Async function  to get all sellers
 async function getAllSellers(req, res) {
     try {
@@ -151,5 +176,6 @@ module.exports = {
     createSeller: createSeller,
     getSeller: getSeller,
     getAllSellers: getAllSellers,
-    editSeller: editSeller
+    editSeller: editSeller,
+    getSellerLogin: getSellerLogin
 };

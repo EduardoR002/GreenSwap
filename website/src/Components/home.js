@@ -6,22 +6,60 @@ import '../CSS/navbar.css';
 import Navbar from './navbar';
 import Cookies from 'js-cookie';
 
-function getCookie(name){
-  const cDecoded = decodeURIComponent(document.cookie);
-  const cArray = cDecoded.split("; ");
-  let result = null;
-  
-  cArray.forEach(element => {
-      if(element.indexOf(name) == 0){
-          result = element.substring(name.length + 1)
-      }
-  })
-  return result;
+// Function that will validate user token
+async function validateToken() {
+
+    const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+
+    const formData = { 
+        token: token 
+    };
+
+    const response = await fetch('http://localhost:3000/tokens/validate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    });
+
+    if (response.status === 200) {
+        const res = await fetch('http://localhost:3000/tokens/getrole', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({token})
+        })
+        const data = await res.json();
+        return {loggedin: true, role: data.role}
+
+    } else {
+        return false;
+    }
 }
 
+// Function that will present website home page
 function Home() {
-    // Will change a button presentation
-    const [isSellerLoggedIn, setIsSellerLoggedIn] = useState(true);
+
+    var loggedin;
+    var role;
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await validateToken();
+            if (result && result.loggedin) {
+                loggedin = true;
+                role = result.role;
+                console.log("User role:", role);
+            } else {
+                loggedin = false;
+                console.log("User not logged in");
+            }
+        };
+        fetchData();
+    }, []);
+
+
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
@@ -67,7 +105,7 @@ function Home() {
                 <br></br>
             
                 {/* Condition that will show for user a button if he is logged as a seller or other button if he is logged as a user*/}
-                {isSellerLoggedIn ? (
+                {loggedin ? (
                         <div className="sellerOptions-03">
                             <Link to={'../sellerOptions'} className="Link">Seller Options</Link>
                         </div>

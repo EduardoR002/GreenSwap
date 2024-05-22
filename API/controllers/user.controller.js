@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { createToken } = require('./tokens.controller.js');
 const token = require('../models/token.js');
+const {getSellerLogin} = require('./seller.controller.js');
 
 // Async function that create a new User
 async function createUser(req, res) {
@@ -257,8 +258,6 @@ function getCookieTTL(ttl){
 async function loginUser(req, res) {
     try {
         const { email, password } = req.body;
-        const hour = 3600000;
-        const expirationDate = new Date(Date.now() + hour);
         // Find user by email
         const user = await models.user.findOne({ where: { email: email } });
 
@@ -286,7 +285,6 @@ async function loginUser(req, res) {
                 httpOnly: true,
                 secure: true,
                 sameSite: 'Strict',
-                expires: expirationDate
             });
 
             return res.status(200).json({
@@ -304,19 +302,22 @@ async function loginUser(req, res) {
                 });
             }
 
+            const userId = user.idUser;
             // Password matched, find seller
-            const seller = await models.seller.findOne({ where: { userId: user.idUser }});
+            const seller = await models.seller.findOne({ where: { userId: userId }});
+            console.log(seller);
 
-            if (!seller) {
+            const sellerResponse = await getSellerLogin({ body: { sellerId: userId } });
+
+            if (!sellerResponse.status === 200) {
                 const token = await createToken(user.idUser, 'user');
                 res.cookie('token', token, {
                     httpOnly: true,
                     secure: true,
                     sameSite: 'Strict',
-                    expires: expirationDate
                 });
                 return res.status(200).json({
-                    message: "Login successful",
+                    message: "Login user successful",
                     token: token,
                     user: user
                 });
@@ -327,10 +328,9 @@ async function loginUser(req, res) {
                     httpOnly: true,
                     secure: true,
                     sameSite: 'Strict',
-                    expires: expirationDate
                 });
                 return res.status(200).json({
-                    message: "Login successful",
+                    message: "Login seller successful",
                     token: token,
                     user: user
                 });
