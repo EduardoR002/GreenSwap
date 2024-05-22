@@ -222,9 +222,7 @@ async function cancelPeriodicPurchase(req, res){
 
     const updatedpurchase = purchase;
 
-    updatedpurchase.idpurchasestate = 5;
-
-    Object.assign(purchase, updatedpurchase);
+    purchase.idpurchasestate = 5;
     await purchase.save();
 
     await models.sequelize.query(
