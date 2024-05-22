@@ -102,6 +102,15 @@ async function acceptProposal(req, res) {
             );
         }
         else if (type === 'future') {
+            await models.sequelize.query(
+                'CALL createFuturePurchase(:in_buydate, :in_quantity, :in_price, :in_futurepurchase, :in_idproduct, :in_iduser)',
+                {
+                    replacements: {in_buydate: new Date(), in_quantity: proposal.quantity, in_price: proposal.newprice, in_futurepurchase: proposal.futuredate, in_idproduct: proposal.idproduct, in_iduser: proposal.iduser },
+                    type: models.sequelize.QueryTypes.SELECT
+                }
+            );  
+        }
+        else if (type === 'periodic') {
             
         }
 
