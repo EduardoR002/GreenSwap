@@ -1,6 +1,6 @@
 const models = require('../models');
 
-async function deliverDirectPurchase(req, res) {
+async function deliverPurchase(req, res) {
     const idpurchase = req.body;
 
     try {
@@ -215,9 +215,35 @@ async function editPurchase(req, res) {
     }
 }
 
+async function cancelPeriodicPurchase(req, res){
+    const { purchaseId } = req.body;
+
+    const purchase = await models.purchase.findByPk(purchaseId);
+
+    const updatedpurchase = purchase;
+
+    updatedpurchase.idpurchasestate = 5;
+
+    Object.assign(purchase, updatedpurchase);
+    await purchase.save();
+
+    await models.sequelize.query(
+        'CALL createNotification(:in_date, :in_idtypenotification, :in_idpurchase, :in_idproposal, :in_idcertificate, :in_idrequest, :in_description, :in_for, :in_userid)',
+        {
+            replacements: {in_date: Date(), in_idtypenotification: 1, in_idpurchase: updatedpurchase.purchaseId, in_idproposal: null, in_idcertificate: null, in_idrequest: null, in_description: 'Periodic purchase canceled', in_for: 'user', in_userid: updatedpurchase.idUser}
+        }
+    );
+
+    return res.status(200).json({
+        message: "Periodic purchased canceled successfully",
+    });
+}
+
 module.exports = {
     createPurchase: createPurchase,
     getAllPurchases: getAllPurchases,
     editPurchase: editPurchase,
-    createDirectPurchase: createDirectPurchase
+    createDirectPurchase: createDirectPurchase,
+    deliverPurchase: deliverPurchase,
+    cancelPeriodicPurchase: cancelPeriodicPurchase
 };

@@ -246,14 +246,6 @@ async function editUser(req, res){
     }
 }
 
-function getCookieTTL(ttl){
-    const date = new Date();
-    date.setTime(date.getTime() +  (ttl * 60 * 1000));
-    let expires = date.toUTCString();
-    //document.cookie = `${name}=${value}; ${expires}; path=/`
-    return expires;
-}
-
 /* Async function used to provide login to the user */
 async function loginUser(req, res) {
     try {
