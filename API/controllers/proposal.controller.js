@@ -1,5 +1,6 @@
 const models = require('../models');
 
+// Async function to create a new direct  proposal
 async function createDirectProposal(req, res) {
     try {
         const { newprice, idproduct, iduser, quantity } = req.body;
@@ -13,7 +14,7 @@ async function createDirectProposal(req, res) {
         const result = await models.sequelize.query(
             'CALL createDirectProposal(:in_newprice, :in_idproduct, :in_iduser, :in_quantity)',
             {
-                replacements: { in_newprice: newprice, in_idproduct: idproduct, in_iduser: iduser, in_quantity: quantity },
+                replacements: { in_newprice: newprice, in_idproduct: idproduct, in_iduser: iduser, ind_quantity: quantity },
                 type: models.sequelize.QueryTypes.SELECT
             }
         );
@@ -27,6 +28,17 @@ async function createDirectProposal(req, res) {
                 message: result[0] ? result[0].message : "Unknown error occurred"
             });
         }
+    } catch (error) {
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error.message
+        });
+    }
+}
+
+async function acceptProposal(req, res) {
+    try {
+
     } catch (error) {
         res.status(500).json({
             message: "Something went wrong",
