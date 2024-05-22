@@ -28,7 +28,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       references: {
         model: 'user',
-        key: 'userId'
+        key: 'idUser'
       }
     }
   }, {
@@ -59,7 +59,7 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "userrequest_idx",
+        name: "useridseller_idx",
         using: "BTREE",
         fields: [
           { name: "userId" },

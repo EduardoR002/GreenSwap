@@ -22,10 +22,13 @@ async function createToken(id, role) {
     }
 }
 
-async function getRole(token) {
+async function getRole(req, res) {
+    const { token } = req.body
     try {
         const decoded = jwt.verify(token, '0f1ab83a576c30f57aa5c33de4009cc923923ac041f6f63af8daa1a5ad53254a');
-        return decoded.role;
+        return res.status(200).json({
+            role: decoded.role
+        })
     } catch (error) {
         console.error('Invalid or expired token:', error.message);
         throw new Error('Invalid or expired token');

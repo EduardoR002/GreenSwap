@@ -7,12 +7,15 @@ import Navbar from './navbar';
 import Cookies from 'js-cookie';
 
 // Function that will validate user token
-function validateToken() {
+async function validateToken() {
+
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 
-    const formData = { token: token };
+    const formData = { 
+        token: token 
+    };
 
-    const response = fetch('http://localhost:3000/tokens/validate', {
+    const response = await fetch('http://localhost:3000/tokens/validate', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -21,82 +24,40 @@ function validateToken() {
     });
 
     if (response.status === 200) {
-        return true;
+        const res = await fetch('http://localhost:3000/tokens/getrole', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({token})
+        })
+        const data = await res.json();
+        return {loggedin: true, role: data.role}
+
     } else {
         return false;
     }
 }
 
-// Function to get token from cookies
-function GetTokenFromCookies() {
-
-    const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
-
-    let tokenValidation;
-
-    if (validateToken()) {
-        tokenValidation = "valid";
-    } else {
-        tokenValidation = "invalid";
-    }
-
-    return { token, tokenValidation };
-}
-
-// Function that will get user role of the token
-async function GetuserRole() {
-
-    const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-
-    const formData = { token: token };
-
-    const response = fetch('http://localhost:3000/tokens/getrole', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-    });
-
-    const data = await response.json();
-    return data.role;
-}
-
 // Function that will present website home page
 function Home() {
 
-    // Get user token and check if token is valid
-    const { token, tokenValidation } = GetTokenFromCookies();
-
-    console.log("Token");
-    console.log(token);
-
-    // variable for manipulate thing that will apear if logged in or logged of
-    let loggedState = false;
-
-    // variable for manipulate things that will appear if logged as seller or not
-    let sellerPage = false;
-
-    // Get user Role from token
-    let userRole = GetuserRole();
-
-    // Change os variables 
-    if (tokenValidation === "valid") {
-        loggedState = true;
-
-        if (userRole === "seller") {
-            sellerPage = true;
-        } else {
-            sellerPage = false;
-        }
-    } else {
-        loggedState = false;
-    }
-
-    console.log("Logged State: " + loggedState);
-    console.log("Seller Page: " + sellerPage);
-
-
+    var loggedin;
+    var role;
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await validateToken();
+            if (result && result.loggedin) {
+                loggedin = true;
+                role = result.role;
+                console.log("User role:", role);
+            } else {
+                loggedin = false;
+                console.log("User not logged in");
+            }
+        };
+        fetchData();
+    }, []);
 
 
     const [products, setProducts] = useState([]);
@@ -144,7 +105,7 @@ function Home() {
                 <br></br>
             
                 {/* Condition that will show for user a button if he is logged as a seller or other button if he is logged as a user*/}
-                {loggedState ? (
+                {loggedin ? (
                         <div className="sellerOptions-03">
                             <Link to={'../sellerOptions'} className="Link">Seller Options</Link>
                         </div>
