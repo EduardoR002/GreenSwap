@@ -216,16 +216,16 @@ async function editPurchase(req, res) {
 }
 
 async function cancelPeriodicPurchase(req, res){
-    const { purchaseId } = req.body;
 
     try {
-        const { purchaseId } = req.body;
+        const { idpurchase } = req.body;
 
-        if (!purchaseId) {
-            return res.status(400).json({ message: "purchaseId is required" });
+
+        if (!idpurchase) {
+            return res.status(400).json({ message: "idpurchase is required" });
         }
 
-        const purchase = await models.purchase.findByPk(purchaseId);
+        const purchase = await models.purchase.findByPk(idpurchase);
 
         if (!purchase) {
             return res.status(404).json({ message: "Purchase not found" });
