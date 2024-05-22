@@ -1,5 +1,39 @@
 const models = require('../models');
 
+async function createDirectProposal(req, res) {
+    try {
+        const { newprice, idproduct, iduser, quantity } = req.body;
+
+        // Check if price and quantity is greater than zero
+        if (newprice <= 0 || quantity <= 0) {
+            return res.status(422).json({
+                message: "Price or quantity must be greater than zero"
+            });
+        }
+        const result = await models.sequelize.query(
+            'CALL createDirectProposal(:in_newprice, :in_idproduct, :in_iduser, :in_quantity)',
+            {
+                replacements: { in_newprice: newprice, in_idproduct: idproduct, in_iduser: iduser, in_quantity: quantity },
+                type: models.sequelize.QueryTypes.SELECT
+            }
+        );
+
+        if (result && result.length > 0 && result[0].message === 'Proposal created successfully') {
+            res.status(200).json({
+                message: "Proposal created successfully"
+            });
+        } else {
+            res.status(500).json({
+                message: result[0] ? result[0].message : "Unknown error occurred"
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error.message
+        });
+    }
+}
 
 // Async function to create a new proposal
 async function createProposal(req, res) {
@@ -12,7 +46,7 @@ async function createProposal(req, res) {
         });
     }
 
-    
+
     // Check if any field is empty
     if (!newprice || !iduser || !idproduct || !idproposalstate || !idproposaltype) {
         return res.status(422).json({
@@ -138,6 +172,7 @@ async function editProposal(req, res) {
 }
 
 module.exports = {
+    createDirectProposal: createDirectProposal,
     createProposal: createProposal,
     getAllProposals: getAllProposals,
     editProposal: editProposal
