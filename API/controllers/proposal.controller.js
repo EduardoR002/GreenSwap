@@ -72,6 +72,42 @@ async function createFutureProposal (req, res) {
     }
 }
 
+async function createPeriodicProposal (req, res) {
+    try {
+        const { newprice, idproduct, iduser, quantity, startday } = req.body;
+
+        // Check if price and quantity is greater than zero
+        if (newprice <= 0 || quantity <= 0) {
+            return res.status(422).json({
+                message: "Price or quantity must be greater than zero"
+            });
+        }
+
+        const result = await models.sequelize.query(
+            'CALL createPeriodicProposal(:in_newprice, :in_idproduct, :in_iduser, :in_quantity, :in_startday)',
+            {
+                replacements: { in_newprice: newprice, in_idproduct: idproduct, in_iduser: iduser, in_quantity: quantity, in_startday: startday},
+                type: models.sequelize.QueryTypes.SELECT
+            }
+        );
+
+        if (result && result.length > 0 && result[0].message === 'Proposal created successfully') {
+            res.status(200).json({
+                message: "Proposal created successfully"
+            });
+        } else {
+            res.status(500).json({
+                message: result[0] ? result[0].message : "Unknown error occurred"
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error.message
+        });
+    }
+}
+
 async function acceptProposal(req, res) {
     const { idproposal, type } = req.body;
     try {
@@ -111,10 +147,14 @@ async function acceptProposal(req, res) {
             );  
         }
         else if (type === 'periodic') {
-            
+            await models.sequelize.query(
+                'CALL createPeriodicPurchase(:in_buydate, :in_quantity, :in_price, :in_idproduct, :in_iduser, :in_startday)',
+                {
+                    replacements: {in_buydate: new Date(), in_quantity: proposal.quantity, in_price: proposal.newprice, in_idproduct: proposal.idproduct, in_iduser: proposal.iduser, in_startday: proposal.startday},
+                    type: models.sequelize.QueryTypes.SELECT
+                }
+            );  
         }
-
-
         res.status(200).json({
             message: "Proposal accepted with success"
         })
@@ -281,5 +321,6 @@ module.exports = {
     acceptProposal: acceptProposal,
     refuseProposal: refuseProposal,
     cancelProposal: cancelProposal,
-    createFutureProposal: createFutureProposal
+    createFutureProposal: createFutureProposal,
+    createPeriodicProposal: createPeriodicProposal
 };
