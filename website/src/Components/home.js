@@ -7,7 +7,7 @@ import Navbar from './navbar';
 import Cookies from 'js-cookie';
 
 // Function that will validate user token
-async function validateToken() {
+export async function validateToken() {
 
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 
