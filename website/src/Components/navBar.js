@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import GreenSwap from '../images/GreenSwap.png';
 import '../CSS/navbar.css';
@@ -10,6 +10,37 @@ const role = vt_res.role;
 const loggedin = vt_res.role;
 
 
+const Logout = async () => {
+    const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+
+    const formData = { 
+        token: token 
+    };
+
+    try {
+        const response = await fetch('http://localhost:3000/tokens/delete', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        });
+
+        if (response.ok) {
+            // Limpar o token do cookie
+            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            console.log("Usuário deslogado com sucesso");
+            // Redirecionar para a página de login ou home
+            window.location.href = './login';
+        } else {
+            console.error("Falha ao deslogar");
+            // Lidar com falha no logout
+        }
+    } catch (error) {
+        console.error("Erro ao deslogar:", error);
+        // Lidar com erro de rede ou servidor
+    }
+};
 
 function Navbar() {
 
@@ -58,18 +89,29 @@ function Navbar() {
                     </div>
 
                     <div className="main-log">
-                    <div className="login">
-                        <a>
-                            <Link to="../logIn" className="Link">Login</Link><br></br>
-                        </a>
+
+                        {/* If user is logged in it will apear login, and create account button, if not it will appear loggof */}
+                        {!loggedin ? (
+
+                            <div>
+
+                                <div className="login">
+                                    <Link to="../logIn" className="Link">Login</Link><br />
+                                </div>
+
+                                <div className="regist">
+                                    <Link to="../register" className="Link">New? Create an account</Link>
+                                </div>
+
+                            </div>
+
+                        ) : (
+                                <div>
+                                    <button onClick={Logout} className="button-logout-05">Logout</button>
+                                </div>
+                        )}
                     </div>
 
-                    <div className="regist">
-                        <a>
-                            <Link to="../register" className="Link">New? Create an account</Link> 
-                        </a>        
-                    </div>
-                    </div>
                 </div>
             </div>
         </div>

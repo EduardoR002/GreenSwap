@@ -131,3 +131,20 @@
     margin: 0 auto;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
+.button-logout-05{
+  width: 110%;
+  color: #042C3B;
+  background-color: #fffefe;
+  border: 2px solid #042C3B;
+  border-radius: 5px;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  font-size: 200%;
+}
+
+.button-logout-05:hover{
+  color: blue;
+  cursor: pointer;
+}

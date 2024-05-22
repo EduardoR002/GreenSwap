@@ -6,6 +6,8 @@ import '../CSS/navbar.css';
 import Navbar from './navbar';
 import Cookies from 'js-cookie';
 
+
+
 // Function that will validate user token
 export async function validateToken() {
 
