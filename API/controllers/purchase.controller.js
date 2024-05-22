@@ -36,8 +36,6 @@ async function deliverDirectPurchase(req, res) {
             error: error.message
         })
     }
-
-    
 }
 
 async function createDirectPurchase(req, res) {
@@ -67,7 +65,6 @@ async function createDirectPurchase(req, res) {
             error: error.message
         })
     }
-    
 }
 
 // Async function to create a purchase
