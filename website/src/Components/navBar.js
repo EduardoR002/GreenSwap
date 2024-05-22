@@ -12,6 +12,7 @@ const loggedin = vt_res.role;
 
 const Logout = async () => {
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    console.log(token);
 
     const formData = { 
         token: token 
