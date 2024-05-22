@@ -55,6 +55,8 @@ async function createFutureProposal (req, res) {
             }
         );
 
+        console.log(result);
+
         if (result && result.length > 0 && result[0].message === 'Proposal created successfully') {
             res.status(200).json({
                 message: "Proposal created successfully"
