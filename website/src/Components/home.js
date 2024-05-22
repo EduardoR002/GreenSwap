@@ -41,6 +41,7 @@ export async function validateToken() {
 
 // Function that will present website home page
 function Home() {
+    var loggedin;
 
     const [products, setProducts] = useState([]);
 
