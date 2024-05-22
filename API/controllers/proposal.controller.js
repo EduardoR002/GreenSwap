@@ -108,65 +108,44 @@ async function refuseProposal(req, res) {
     }
 }
 
-// Async function to create a new proposal
-async function createProposal(req, res) {
-    const { newprice, iduser, idproduct, idproposalstate, idproposaltype, quantity, futuredate, startday } = req.body;
-
-    // Check if newprice is greater than 0
-    if (newprice <= 0) {
-        return res.status(422).json({
-            message: "Price must be greater than zero"
-        });
-    }
-
-
-    // Check if any field is empty
-    if (!newprice || !iduser || !idproduct || !idproposalstate || !idproposaltype) {
-        return res.status(422).json({
-            message: "All fields are required"
-        });
-    }
-
-
-
-    const newProposal = {
-        newprice,
-        iduser,
-        idproduct,
-        idproposalstate,
-        idproposaltype,
-        quantity,
-        futuredate,
-        startday
-    };
-
+// Async function used to cancel a proposal
+async function cancelProposal(req, res) {
+    const { idproposal } = req.body; 
     try {
-        // Check if the referenced user, product, proposal state, and proposal type exist
-        const [user, product, proposalState, proposalType] = await Promise.all([
-            models.user.findByPk(iduser),
-            models.product.findByPk(idproduct),
-            models.proposalstate.findByPk(idproposalstate),
-            models.proposaltype.findByPk(idproposaltype)
-        ]);
+        // Find the proposal by its ID
+        const proposal = await models.proposal.findByPk(idproposal);
 
-        if (!user || !product || !proposalState || !proposalType) {
-            return res.status(404).json({
-                message: "User, Product, Proposal State, or Proposal Type not found"
-            });
+        // Check if the proposal exists
+        if (!proposal) {
+            return res.status(404).json({ message: "Proposal not found" });
         }
 
-        // Create the proposal
-        const createdProposal = await models.proposal.create(newProposal);
+        // Check if the proposal's state is "pending"
+        if (proposal.idproposalstate !== 1) { // Assuming 1 is the ID for "pending" state
+            return res.status(400).json({ message: "Proposal is not in pending state" });
+        }
 
-        res.status(200).json({
-            message: "Proposal created successfully",
-            proposal: createdProposal
-        });
+        // Update the proposal's state to "cancelled"
+        proposal.idproposalstate = 4; // Assuming 4 is the ID for "cancelled" state
+
+        // Save the updated proposal
+        await proposal.save();
+
+        // Create a cancellation notification
+        await models.sequelize.query(
+            'CALL createNotification (:in_date, :in_idtypenotification, :in_idpurchase, :in_idproposal, :in_idcertificate, :in_idrequest, :in_description, :in_for, :in_userid)',
+            {
+                replacements: {in_date: new Date(), in_idtypenotification: 2, in_idpurchase: null, in_idproposal: proposal.idproposal, in_idcertificate: null, in_idrequest: null, in_description: "Proposal cancelled", in_for: "user", in_userid: proposal.iduser},
+                type: models.sequelize.QueryTypes.INSERT
+            }
+        );
+
+        // Send success response
+        return res.status(200).json({ message: "Proposal cancelled successfully" });
+        
     } catch (error) {
-        res.status(500).json({
-            message: "Something went wrong",
-            error: error.message
-        });
+        // Handle any errors
+        return res.status(500).json({ message: "Something went wrong", error: error.message });
     }
 }
 
@@ -193,7 +172,7 @@ async function getAllProposals(req, res) {
 
 // Async function used to edit data of one proposal
 async function editProposal(req, res) {
-    const proposalId = req.params.proposalId;
+    const idproposal = req.params.idproposal;
     const updatedProposalData = req.body;
 
     // Check if any field is empty
@@ -204,7 +183,7 @@ async function editProposal(req, res) {
     }
 
     try {
-        const proposal = await models.proposal.findByPk(proposalId);
+        const proposal = await models.proposal.findByPk(idproposal);
         if (!proposal) {
             return res.status(404).json({
                 message: "Proposal not found"
@@ -246,9 +225,9 @@ async function editProposal(req, res) {
 
 module.exports = {
     createDirectProposal: createDirectProposal,
-    createProposal: createProposal,
     getAllProposals: getAllProposals,
     editProposal: editProposal,
     acceptProposal: acceptProposal,
-    refuseProposal: refuseProposal
+    refuseProposal: refuseProposal,
+    cancelProposal: cancelProposal
 };
