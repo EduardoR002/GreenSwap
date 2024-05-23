@@ -23,6 +23,7 @@ const proposalRoute = require('./routes/proposal.js');
 const purchaseRoute = require('./routes/purchase.js');
 const notificationRoute = require('./routes/notification.js');
 const tokenRoute = require('./routes/tokens.js');
+const favoritesRoute = require('./routes/favorites.js');
 
 
 function authenticateToken(req, res, next) {
@@ -53,6 +54,7 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use("/favorites", favoritesRoute);
 app.use("/tnotific", tnotificRoute);
 app.use("/tproduct", tproductRoute);
 app.use("/users", usersRoute);
