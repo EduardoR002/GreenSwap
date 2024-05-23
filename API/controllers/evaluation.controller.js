@@ -56,7 +56,18 @@ async function removeEvaluation(req, res){
     }
 }
 
+async function getRanking(req, res){
+    const result = await models.sequelize.query(
+        'CALL getRanking()',
+        {
+            type: models.sequelize.QueryTypes.RAW
+        }
+    );
+    res.status(200).json(result);
+}
+
 module.exports = {
     doEvaluation: doEvaluation,
-    removeEvaluation: removeEvaluation
+    removeEvaluation: removeEvaluation,
+    getRanking: getRanking
 }
