@@ -4,6 +4,6 @@ const { addFavorite, removeFavorite } = require('../controllers/favorites.contro
 const router = Router();
 
 router.post('/addfavorite', addFavorite);
-router.post('/removefavorite', removeFavorite);
+router.delete('/removefavorite', removeFavorite);
 
 module.exports = router;
