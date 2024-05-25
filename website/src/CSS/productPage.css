@@ -1,0 +1,32 @@
+.prod-cont{
+    display: flex;
+    align-items: center;
+    margin: 20px auto;
+    width: 94%;
+    padding: 20px; /*unit*/
+}
+
+.prod-cont-left, .prod-cont-right{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    left: 100%;
+}
+
+.more-prods-cont{
+    display: flex;
+    align-items: center;
+    margin: 20px auto;
+    width: 94%;
+    padding: 20px; /*unit*/
+}
+
+.prod-frame{
+    width: 500px;
+    height: 311px;
+    border: 8px solid #04B204;
+    background: url("https://picsum.photos/1920/1080") lightgray 50% / cover no-repeat;  
+    margin-left: 88px;
+    margin-top: 20px;
+}

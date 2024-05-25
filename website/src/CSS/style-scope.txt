@@ -10,6 +10,7 @@ aboutUs.css         -09
 orders.css          -10
 ranking.css         -11
 profileView.css     -12
+productPage.css     -13
 
 ### HOW TO USE (example):
 

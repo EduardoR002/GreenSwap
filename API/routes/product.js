@@ -4,7 +4,7 @@ const { createProduct, getProduct, getAllProducts,editProduct,editProductStock} 
 const router = Router();
 
 router.post("/create", createProduct);
-router.put("/get/:idproduct",getProduct);
+router.get("/get/:productId",getProduct);
 router.post("/getall", getAllProducts);
 router.put("/editproduct/:idproduct",editProduct);
 router.put("/editstockproduct/:idproduct",editProductStock);

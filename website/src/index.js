@@ -21,6 +21,7 @@ import AboutUs from './Components/aboutUs';
 import SellerOptions from './Components/sellerOptions';
 import SellerProposals from './Components/sellerProposals';
 import Proposals from './Components/proposals';
+import ProductPage from './Components/productPage';
 
 let vt_res = await validateToken();
 
@@ -117,8 +118,8 @@ const mainRoutes = [
     element: <AboutUs />
   },
   {
-    path: 'products/:id', // Make sure the path includes a parameter for the product ID
-    element: <Home />, // Replace <ProductDetails /> with the appropriate component
+    path: 'products/:productId', // Make sure the path includes a parameter for the product ID
+    element: <ProductPage />, 
   }
 ];
 
@@ -180,7 +181,7 @@ const generateProductRoutes = async () => {
     for (let i = 0; i <= product.length; i++) {
       productRoutes.push({
         path: `products/${product[i].idproduct}`,
-        element: <Home />, // Replace <Home /> with the appropriate component for product details
+        element: <ProductPage />, 
       });
     }
 
@@ -191,15 +192,9 @@ const generateProductRoutes = async () => {
   }
 };
 
-const prodRoutes = [
-  {
-    path: 'products',
-    element: <Home/>
-  }
-];
 
 // Combinando as rotas principais com as rotas de produtos geradas dinamicamente
-const combinedRoutes = [...mainRoutes, ...prodRoutes, ...await generateProductRoutes()];
+const combinedRoutes = [...mainRoutes, ...await generateProductRoutes()];
 
 // Criando o roteador
 const router = createBrowserRouter(createRoutesFromElements(
