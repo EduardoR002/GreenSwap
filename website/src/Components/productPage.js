@@ -6,8 +6,6 @@ import Navbar from './navbar';
 function ProductPage() {
   const { productId } = useParams();
   const [productData, setProductData] = useState(null);
-  const [userData, setUserData] = useState(null);
-  var sellerId;
 
   useEffect(() => {
     async function fetchProduct() {
@@ -24,7 +22,6 @@ function ProductPage() {
 
         if (res.ok) {
           setProductData(data.product); // Armazenar os dados do produto em productData
-          sellerId = productData.idseller;
         } else {
           console.error('Failed to fetch product:', res.status, res.statusText);
         }
@@ -33,30 +30,7 @@ function ProductPage() {
       }
     }
 
-    async function fetchSeller() {
-        try {
-          const selPath = 'http://localhost:3000/users/getuser/' + 32;
-          const res = await fetch(selPath, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-          });
-  
-          const data = await res.json();
-  
-          if (res.ok) {
-            setUserData(data.user); // Armazenar os dados do produto em userData
-          } else {
-            console.error('Failed to fetch seller:', res.status, res.statusText);
-          }
-        } catch (error) {
-          console.error('Error:', error.message);
-        }
-      }
-
     fetchProduct(); // Chamando a função para buscar o produto ao montar o componente
-    fetchSeller();
 
   }, [productId]);
   
@@ -64,7 +38,7 @@ function ProductPage() {
     <>
         <div className="navbar-position"> {/* Navbar common to all pages*/}
             <Navbar />
-            {productData && userData ? (
+            {productData ? (
                 <>
                     <div className='prod-cont-13'>
 
@@ -74,7 +48,7 @@ function ProductPage() {
                         <div className='prod-cont-right-13'>
                             <div className='pct-up'>
                                 <span className='poppins-regular prod-name-13'>{productData.name}</span>
-                                <span className='poppins-regular user-name-13'>{userData.name}</span>
+                                <span className='poppins-regular user-name-13'>{productData.idseller}</span> {/*DBCHANGE*/}
                                 <span className='poppins-regular prod-price-13'>{productData.price}€/Kg</span>
                                 <span className='poppins-regular prod-desc-13'>{productData.description}</span>
                             </div>
