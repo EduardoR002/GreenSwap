@@ -55,8 +55,8 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    margin: 20px auto;
-    width: 100%;
+    margin: 0 auto;
+    width: 90%;
     height: 100%;
     padding: 20px; /*unit*/
     text-align: center;
