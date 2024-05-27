@@ -53,23 +53,27 @@
 
 .productsHome-03 {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     margin: 20px auto;
-    width: 94%;
+    width: 100%;
+    height: 100%;
     padding: 20px; /*unit*/
     text-align: center;
 }
 
 .product-container-03{
-    width: 358px;
+    width: 318px;
     height: 346px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    margin: 0;
+    padding: 20px;
 }
 
 .product-03{
-    width: 328px;
+    width: 308px;
     height: 204px;
     background-color: red;
     margin-right: 20px;

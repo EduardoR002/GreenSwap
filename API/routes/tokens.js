@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const {createToken, deleteToken, renewToken, validateToken, getRole} = require('../controllers/tokens.controller.js');
+const {createToken, deleteToken, renewToken, validateToken, getRole, getId} = require('../controllers/tokens.controller.js');
 
 const router = Router();
 
@@ -16,5 +16,6 @@ router.delete('/delete', deleteToken);
 router.put('/renew', renewToken);
 router.post('/validate', validateToken);
 router.post('/getrole', getRole);
+router.post('/getid', getId);
 
 module.exports = router;

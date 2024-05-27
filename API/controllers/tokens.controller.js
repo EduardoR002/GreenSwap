@@ -35,6 +35,19 @@ async function getRole(req, res) {
     }
 }
 
+async function getId(req, res) {
+    const { token } = req.body
+    try {
+        const decoded = jwt.verify(token, '0f1ab83a576c30f57aa5c33de4009cc923923ac041f6f63af8daa1a5ad53254a');
+        return res.status(200).json({
+            id: decoded.id
+        })
+    } catch (error) {
+        console.error('Invalid or expired token:', error.message);
+        throw new Error('Invalid or expired token');
+    }
+}
+
 async function deleteToken(req, res){
     try {
         const token = req.body.token;
@@ -113,5 +126,6 @@ module.exports = {
     deleteToken: deleteToken,
     renewToken: renewToken,
     validateToken: validateToken,
-    getRole: getRole
+    getRole: getRole,
+    getId: getId
 };
