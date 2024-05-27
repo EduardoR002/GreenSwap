@@ -65,7 +65,7 @@ const mainRoutes = [
 
   {
     path: 'sellerRegist',
-    element: (role === "seller") ? <SellerRegister /> : <Login/>
+    element: <SellerRegister />
   },
 
   {

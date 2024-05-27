@@ -18,12 +18,7 @@ function SellerOptions() {
 
     <div className="containerOption">
         
-        <div className="options">
-        <Link  to={'../sellerProducts'} className="Link">My Products</Link>
-        </div>
-
-        <br></br> 
-
+      
         <div className="options">
         <Link to={'../sellerOrders'} className="Link">My Orders</Link>
         </div>
@@ -31,13 +26,20 @@ function SellerOptions() {
         <br></br> 
 
         <div className="options">
-        <Link to={'../productRegist'} className="Link">Register Product</Link>
+        <Link to={'../sellerProposals'} className="Link">My Proposals</Link>
         </div>
 
         <br></br> 
 
         <div className="options">
-        <Link  className="Link">Edit Product</Link>
+        <Link  to={'../sellerProducts'} className="Link">My Products</Link>
+        </div>
+
+
+        <br></br> 
+
+        <div className="options">
+        <Link to={'../productRegist'} className="Link">Register Product</Link>
         </div>
 
     </div>

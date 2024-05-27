@@ -14,7 +14,7 @@ function SellerOrders() {
       <Navbar /> 
 
       {/* Page title */}
-      <h1 className="title-07">Your Orders</h1>
+      <h1 className="title-07">Your Orders as a seller</h1>
 
 
 

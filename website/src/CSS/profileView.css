@@ -6,7 +6,7 @@
 }
 
 .profile {
-    margin-top: 3%;
+    margin-top: 0%;
     background-image: url('../images/profileBk.png');
     margin-left: 2%; 
     background-color: #4CCC7B;
@@ -44,45 +44,6 @@ label {
     font-family: "Poppins", sans-serif;
 }
 
-.yourProducts { 
-    margin-top: 3%;
-    margin-right: 2%; 
-    width: 64%;
-    height:68%;
-    background-color: #4CCC7B;
-    padding: 20px;
-    border-radius: 8px;
-    float: right;
-    border: 5px solid #042C3B;
-}
-
-.yourProducts {
-    font-family: "Poppins", sans-serif;
-    text-align: center;
-    font-style: normal;
-}
-
-.row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.column {
-    flex: 1;
-}
-
-.column img {
-    border-radius: 10%;
-    border: 3px solid #042C3B;
-    max-width: 70%;
-    height: auto;
-    cursor: pointer;
-}
-
-.column:hover {
-    transform: scale(1.1);
-}
 
 h1{
     font-family: "Poppins", sans-serif;
@@ -90,4 +51,71 @@ h1{
     font-size: 250%;
     text-align: center;
     color: #042C3B;;
+}
+
+.productsHome-12 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: -1%;
+    width: 66%;
+    height: 100%;
+    padding: 20px;
+    text-align: center;
+    border: 4px solid #012837;
+    background-color: rgb(101, 213, 101);
+    float: right;
+    margin-right: 1%;
+}
+
+.product-container-12{
+    width: 318px;
+    height: 346px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.product-12{
+    width: 308px;
+    height: 204px;
+    background-color: red;
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+.product-h1-12{
+    font-size: 36px;
+    margin: 0;
+    margin-bottom: -5px;
+}
+
+.product-h2-12{
+    font-size: 24px;
+    margin: 0;
+}
+
+.product-img-12{
+    border-style: solid;
+    border-width: 5px;
+    border-color: #012837;
+}
+
+.seller-12{
+    display: flex;
+    align-items: center;
+}
+
+.seller-h3-12{
+    color: #8e8e8e;
+    font-size: 20px;
+}
+
+.mso-12{
+    color: #8e8e8e;
+    margin: 0;
+    margin-right: 5px;
+    font-size: 20px;
+    margin-bottom: 3px;
 }

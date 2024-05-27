@@ -1,89 +1,76 @@
-import React, { useRef }  from "react";
-import '../CSS/sellerRegist.css'
-import logo from '../images/GreenSwap.png'
+import React from "react";
+import '../CSS/sellerRegist.css';
+import logo from '../images/GreenSwap.png';
 import { Link } from "react-router-dom";
+import GreenSwap from '../images/GreenSwap.png';
 
-//Function that will present user Regist page of the website
 function SellerRegister() {
-    const handleSellerRegister = async () => {
-      const formData = {
-        email: document.getElementById('email').value,
-        description: document.getElementById('productDescription').value,
-      }
-      try {
-        const res = await fetch('http://localhost:3000/seller/create', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData),
-        });
-        if (res.status === 200) {
-          const data = await res.json();
-          document.cookie = `user=${data.user.name}; path=/`;
-          alert("Criado com sucesso");
-      }      
-        else if (res.status === 422) {
-          alert("Phone number must be 9 digits long")  //--------------- MUDAR ERROS ------------------------------
+  const handleSellerRegister = async () => {
+    const formData = {
+      email: document.getElementById('email').value,
+      description: document.getElementById('productDescription').value,
+    };
+    try {
+      const res = await fetch('http://localhost:3000/seller/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData),
+      });
+      if (res.status === 200) {
+        const data = await res.json();
+        document.cookie = `user=${data.user.name}; path=/`;
+        alert("Criado com sucesso");
+      } else if (res.status === 422) {
+        alert("Phone number must be 9 digits long");
+      } else if (res.status === 409) {
+        const data = await res.json();
+        if (data.message === "Email already exists") {
+          alert("Email already exist");
+        } else if (data.message === "Phone number already exists") {
+          alert("Phone number already exist");
         }
-        else if(res.status === 409){
-          const data = await res.json()
-          if (data.message === "Email already exists") {
-            alert("Email already exist")
-          }
-          else if(data.message === "Phone number already exists"){
-            alert("Phone number already exist")
-          }
-          
-        }
-      } catch (error) {
-        console.error('Erro:', error.message);
       }
+    } catch (error) {
+      console.error('Erro:', error.message);
     }
-    return(
-        <>
-        <div className="main-08">
-          {/* Form */}
-          <div className="formDiv-08">
-            <h1>USER REQUEST TO BE A SELLER</h1>
+  };
+
+  return (
+    <div className="seller-register-container">
+      <div className="form-container">
+      <a className='a-05'>
+                <Link to={"../home"}><img src={GreenSwap} className="icon-05" alt="GreenSwap Icon" /></Link>
+                </a>
+        <h1 className="form-title">Be a Seller</h1>
         
-
-            <div className="input-box-07">
-                <label for="email">Email:
-                <input
-                className="poppins-regular input-08"
-                type="text"
-                id="email"
-                placeholder=""
-                />
-                </label>
-            </div>
-            
-            
-
-            <div className="input-box-08">
-            <label for="price">Description:
-                <input
-                className="poppins-regular input-08"
-                type="text"
-                id="productDescription"
-                placeholder=""
-                />
-                </label>
-            </div>
-            
-            {/*Button that will send user request to be a seller */}
-            <button className="poppins-regular button-08" onClick={handleSellerRegister}>
-              Submit Request
-            </button>
-
-            <br></br>
-
+        <div className="input-group">
+          <label htmlFor="email">Email:</label>
+          <input
+            className="input-field"
+            type="email"
+            id="email"
+            placeholder="Enter your email"
+          />
         </div>
+        
+        <div className="input-group">
+          <label htmlFor="productDescription">Description:</label>
+          <input
+            className="input-field"
+            type="text"
+            id="productDescription"
+            placeholder="Enter product description"
+          />
+        </div>
+        
+        <button className="submit-button" onClick={handleSellerRegister}>
+          Submit Request
+        </button>
+      </div>
     </div>
-      </>
-
-    )
+  );
 }
 
 export default SellerRegister;
