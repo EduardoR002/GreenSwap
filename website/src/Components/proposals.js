@@ -38,7 +38,6 @@ function Proposals() {
                 {/* Div for proposal information*/}
                 <div className='right-content-14'>
 
-                  <span className="poppins-regular product-info-h1-14"><b>Purchase Type:</b> {} </span><br></br>
                   <span className="poppins-regular product-info-h1-14"><b>Proposal Date:</b> {} </span><br></br>
                   <span className="poppins-regular product-info-h1-14"><b>Quantity:</b> {} kg </span><br></br>
                   <span className="poppins-regular product-info-h1-14"><b>Price:</b> $ </span><br></br>

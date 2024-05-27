@@ -74,7 +74,7 @@ function Navbar() {
                         <a className="a-05 poppins-regular"> <Link to={'../orders'}  className="Link">Orders</Link></a>
                     </div>
                     <div className="section-05">
-                        <a className="a-05 poppins-regular"> <Link to={'../proposals'}  className="Link">Proposal</Link></a>
+                        <a className="a-05 poppins-regular"> <Link to={'../proposals'}  className="Link">Proposals</Link></a>
                     </div>
                 </div>
 
