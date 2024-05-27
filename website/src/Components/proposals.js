@@ -22,18 +22,17 @@ function Proposals() {
                 <div className='left-content-14'>
 
                   <Link to={'../products/'}  className="Link">
-                                <img className='product-img-03' src='https://picsum.photos/328/204'/>
+                                <img className='product-img-14' src='https://picsum.photos/328/204'/>
                   </Link>
                             <span className='poppins-regular product-h1-14'>{}Tomates</span>
                             <span className='poppins-regular product-h2-14'>{}15€/kg</span>
-                            <div className='seller-03'>
+                            <div className='seller-14'>
                             <span class="material-symbols-outlined mso-14">
                                     person
                             </span>
                             <span className='poppins-regular seller-h3-14'>{}John</span>
                   </div>
             </div>
-            <div>
 
                 {/* Div for proposal information*/}
                 <div className='right-content-14'>
@@ -43,7 +42,7 @@ function Proposals() {
                   <span className="poppins-regular product-info-h1-14"><b>Price:</b> $ </span><br></br>
                   <span className="poppins-regular product-info-h1-14"><b>State: </b> {} </span><br></br>
 
-            </div>
+
 
           </div>
 

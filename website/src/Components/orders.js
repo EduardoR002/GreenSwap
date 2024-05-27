@@ -25,7 +25,7 @@ function Orders() {
                 <div className='left-content-10'>
 
                   <Link to={'../products/'}  className="Link">
-                                <img className='product-img-03' src='https://picsum.photos/328/204'/>
+                                <img className='product-img-10' src='https://picsum.photos/328/204'/>
                   </Link>
                             <span className='poppins-regular product-h1-10'>{}Tomates</span>
                             <span className='poppins-regular product-h2-10'>{}15€/kg</span>
@@ -36,7 +36,7 @@ function Orders() {
                             <span className='poppins-regular seller-h3-10'>{}John</span>
                   </div>
             </div>
-            <div>
+
 
                 {/* Div for purchase information*/}
                 <div className='right-content-10'>
@@ -48,7 +48,6 @@ function Orders() {
                   <span className="poppins-regular product-info-h1-10"><b>Date Receveid (estimated):</b> {} </span><br></br>
                   <span className="poppins-regular product-info-h1-10"><b>State: </b> {} </span><br></br>
 
-            </div>
 
           </div>
 
