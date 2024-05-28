@@ -4,80 +4,68 @@ import { Link } from "react-router-dom";
 import '../CSS/navbar.css';
 import Navbar from './navbar';
 import ranking from "../images/ranking.png"
+import '../CSS/productPage.css'
+import { fetchBestProducts } from '../APIF/ranking.fetch';
 
 //Function that will present About Us page of the website
 function Ranking() {
 
-  var loggedin;
-
-  const [products, setProducts] = useState([]);
+  //COPY COPY COPY COPY COPY
+  const [products, setProducts] = useState(null);
 
   useEffect(() => {
-      getProducts();
-  }, []); // O array vazio como segundo argumento garante que o efeito só execute uma vez após a montagem
-
-  async function getProducts() {
-      const formData = {
-          search_name: " ",
-          max_price: 0,
-          min_price: 0
-      };
-  
-      //console.log('Sending request with data:', formData);
-  
-      try {
-          const res = await fetch('http://localhost:3000/product/getall', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(formData),
-          });
-  
-          const data = await res.json();
-  
-          if (res.ok) { // Check if response status is in the range 200-299
-              const flattenedProducts = Object.values(data.products[0]);
-              setProducts(flattenedProducts);
-          } else {
-              console.error('Failed to fetch products:', res.status, res.statusText);
-          }
-      } catch (error) {
-          console.error('Error:', error.message);
-      }
-  }
+    fetchBestProducts()
+      .then(productsData => {
+        if (productsData) {
+          const products = Object.values(productsData);
+          console.log("productsData -> "+productsData+" | productsData[0] -> "+ productsData[0])
+          setProducts(products); // Definindo o produto no estado
+        } else {
+          console.error("Products are undefined or null.");
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching products:', error);
+      });
+  }, []); 
+  //COPY COPY COPY COPY COPY
 
     return (
      
-
       <div className="navbar-position"> {/* Navbar common to all pages*/}
       <Navbar />
+      {products ? (
+                <div className='tocenter-11'>
 
-      {/* Page title */}
-      <div className="ranking-icon">
-        <img src={ranking} alt="Ranking Icon" className="icon-07" />
-      </div>
-            {/* Div where will apear  diverse products*/}
-            <div className="productsHome-03">
-
+                    <div className="ranking-icon">
+                        <img src={ranking} alt="Ranking Icon" className="icon-07" />
+                    </div>
+                    
+                    <div className='cont-11'>
                     {products.map((product, index) => (
-                        <div className='product-container-03' key={index}>
-                            <Link to={'../products/'+product.idproduct}  className="Link">
-                                <img className='product-img-03' src='https://picsum.photos/328/204'/>
-                            </Link>
-                            <span className='poppins-regular product-h1-03'>{product.name}</span>
-                            <span className='poppins-regular product-h2-03'>{product.price}€/kg</span>
-                            <div className='seller-03'>
-                                <span class="material-symbols-outlined mso-03">
-                                    person
-                                </span>
-                                <span className='poppins-regular seller-h3-03'>{product.seller_name}</span>
+                        <div className='main-11' key={index}>
+                            <span className='poppins-regular place-11'>{index+1}º</span>
+
+                            <div className='product-container-03' key={index}>
+                                <Link to={'../products/'+product.idproduct}  className="Link">
+                                    <img className='product-img-03' src='https://picsum.photos/328/204'/>
+                                </Link>
+                                <span className='poppins-regular product-h1-03'>{product.name}</span>
+                                <span className='poppins-regular product-h2-03'>{product.price}€/kg</span>
+                                <div className='rating-11'>
+                                    <span className='poppins-regular product-h1-11'>{parseFloat(product.avg_evaluation).toFixed(1)}</span>
+                                    <span class="material-symbols-outlined star-11">
+                                        grade
+                                    </span>
+                                </div>        
                             </div>
                         </div>
                     ))}
-
-              {/*<p>Aqui vão aparecer os produtos da home page</p>*/}
-              </div>
+                    </div>
+                </div>
+            ) : (
+                <p className='poppins-regular'>Loading...</p>
+            )}
 
         </div>
       );
