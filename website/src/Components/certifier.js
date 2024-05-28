@@ -39,7 +39,7 @@ function Certifier() {
                                 <th className='poppins-regular'><b>Req ID</b></th>
                                 <th className='poppins-regular'><b>User ID</b></th>
                                 <th className='poppins-regular'><b>NIF</b></th>
-                                <th className='poppins-regular'><b>Photo</b></th>
+                                {/*<th className='poppins-regular'><b>Photo</b></th>*/}
                                 <th className='poppins-regular'><b>Req State</b></th>
                             </tr>
                         </thead>
