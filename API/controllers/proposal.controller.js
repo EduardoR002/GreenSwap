@@ -20,12 +20,11 @@ async function createDirectProposal(req, res) {
                 type: models.sequelize.QueryTypes.SELECT
             }
         );
-
-        if (!result) {
-            res.status(500).json({
-                message: result[0] ? result[0].message : "Unknown error occurred"
+        
+        if (!result || result.length === 0) {
+            return res.status(500).json({
+                message: "Unknown error occurred"
             });
-            
         } else {
             res.status(200).json({
                 message: "Proposal created successfully"

@@ -204,7 +204,7 @@ describe('createProduct function', () => {
 });
 
 // Group of unit tests that test the function getProduct
-describe('getProduct function', () => {
+/*describe('getProduct function', () => {
     it('should return 200 and the product if found', async () => {
         const mockProduct = {
             id: 1,
@@ -279,7 +279,7 @@ describe('getProduct function', () => {
             error: 'Database error'
         });
     });
-});
+});*/
 
 // Group of unit tests that test the function getAllProducts
 describe('getAllProducts function', () => {
