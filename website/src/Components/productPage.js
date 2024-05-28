@@ -5,7 +5,7 @@ import Navbar from './navbar';
 import { fetchProduct } from '../APIF/prod.fetch.js';
 
 function ProductPage() {
-
+  //COPY COPY COPY COPY COPY
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
 
@@ -23,6 +23,7 @@ function ProductPage() {
         console.error('Error fetching product:', error);
       });
   }, [productId]); // Executa o efeito sempre que productId mudar
+  //COPY COPY COPY COPY COPY
   
   return (
     <>
@@ -38,7 +39,7 @@ function ProductPage() {
                         <div className='prod-cont-right-13'>
                             <div className='pct-up'>
                                 <span className='poppins-regular prod-name-13'>{product.name}</span>
-                                <span className='poppins-regular user-name-13'>{product.idseller}</span> {/*DBCHANGE*/}
+                                <span className='poppins-regular user-name-13'>{product.seller}</span> {/*DBCHANGE*/}
                                 <span className='poppins-regular prod-price-13'>{product.price}€/Kg</span>
                                 <span className='poppins-regular prod-desc-13'>{product.description}</span>
                             </div>

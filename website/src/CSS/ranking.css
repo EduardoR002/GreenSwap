@@ -1,9 +1,50 @@
+.tocenter-11{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.main-11{
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    border-top: 5px solid black;
+    border-width: thin;
+    padding: 50px
+}
+
+.place-11{
+    font-size: 100px;
+    margin-top:50px;
+    margin-right: 50px;
+    color: rgb(32, 218, 54);
+}
+
+.main-11:first-child{
+    border: 0px;
+}
+
+.rating-11{
+    display: flex;
+}
+
+.product-h1-11{
+    font-size: 30px;
+}
+
+.star-11{
+    margin: 0;
+    margin-left: 2px;
+    font-size: 37px;
+    color: gold;
+}
+
 .ranking-icon{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 1%;
-    margin-bottom: -2%;
+    margin-top: 50px;
+    margin-bottom: -20px;
 }
 
 .icon-07 {
