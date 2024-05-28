@@ -1,5 +1,46 @@
 const models = require('../models');
 
+async function deliveredPurchase(req, res) {
+    const { idpurchase } = req.body;
+
+    try {
+        const purchase = await models.purchase.findByPk(idpurchase);
+
+        if (!purchase) {
+            return res.status(404).json({
+                message: "Purchase not found"
+            });
+        }
+
+        const updatedPurchaseData = purchase;
+
+        updatedPurchaseData.idpurchasestate = 3;
+
+        Object.assign(purchase, updatedPurchaseData);
+        const updatedPurchase = await purchase.save();
+
+        const product = await models.product.findByPk(purchase.idproduct)
+
+        const seller = await models.product.findByPk(product.idseller)
+
+        await models.sequelize.query(
+            'CALL createNotification(:in_date, :in_idtypenotification, :in_idpurchase, :in_idproposal, :in_idcertificate, :in_idrequest, :in_description, :in_for, :in_userid)',
+            {
+                replacements: {in_date: new Date(), in_idtypenotification: 1, in_idpurchase: updatedPurchase.idpurchase, in_idproposal: null, in_idcertificate: null, in_idrequest: null, in_description: 'Product delivered', in_for: 'seller', in_userid: seller.userId}
+            }
+        );
+        res.status(200).json({
+            message: "Purchase updated successfully",
+            purchase: updatedPurchase
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error.message
+        })
+    }
+}
+
 async function deliverPurchase(req, res) {
     const { idpurchase } = req.body;
 
