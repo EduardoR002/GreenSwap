@@ -17,7 +17,7 @@ async function fetchProduct(idproduct) {
       const data = await res.json();
   
       if (res.ok) {
-        return data.product;
+        return data;
       } else {
         throw new Error(`Failed to fetch product: ${res.status} ${res.statusText}`);
       }

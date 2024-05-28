@@ -88,7 +88,7 @@ async function getProduct(req, res) {
                 type: models.sequelize.QueryTypes.SELECT
             }
         );
-        return res.status(200).json(result);
+        return res.status(200).json(result[0]);
     } catch (error) {
         res.status(500).json({
             message: "Something went wrong",
