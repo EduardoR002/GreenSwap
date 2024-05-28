@@ -3,9 +3,6 @@ const { createNotification, getAllNotifications} = require('../controllers/notif
 
 const router = Router();
 
-router.post("/create", createNotification);
 router.get("/getall", getAllNotifications);
-
-
 
 module.exports = router;

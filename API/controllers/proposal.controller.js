@@ -1,4 +1,6 @@
 const models = require('../models');
+const notification = require('../models/notification.js');
+const {createNotification} = require('./notification.controller.js');
 
 // Async function to create a new direct  proposal
 async function createDirectProposal(req, res) {
@@ -114,58 +116,41 @@ async function createPeriodicProposal (req, res) {
 }
 
 async function acceptProposal(req, res) {
-    const { idproposal, type } = req.body;
+    const { idproposal } = req.body;
     try {
-        const proposal = await models.proposal.findByPk(idproposal);
-
-        const proposalUpdated = proposal;
-
-        proposalUpdated.idproposalstate = 2;
-
-        Object.assign(proposal, proposalUpdated);
-        const updatedproposal = await proposal.save();
-
-        await models.sequelize.query(
-            'CALL createNotification (:in_date, :in_idtypenotification, :in_idpurchase, :in_idproposal, :in_idcertificate, :in_idrequest, :in_description, :in_for, :in_userid)',
-            {
-                replacements: {in_date: new Date(), in_idtypenotification: 2, in_idpurchase: null, in_idproposal: updatedproposal.idproposal, in_idcertificate: null, in_idrequest: null, in_description: "Proposal accepted", in_for: "user", in_userid: proposal.iduser},
-                type: models.sequelize.QueryTypes.INSERT
+        const proposal = await changeProposalState(idproposal);
+        if (proposal === 'Not Pending') {
+            return res.status(422).json({
+                message: "Proposal state is not pending",
+            });
+        }
+        if (proposal) {
+            const notification = await createNotification(2,null,proposal.idproposal,null,null, "Proposal accepted","user",proposal.iduser);
+            if (!notification) {
+                return res.status(500).json({
+                    message: "Something went wrong",
+                    error: error.message
+                });
             }
-        );
-
-        if (type === 'direct') {
-            await models.sequelize.query(
-                'CALL directProposaltoPurchase(:in_buydate, :in_quantity, :in_price, :in_idproduct, :in_iduser)',
-                {
-                    replacements: {in_buydate: new Date(), in_quantity: proposal.quantity, in_price: proposal.newprice, in_idproduct: proposal.idproduct, in_iduser: proposal.iduser },
-                    type: models.sequelize.QueryTypes.SELECT
-                }
-            );
+            const purchase = await proposalToPurchase(proposal);
+            if (!purchase) {
+                return res.status(500).json({
+                    message: "Something went wrong",
+                    error: error.message
+                });
+            }
+            return res.status(200).json({
+                message: "Proposal accepted with success"
+            })
         }
-        else if (type === 'future') {
-            await models.sequelize.query(
-                'CALL createFuturePurchase(:in_buydate, :in_quantity, :in_price, :in_futurepurchase, :in_idproduct, :in_iduser)',
-                {
-                    replacements: {in_buydate: new Date(), in_quantity: proposal.quantity, in_price: proposal.newprice, in_futurepurchase: proposal.futuredate, in_idproduct: proposal.idproduct, in_iduser: proposal.iduser },
-                    type: models.sequelize.QueryTypes.SELECT
-                }
-            );  
+        else{
+            return res.status(404).json({
+                message: "Proposal not founded",
+                error: error.message
+            });
         }
-        else if (type === 'periodic') {
-            await models.sequelize.query(
-                'CALL createPeriodicPurchase(:in_buydate, :in_quantity, :in_price, :in_idproduct, :in_iduser, :in_startday)',
-                {
-                    replacements: {in_buydate: new Date(), in_quantity: proposal.quantity, in_price: proposal.newprice, in_idproduct: proposal.idproduct, in_iduser: proposal.iduser, in_startday: proposal.startday},
-                    type: models.sequelize.QueryTypes.SELECT
-                }
-            );  
-        }
-        res.status(200).json({
-            message: "Proposal accepted with success"
-        })
-        
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             message: "Something went wrong",
             error: error.message
         });
@@ -317,6 +302,54 @@ async function editProposal(req, res) {
             error: error.message
         });
     }
+}
+
+async function changeProposalState(idproposal){
+    try {
+        const proposal = await models.proposal.findByPk(idproposal);
+        if (proposal.idproposalstate != 1) {
+            return "Not Pending";
+        }
+        proposal.idproposalstate = 2;
+        const updatedproposal = await proposal.save();
+        return updatedproposal;
+    } catch (error) {
+        throw new Error("Something went wrong: " + error.message);
+    }    
+}
+
+async function proposalToPurchase(proposal){
+    if (proposal.idproposaltype === 1) {
+        await models.sequelize.query(
+            'CALL directProposaltoPurchase(:in_buydate, :in_quantity, :in_price, :in_idproduct, :in_iduser)',
+            {
+                replacements: {in_buydate: new Date(), in_quantity: proposal.quantity, in_price: proposal.newprice, in_idproduct: proposal.idproduct, in_iduser: proposal.iduser },
+                type: models.sequelize.QueryTypes.SELECT
+            }
+        );
+        return true;
+    }
+    else if (proposal.idproposaltype === 2) {
+        await models.sequelize.query(
+            'CALL createFuturePurchase(:in_buydate, :in_quantity, :in_price, :in_futurepurchase, :in_idproduct, :in_iduser)',
+            {
+                replacements: {in_buydate: new Date(), in_quantity: proposal.quantity, in_price: proposal.newprice, in_futurepurchase: proposal.futuredate, in_idproduct: proposal.idproduct, in_iduser: proposal.iduser },
+                type: models.sequelize.QueryTypes.SELECT
+            }
+        );
+        return true;
+    }
+    else if (proposal.idproposaltype === 3) {
+        await models.sequelize.query(
+            'CALL createPeriodicPurchase(:in_buydate, :in_quantity, :in_price, :in_idproduct, :in_iduser, :in_startday)',
+            {
+                replacements: {in_buydate: new Date(), in_quantity: proposal.quantity, in_price: proposal.newprice, in_idproduct: proposal.idproduct, in_iduser: proposal.iduser, in_startday: proposal.startday},
+                type: models.sequelize.QueryTypes.SELECT
+            }
+        );
+        return true;
+    }
+    return false;
 }
 
 async function getUserProposals(req, res){
