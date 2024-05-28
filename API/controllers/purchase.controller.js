@@ -263,11 +263,39 @@ async function cancelPeriodicPurchase(req, res){
     }
 }
 
+async function getUserPurchases(req, res){
+    const { userId } = req.body;
+    try {
+        const user = await models.user.findByPk(userId);
+        if(user){
+            const [result] = await models.sequelize.query(
+                'CALL getUserPurchases(:in_userId)',
+                {
+                    replacements: { in_userId: userId },
+                    type: models.sequelize.QueryTypes.SELECT
+                }
+            );
+            return res.status(200).json(result);
+        }
+        else{
+            return res.status(404).json({
+                message: 'User not found' 
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: "An error occurred",
+            error: error.message,
+        });
+    }
+}
+
 module.exports = {
     createPurchase: createPurchase,
     getAllPurchases: getAllPurchases,
     editPurchase: editPurchase,
     createDirectPurchase: createDirectPurchase,
     deliverPurchase: deliverPurchase,
-    cancelPeriodicPurchase: cancelPeriodicPurchase
+    cancelPeriodicPurchase: cancelPeriodicPurchase,
+    getUserPurchases: getUserPurchases
 };
