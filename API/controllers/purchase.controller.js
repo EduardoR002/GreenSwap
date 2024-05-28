@@ -338,5 +338,6 @@ module.exports = {
     createDirectPurchase: createDirectPurchase,
     deliverPurchase: deliverPurchase,
     cancelPeriodicPurchase: cancelPeriodicPurchase,
-    getUserPurchases: getUserPurchases
+    getUserPurchases: getUserPurchases,
+    deliveredPurchase: deliveredPurchase
 };
