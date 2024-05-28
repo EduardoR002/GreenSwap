@@ -26,7 +26,6 @@ const tokenRoute = require('./routes/tokens.js');
 const favoritesRoute = require('./routes/favorites.js');
 const evalutationRoute = require('./routes/evaluation.js');
 
-
 function authenticateToken(req, res, next) {
     const token = req.headers.authorization;
 
@@ -43,7 +42,6 @@ function authenticateToken(req, res, next) {
         next();
     });
 }
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -76,7 +74,5 @@ app.use("/proposal", proposalRoute);
 app.use("/purchase", purchaseRoute);
 app.use("/notification", notificationRoute);
 app.use("/tokens", tokenRoute);
-
-
 
 module.exports = app;
