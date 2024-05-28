@@ -2,36 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../CSS/productPage.css';
 import Navbar from './navbar';
+import {fetchProduct} from '../API/api.js'
 
 function ProductPage() {
   const { productId } = useParams();
   const [productData, setProductData] = useState(null);
+  const [error, setError] = useState(null); 
 
   useEffect(() => {
-    async function fetchProduct() {
+    async function getProductData() {
       try {
-        const prodPath = 'http://localhost:3000/product/get/' + productId;
-        const res = await fetch(prodPath, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-        });
-
-        const data = await res.json();
-
-        if (res.ok) {
-          setProductData(data.product); // Armazenar os dados do produto em productData
-        } else {
-          console.error('Failed to fetch product:', res.status, res.statusText);
-        }
+        const data = await fetchProduct(productId);
+        setProductData(data);
       } catch (error) {
-        console.error('Error:', error.message);
+        setError(error.message);
       }
     }
-
-    fetchProduct(); // Chamando a função para buscar o produto ao montar o componente
-
+    getProductData();
   }, [productId]);
   
   return (
