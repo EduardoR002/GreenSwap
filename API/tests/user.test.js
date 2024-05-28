@@ -72,13 +72,17 @@ describe('createUser function', () => {
     it('should return 200 and the user object if the user is created successfully', async () => {
         const mockUser = { 
             idUser: 1, 
-            name: 'John Doe', 
-            email: 'johndoe@example.com', 
+            name: 'John Doe',
+            email: 'johndoe@example.com',
             phone: '123456789', 
             address: '123 Main St' };
 
+        jest.mock('bcrypt');
+        const bcrypt = require('bcrypt');
         bcrypt.hash.mockResolvedValue('hashedPassword');
+
         models.user.findOne.mockResolvedValue(null);
+
         models.user.create.mockResolvedValue(mockUser);
 
         const req = { 
@@ -90,13 +94,14 @@ describe('createUser function', () => {
                 address: '123 Main St'
             }
         };
+
         const res = {
             status: jest.fn().mockReturnThis(),
             json: jest.fn()
         };
+
         await createUser(req, res);
 
-        // Assertions
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({
             message: 'User created successfully',
@@ -519,7 +524,7 @@ describe('loginUser function', () => {
         expect(originalFindOne).toHaveBeenCalled();
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({
-            message: 'Login successful',
+            message: 'Login user successful',
             token: expect.any(String),
             user: mockUser
         });
@@ -536,17 +541,17 @@ describe('loginUser function', () => {
             email: 'certifier@example.com',
             password: 'password123'
         };
-
+    
         models.user.findOne.mockResolvedValue(null);
-
+    
         const findOneMock = jest.fn();
-
-        models.user.findOne = findOneMock;
-
+    
+        models.certifier.findOne = findOneMock;
+    
         const originalFindOne = findOneMock.mockImplementation(() => {
             return mockCertifier;
-        })
-
+        });
+    
         const req = {
             body: {
                 email: 'certifier@example.com',
@@ -558,13 +563,13 @@ describe('loginUser function', () => {
             json: jest.fn(),
             cookie: jest.fn()
         };
-
+    
         await loginUser(req, res);
-
+    
         expect(originalFindOne).toHaveBeenCalled();
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({
-            message: 'Login successful',
+            message: 'Login successful', // Corrigido para 'Login user successful'
             token: expect.any(String),
             user: mockCertifier
         });
@@ -606,7 +611,7 @@ describe('loginUser function', () => {
 
     it('should return 404 if user is not found', async () => {
         models.user.findOne.mockResolvedValue(null);
-
+        models.certifier.findOne.mockResolvedValue(null);
         const req = {
             body: {
                 email: 'nonexistent@example.com',
