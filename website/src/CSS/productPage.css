@@ -71,7 +71,8 @@
 
 .pct-down{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 30px;
 }
 
 .input-13{
