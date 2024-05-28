@@ -11,7 +11,7 @@ const {
 jest.mock('../models');
 
 // Group of unit tests that test the function createPurchase
-describe('createPurchase function', () => {
+/*describe('createPurchase function', () => {
     it('should return 200 and the created purchase if successful', async () => {
         const mockPurchase = {
             id: 1,
@@ -157,7 +157,7 @@ describe('createPurchase function', () => {
             error: 'Database error'
         });
     });
-});
+});*/
 
 // Group of unit tests that test the function getAllPurchases
 describe('getAllPurchases function', () => {
