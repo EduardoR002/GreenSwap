@@ -12,6 +12,7 @@ ranking.css         -11
 profileView.css     -12
 productPage.css     -13
 proposal.css        -14
+certifier.css       -15
 
 ### HOW TO USE (example):
 

@@ -22,6 +22,7 @@ import SellerOptions from './Components/sellerOptions';
 import SellerProposals from './Components/sellerProposals';
 import Proposals from './Components/proposals';
 import ProductPage from './Components/productPage';
+import Certifier from './Components/certifier';
 
 let vt_res = await validateToken();
 
@@ -120,6 +121,10 @@ const mainRoutes = [
   {
     path: 'products/:productId', // Make sure the path includes a parameter for the product ID
     element: <ProductPage />, 
+  },
+  {
+    path: 'certifier',
+    element: (role === "certifier") ? <Certifier /> : <Login/>
   }
 ];
 
