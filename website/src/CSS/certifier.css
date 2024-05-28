@@ -2,5 +2,27 @@
 .space-15{
     margin-top: 50px;
     margin-bottom: 50px;
+    justify-content: flex-start;
 }
+
+/* Estilo para a tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #ccc; /* Borda da tabela */
+  }
+  
+  /* Estilo para os cabeçalhos */
+  thead th {
+    background-color: #ffffff; /* Cor de fundo dos cabeçalhos */
+    border-bottom: 2px solid #ccc; /* Borda inferior dos cabeçalhos */
+    padding: 8px; /* Espaçamento interno dos cabeçalhos */
+  }
+  
+  /* Estilo para as células de dados */
+  tbody td {
+    padding: 8px; /* Espaçamento interno das células de dados */
+  }
+  
+
 

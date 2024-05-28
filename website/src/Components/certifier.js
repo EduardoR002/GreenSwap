@@ -37,23 +37,24 @@ function Certifier() {
                     <table>
                         <thead>
                             <tr>
-                                <th>Req ID</th>
-                                <th>User ID</th>
-                                <th>NIF</th>
-                                <th>Photo</th>
-                                <th>Req State</th>
+                                <th className='poppins-regular'><b>Req ID</b></th>
+                                <th className='poppins-regular'><b>User ID</b></th>
+                                <th className='poppins-regular'><b>NIF</b></th>
+                                <th className='poppins-regular'><b>Photo</b></th>
+                                <th className='poppins-regular'><b>Req State</b></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {requests.map((request, index) => (
-                                <tr>
-                                    <td>{request[index].idrequestseller}</td>
-                                    <td>{request[index].iduser}</td>
-                                    <td>{request[index].nif}</td>
-                                    {/*<td>{request[index].photo}</td>*/}
-                                    <td>{request[index].idstate}</td>
-                                </tr>
-                            ))}
+                        {requests.map((request, index) => (
+                            <tr>
+                                <td className='poppins-regular'>{request[index].idrequestseller}</td>
+                                <td className='poppins-regular'>{request[index].iduser}</td>
+                                <td className='poppins-regular'>{request[index].nif}</td>
+                                {/*<td className='poppins-regular'>{request.photo}</td>*/}
+                                <td className='poppins-regular'>{request[index].idstate}</td>
+                            </tr>
+                        ))}
+
                         </tbody>
                     </table>
                    ) : (
