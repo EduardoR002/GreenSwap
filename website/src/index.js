@@ -28,7 +28,7 @@ let vt_res = await validateToken();
 const role = vt_res.role;
 const isLoggedIn = vt_res.loggedin;
 
-console.log("This user is logged in? -> "+isLoggedIn+" Role: "+role);
+//console.log("This user is logged in? -> "+isLoggedIn+" Role: "+role);
 
 // #region Routes
 const mainRoutes = [
@@ -176,7 +176,7 @@ const generateProductRoutes = async () => {
 
     const productRoutes = [];
 
-    console.log(product[0].idproduct)
+    //console.log(product[0].idproduct)
 
     for (let i = 0; i <= product.length; i++) {
       productRoutes.push({
@@ -203,28 +203,12 @@ const router = createBrowserRouter(createRoutesFromElements(
   ))
 ));
 
-//-------------------------------------------STOP HERE-----------------------------------
-/*const prodRoutes = [
-  {
-    path: 'teste',
-    element: <Home/>
-  }
-];*/
-
-//const combinedRoutes = [...mainRoutes,...prodRoutes];
-
-//const router = createBrowserRouter(combinedRoutes);
-
-// #endregion
-
 const root = createRoot(document.getElementById('root')); // Use createRoot de react-dom/client
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>
 );
-
-
 
 // Se você deseja começar a medir o desempenho em sua aplicação, passe uma função
 // para registrar resultados (por exemplo: reportWebVitals(console.log))

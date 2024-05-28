@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../CSS/productPage.css';
 import Navbar from './navbar';
-import {fetchProduct} from '../API/api.js'
+import { fetchProduct } from '../APIF/prod.fetch.js';
 
 function ProductPage() {
+
   const { productId } = useParams();
+
   const [productData, setProductData] = useState(null);
   const [error, setError] = useState(null); 
 
@@ -19,6 +21,7 @@ function ProductPage() {
       }
     }
     getProductData();
+    //console.log(productData)
   }, [productId]);
   
   return (

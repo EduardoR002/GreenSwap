@@ -79,8 +79,8 @@ async function renewToken(req, res){
         if (oldtoken) {
             const decodedtoken = jwt.verify(token, '0f1ab83a576c30f57aa5c33de4009cc923923ac041f6f63af8daa1a5ad53254a');
             const { id, role} = decodedtoken;
-            console.log("ID:", id);
-            console.log("Role:", role);
+            //console.log("ID:", id);
+            //console.log("Role:", role);
             const newtoken = jwt.sign(
                 { id: id, role: role},
                 '0f1ab83a576c30f57aa5c33de4009cc923923ac041f6f63af8daa1a5ad53254a',

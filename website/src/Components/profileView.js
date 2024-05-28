@@ -22,7 +22,7 @@ function ProfileView() {
           min_price: 0
       };
   
-      console.log('Sending request with data:', formData);
+      //console.log('Sending request with data:', formData);
   
       try {
           const res = await fetch('http://localhost:3000/product/getall', {
