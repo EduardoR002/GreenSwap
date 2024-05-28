@@ -90,3 +90,33 @@
     margin-bottom: 3px;
 }
 
+.no-orders-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+  }
+  
+  .no-orders-message {
+    margin-top: 20px;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .no-orders-icon {
+    font-size: 50px;
+    color: #999;
+    margin-bottom: 10px;
+  }
+  
+  .no-orders-text {
+    font-size: 18px;
+    color: #333;
+  }
