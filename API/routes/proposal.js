@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { createDirectProposal, getAllProposals, editProposal, acceptProposal, refuseProposal,cancelProposal,createFutureProposal,createPeriodicProposal, getUserProposals} = require('../controllers/proposal.controller.js')
+const { createDirectProposal, getAllProposals, editProposal, acceptProposal, refuseProposal,cancelProposal,createFutureProposal,createPeriodicProposal, getUserProposals, getSellerProposals} = require('../controllers/proposal.controller.js')
 
 const router = Router();
 
@@ -12,6 +12,7 @@ router.put("/cancelproposal", cancelProposal);
 router.post("/futureproposal", createFutureProposal);
 router.post("/periodicproposal", createPeriodicProposal);
 router.post("/getUserProposals", getUserProposals);
+router.post("/getSellerProposals", getSellerProposals);
 
 
 module.exports = router;
