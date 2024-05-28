@@ -1,24 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import '../CSS/e404.css'
-import { fetchProduct } from '../APIF/prod.fetch';
 
 export default function E404(){
-
-    //HERE IS THE PROBLEM
-    fetchProduct(3)
-    .then(product => {
-        console.log("e404.js fetchProduct(3) result:", product); // Log completo do produto
-        if (product) {
-            console.log("e404.js fetchProduct(3) = " + product.name); // Acessando a propriedade name
-        } else {
-            console.error("Product is undefined or null.");
-        }
-    })
-    .catch(error => {
-        console.error('Error fetching product:', error);
-    });
-
    
     return(
         <>
