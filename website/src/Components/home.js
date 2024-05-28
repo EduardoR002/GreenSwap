@@ -51,7 +51,7 @@ function Home() {
 
     async function getProducts() {
         const formData = {
-            search_name: " ",
+            search_name: "",
             max_price: 0,
             min_price: 0
         };
