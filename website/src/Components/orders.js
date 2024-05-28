@@ -1,64 +1,92 @@
-import React, { useRef }  from "react";
-import '../CSS/orders.css'
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import '../CSS/navbar.css';
 import Navbar from './navbar';
+import '../CSS/orders.css';
+import '../CSS/navbar.css';
 
-//Function that will present Orders page of the website
+// Função para buscar todas as ordens de um usuário
+const fetchUserOrders = async (userId) => {
+  try {
+    const response = await fetch(`http://localhost:3000/orders/${userId}`);  //é preciso um getID pra saber o id do user  e ir buscar as suas compras com esta funçâo!!!!!!!!!!!
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching user orders:', error);
+    return [];
+  }
+};
+
 function Orders() {
+  const [orders, setOrders] = useState([]);
+  const userId = 'user123'; // Substitua pelo ID real do usuário
 
-  //fazer função pra ir buscar as compras do user, e a sua informação e do produto que comprou e depois meter as variaveis em baixo no HTML ENTRE OS {}
+  useEffect(() => {
+    const getUserOrders = async () => {
+      const data = await fetchUserOrders(userId);
+      setOrders(data);
+    };
 
+    getUserOrders();
+  }, [userId]);
 
-  return (
-   
-
-    <div className="navbar-position"> {/* Navbar common to all pages*/}
-      <Navbar />
-
-      {/* Div where will apear user purchases*/}
-      <div className="orders-container-10">
-
-          {/* Div for product information and picture*/}
-          <div className='product-container-10'>
-
-                <div className='left-content-10'>
-
-                  <Link to={'../products/'}  className="Link">
-                                <img className='product-img-10' src='https://picsum.photos/328/204'/>
-                  </Link>
-                            <span className='poppins-regular product-h1-10'>{}Tomates</span>
-                            <span className='poppins-regular product-h2-10'>{}15€/kg</span>
-                            <div className='seller-10'>
-                            <span class="material-symbols-outlined mso-10">
-                                    person
-                            </span>
-                            <span className='poppins-regular seller-h3-10'>{}John</span>
-                  </div>
-            </div>
-
-
-                {/* Div for purchase information*/}
-                <div className='right-content-10'>
-
-                  <span className="poppins-regular product-info-h1-10"><b>Purchase Type:</b> {} </span><br></br>
-                  <span className="poppins-regular product-info-h1-10"><b>Purchase Date:</b> {} </span><br></br>
-                  <span className="poppins-regular product-info-h1-10"><b>Quantity:</b> {} kg </span><br></br>
-                  <span className="poppins-regular product-info-h1-10"><b>Price:</b> $ </span><br></br>
-                  <span className="poppins-regular product-info-h1-10"><b>Date Receveid (estimated):</b> {} </span><br></br>
-                  <span className="poppins-regular product-info-h1-10"><b>State: </b> {} </span><br></br>
-
-
-          </div>
-
-      </div>
-         
+  if (orders.length === 0) {
+    return (
       
+      <div className="navbar-position">
+        <Navbar />
+        <div className="no-orders-container">
+          <div className="no-orders-message">
+            <p className="poppins-regular no-orders-text">You dont have orders at moment.</p>
+          </div>
+        </div>
       </div>
-
-
-    </div>
     );
   }
+
+  return (
+    <div className="navbar-position">
+
+      {/* Navbar comum a todas as páginas */}
+      <Navbar />
+
+      {/* Div onde aparecerão as compras do usuário */}
+      <div className="orders-container-10">
+
+        {orders.map(order => (
+          <div key={order.id} className='product-container-10'>
+
+            {/* Div para informações do produto e imagem */}
+            <div className='left-content-10'>
+              <Link to={'../products/'} className="Link">
+                <img className='product-img-10' src='https://picsum.photos/328/204' alt='Product' />
+              </Link>
+              <span className='poppins-regular product-h1-10'>{order.productName}</span>
+              <span className='poppins-regular product-h2-10'>{order.productPrice}€/kg</span>
+              <div className='seller-10'>
+                <span className="material-symbols-outlined mso-10">person</span>
+                <span className='poppins-regular seller-h3-10'>{order.sellerName}</span>
+              </div>
+            </div>
+
+            {/* Div para informações da compra */}
+            <div className='right-content-10'>
+              <span className="poppins-regular product-info-h1-10"><b>Purchase Type:</b> {order.purchaseType}</span><br />
+              <span className="poppins-regular product-info-h1-10"><b>Purchase Date:</b> {order.purchaseDate}</span><br />
+              <span className="poppins-regular product-info-h1-10"><b>Quantity:</b> {order.quantity} kg</span><br />
+              <span className="poppins-regular product-info-h1-10"><b>Price:</b> {order.price}€</span><br />
+              <span className="poppins-regular product-info-h1-10"><b>Date Received (estimated):</b> {order.dateReceived}</span><br />
+              <span className="poppins-regular product-info-h1-10"><b>State:</b> {order.state}</span><br />
+            </div>
+
+          </div>
+        ))}
+
+      </div>
+    </div>
+  );
+}
 
 export default Orders;
