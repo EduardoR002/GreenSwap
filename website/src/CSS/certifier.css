@@ -24,5 +24,18 @@ table {
     padding: 8px; /* Espaçamento interno das células de dados */
   }
   
+  .pending {
+    /* Estilos para o estado pending */
+    background-color: yellow; /* Por exemplo, cor da fonte laranja */
+}
 
+.accepted {
+    /* Estilos para o estado accepted */
+    background-color: green; /* Por exemplo, cor da fonte verde */
+}
+
+.refused {
+    /* Estilos para o estado refused */
+    background-color: red; /* Por exemplo, cor da fonte vermelha */
+}
 

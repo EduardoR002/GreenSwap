@@ -7,7 +7,6 @@ import { fetchRequestSeller } from '../APIF/requestSeller';
 
 //Function that will present About Us page of the website
 function Certifier() {
-  //COPY COPY COPY COPY COPY
   const [requests, setRequests] = useState(null);
 
   useEffect(() => {
@@ -24,7 +23,19 @@ function Certifier() {
         console.error('Error fetching Requests:', error);
       });
   }, []); 
-  //COPY COPY COPY COPY COPY
+
+  function getStateClass(idstate) {
+    switch (idstate) {
+        case 1:
+            return 'pending';
+        case 2:
+            return 'accepted';
+        case 3:
+            return 'refused';
+        default:
+            return '';
+    }
+}
 
     return (
         <>
@@ -50,7 +61,7 @@ function Certifier() {
                                 <td className='poppins-regular'>{request[index].iduser}</td>
                                 <td className='poppins-regular'>{request[index].nif}</td>
                                 {/*<td className='poppins-regular'>{request.photo}</td>*/}
-                                <td className='poppins-regular'>{request[index].idstate}</td>
+                                <td className={`poppins-regular ${getStateClass(request[index].idstate)}`}>{request[index].idstate}</td>
                             </tr>
                         ))}
 
