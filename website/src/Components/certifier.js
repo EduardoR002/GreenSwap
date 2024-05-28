@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
 import '../CSS/navbar.css';
 import Navbar from './navbar';
-import '../CSS/logIn.css';
+import '../CSS/login.css';
 import '../CSS/certifier.css';
 import { fetchRequestSeller } from '../APIF/requestSeller';
 

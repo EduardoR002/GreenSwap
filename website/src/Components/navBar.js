@@ -108,7 +108,7 @@ function Navbar() {
                             <div>
 
                                 <div className="login">
-                                    <Link to="../logIn" className="Link">Login</Link><br />
+                                    <Link to="../login" className="Link">Login</Link><br />
                                 </div>
 
                                 <div className="regist">

@@ -6,7 +6,7 @@ import { validateToken } from './Components/home';
 //Component imports
 import Register from './Components/register'
 import E404 from './Components/e404'
-import Login from './Components/logIn'
+import Login from './Components/login'
 import Home from './Components/home'
 import ProfileView from './Components/profileView';
 import Buy from './Components/buy';
