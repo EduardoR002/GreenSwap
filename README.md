@@ -1,12 +1,12 @@
-# GreenSwap - Agricultural Products Marketplace
+# || GreenSwap - Agricultural Products Marketplace ||
 
 Welcome to GreenSwap, the marketplace for agricultural products!
 
-## Software Development Project
+## ->Software Development Project
 
 This repository hosts the project for the Software Development Project course.
 
-## Overview
+## ->Overview
 
 GreenSwap is an online platform designed to facilitate the buying and selling of agricultural products. It connects farmers, producers, and consumers, providing a convenient way to exchange goods and support local agriculture. The platform consists of four main components:
 
@@ -15,20 +15,20 @@ GreenSwap is an online platform designed to facilitate the buying and selling of
 - **Database**: Utilizes MySQL for data storage
 - **Server**: Hosted on Azure for flexible and scalable infrastructure
 
-## Goals
+## ->Goals
 - Create a user-friendly marketplace for agricultural products.
 - Promote local farming and sustainable agriculture practices.
 - Facilitate direct transactions between farmers and consumers.
 - Enhance transparency in the agricultural supply chain.
 
-## Developers:
+## ->Developers:
 - Eduardo Rebelo (21105) -> Degree Student in Computer Systems Engineering - IPCA
 - João Oliveira (26001) -> Degree Student in Computer Systems Engineering - IPCA
 - Gonçalo Gonçalves (26019) -> Degree Student in Computer Systems Engineering - IPCA
 - Pedro Rei (26013) -> Degree Student in Computer Systems Engineering - IPCA
 - Rui Miguel (26016) -> Degree Student in Computer Systems Engineering - IPCA
 
-## Setup Instructions
+## ->Setup Instructions
 ### Website
 1. Navigate to the `website` directory.
 2. Install dependencies with `npm install`.
