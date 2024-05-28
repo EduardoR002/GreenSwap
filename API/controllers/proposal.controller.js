@@ -56,7 +56,7 @@ async function createFutureProposal (req, res) {
             }
         );
 
-        console.log(result);
+        //console.log(result);
 
         if (!result) {
             res.status(500).json({

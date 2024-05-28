@@ -46,7 +46,7 @@ const Logout = async () => {
 function Navbar() {
 
     console.log(loggedin);
-    console.log(role);
+    //console.log(role);
 
 
     return (

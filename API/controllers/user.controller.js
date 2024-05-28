@@ -291,7 +291,7 @@ async function loginUser(req, res) {
             }
 
             const userId = user.idUser;
-            console.log(userId);
+            //console.log(userId);
             // Check if user is a seller
             const seller = await models.seller.findOne({ where: { userId: userId } });
 
