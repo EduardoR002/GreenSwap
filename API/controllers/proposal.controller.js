@@ -319,6 +319,33 @@ async function editProposal(req, res) {
     }
 }
 
+async function getUserProposals(req, res){
+    const { userId } = req.body;
+    try {
+        const user = await models.user.findByPk(userId);
+        if(user){
+            const [result] = await models.sequelize.query(
+                'CALL getUserProposals(:in_userId)',
+                {
+                    replacements: { in_userId: userId },
+                    type: models.sequelize.QueryTypes.SELECT
+                }
+            );
+            return res.status(200).json(result);
+        }
+        else{
+            return res.status(404).json({
+                message: 'User not found' 
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: "An error occurred",
+            error: error.message,
+        });
+    }
+}
+
 module.exports = {
     createDirectProposal: createDirectProposal,
     getAllProposals: getAllProposals,
@@ -327,5 +354,6 @@ module.exports = {
     refuseProposal: refuseProposal,
     cancelProposal: cancelProposal,
     createFutureProposal: createFutureProposal,
-    createPeriodicProposal: createPeriodicProposal
+    createPeriodicProposal: createPeriodicProposal,
+    getUserProposals: getUserProposals
 };

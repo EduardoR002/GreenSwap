@@ -79,21 +79,16 @@ async function createProduct(req, res) {
 
 // Async function to get a single product by its ID
 async function getProduct(req, res) {
-    const productId = req.params.productId;
-
+    const { idproduct } = req.body;
     try {
-        const product = await models.product.findByPk(productId);
-
-        if (!product) {
-            return res.status(404).json({
-                message: "Product not found"
-            });
-        }
-
-        res.status(200).json({
-            message: "Product found successfully",
-            product: product
-        });
+        const [result] = await models.sequelize.query(
+            'CALL getProduct(:in_idproduct)',
+            {
+                replacements: { in_idproduct: idproduct },
+                type: models.sequelize.QueryTypes.SELECT
+            }
+        );
+        return res.status(200).json(result);
     } catch (error) {
         res.status(500).json({
             message: "Something went wrong",
@@ -217,10 +212,48 @@ async function editProductStock(productId, newStock) {
     }
 }
 
+async function getBestProducts(req, res){
+    try {
+        const [result] = await models.sequelize.query(
+            'CALL getBestProducts()',
+            {
+                type: models.sequelize.QueryTypes.SELECT
+            }
+        );
+        return res.status(200).json(result);
+    } catch (error) {
+        return res.status(500).json({
+            message: "An error occurred",
+            error: error.message,
+        });
+    }
+}
+
+async function getProductsBySeller(req, res){
+    const { idseller } = req.body;
+    try {
+        const [result] = await models.sequelize.query(
+            'CALL getSellerProducts(:in_idseller)',
+            {
+                replacements: { in_idseller: idseller },
+                type: models.sequelize.QueryTypes.SELECT
+            }
+        );
+        return res.status(200).json(result);
+    } catch (error) {
+        return res.status(500).json({
+            message: "An error occurred",
+            error: error.message,
+        });
+    }
+}
+
 module.exports = {
     createProduct: createProduct,
     getProduct: getProduct,
     getAllProducts: getAllProducts,
     editProduct: editProduct,
-    editProductStock: editProductStock
+    editProductStock: editProductStock,
+    getBestProducts: getBestProducts,
+    getProductsBySeller: getProductsBySeller
 }
