@@ -11,8 +11,9 @@ async function fetchRequestSeller() {
       });
   
       const data = await res.json();
+      console.log(data.requestSellers);
       if (res.ok) {
-        return data;
+        return data.requestSellers;
       } else {
         throw new Error(`Failed to fetch seller requests: ${res.status} ${res.statusText}`);
       }
