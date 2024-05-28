@@ -18,7 +18,6 @@ function Ranking() {
       .then(productsData => {
         if (productsData) {
           const products = Object.values(productsData);
-          console.log("productsData -> "+productsData+" | productsData[0] -> "+ productsData[0])
           setProducts(products); // Definindo o produto no estado
         } else {
           console.error("Products are undefined or null.");

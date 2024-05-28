@@ -16,8 +16,7 @@ function Certifier() {
       .then(data => {
         if (data) {
           const requests = Object.values(data);
-          console.log("data -> "+data+" | data[0] -> "+ data[0])
-          setRequests(data); // Definindo o produto no estado
+          setRequests(requests); // Definindo o produto no estado
         } else {
           console.error("Requests are undefined or null.");
         }
@@ -27,7 +26,6 @@ function Certifier() {
       });
   }, []); 
   //COPY COPY COPY COPY COPY
-  
 
     return (
         <>
@@ -49,11 +47,11 @@ function Certifier() {
                         <tbody>
                             {requests.map((request, index) => (
                                 <tr>
-                                    <td>{request.idrequestseller}</td>
-                                    <td>{request.iduser}</td>
-                                    <td>{request.nif}</td>
-                                    <td>{request.photo}</td>
-                                    <td>{request.idstate}</td>
+                                    <td>{request[index].idrequestseller}</td>
+                                    <td>{request[index].iduser}</td>
+                                    <td>{request[index].nif}</td>
+                                    {/*<td>{request[index].photo}</td>*/}
+                                    <td>{request[index].idstate}</td>
                                 </tr>
                             ))}
                         </tbody>
