@@ -3,6 +3,7 @@ const models = require('../models');
 // Async function to create a new product
 async function createProduct(req, res) {
     const { name, description, price, stock, idtypeproduct, idseller } = req.body;
+    const photo = req.file.buffer;
 
     try {
 
@@ -52,7 +53,7 @@ async function createProduct(req, res) {
                 message: "Product with the same name, seller, and type already exists"
             });
         }
-
+        
         // Create the new product
         const newProduct = {
             name,
@@ -60,7 +61,8 @@ async function createProduct(req, res) {
             price,
             stock,
             idtypeproduct,
-            idseller
+            idseller,
+            photo
         };
 
         const createdProduct = await models.product.create(newProduct);
