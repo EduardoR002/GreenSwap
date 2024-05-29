@@ -94,6 +94,8 @@
     border-style: solid;
     border-width: 5px;
     border-color: #04B204;
+    max-width: 300px; /* Set the maximum width of the image */
+    max-height: 300px; /* Set the maximum height of the image */
 }
 
 .seller-03{

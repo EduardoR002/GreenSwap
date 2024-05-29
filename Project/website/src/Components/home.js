@@ -39,25 +39,30 @@ export async function validateToken() {
     }
 }
 
+function arrayBufferToBase64(buffer) {
+    const bytes = new Uint8Array(buffer);
+    let binary = '';
+    for (let i = 0; i < bytes.byteLength; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+}
+
 // Function that will present website home page
 function Home() {
-    var loggedin;
-
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
         getProducts();
-    }, []); // O array vazio como segundo argumento garante que o efeito só execute uma vez após a montagem
-
+    }, []); // Empty array as the second argument ensures the effect runs only once after mount
+    
     async function getProducts() {
         const formData = {
             search_name: "",
             max_price: 0,
             min_price: 0
         };
-    
-        //console.log('Sending request with data:', formData);
-    
+
         try {
             const res = await fetch('http://localhost:3000/product/getall', {
                 method: 'POST',
@@ -66,9 +71,9 @@ function Home() {
                 },
                 body: JSON.stringify(formData),
             });
-    
+
             const data = await res.json();
-    
+
             if (res.ok) { // Check if response status is in the range 200-299
                 const flattenedProducts = Object.values(data.products[0]);
                 setProducts(flattenedProducts);
@@ -81,46 +86,39 @@ function Home() {
     }
 
     return (
-        <>
-            <div className="navbar-position"> {/* Navbar common to all pages*/}
-                <Navbar />
-            
-                <br></br>
-
-                <br></br>
-                
-                {/* Search bar, for user search for products*/}
-                <div className="search-container-03">
-                    <input type="text" className="search-input-03" placeholder="Search..." />
-                    <button className="search-button-03">Search</button>
-                </div>
-                
-                <br></br>
-
-                {/* Div where will apear  diverse products*/}
-                <div className="productsHome-03">
-
-                    {products.map((product, index) => (
-                        <div className='product-container-03' key={index}>
-                            <Link to={'../products/'+product.idproduct}  className="Link">
-                                <img className='product-img-03' src='https://picsum.photos/328/204'/>
-                            </Link>
-                            <span className='poppins-regular product-h1-03'>{product.name}</span>
-                            <span className='poppins-regular product-h2-03'>{product.price}€/kg</span>
-                            <div className='seller-03'>
-                                <span class="material-symbols-outlined mso-03">
-                                    person
-                                </span>
-                                <span className='poppins-regular seller-h3-03'>{product.seller_name}</span>
-                            </div>
-                        </div>
-                    ))}
-
-                    {/*<p>Aqui vão aparecer os produtos da home page</p>*/}
-                </div>
-
+        <div className="navbar-position">
+            <Navbar />
+            <br />
+            <br />
+            <div className="search-container-03">
+                <input type="text" className="search-input-03" placeholder="Search..." />
+                <button className="search-button-03">Search</button>
             </div>
-        </> 
+            <br />
+            <div className="productsHome-03">
+                {products.map((product, index) => (
+                    <div className="product-container-03" key={index}>
+                        <Link to={'../products/' + product.idproduct} className="Link">
+                            {product.photo ? (
+                                <img
+                                    className="product-img-03"
+                                    src={`data:image/jpeg;base64,${arrayBufferToBase64(product.photo.data)}`}
+                                    alt={product.name}
+                                />
+                            ) : (
+                                <div className="placeholder-image">No Image Available</div>
+                            )}
+                        </Link>
+                        <span className="poppins-regular product-h1-03">{product.name}</span>
+                        <span className="poppins-regular product-h2-03">{product.price}€/kg</span>
+                        <div className="seller-03">
+                            <span className="material-symbols-outlined mso-03">person</span>
+                            <span className="poppins-regular seller-h3-03">{product.seller_name}</span>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
     );
 }
 

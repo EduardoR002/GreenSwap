@@ -119,9 +119,18 @@ async function getAllProducts(req, res) {
             });
         }
 
+        const productsWithBase64Photos = products.map(product => {
+            if (product.photo && Buffer.isBuffer(product.photo)) {
+                const base64Image = product.photo.toString('base64');
+                return { ...product, photo: base64Image };
+            } else {
+                return product;
+            }
+        });
+
         res.status(200).json({
             message: "Products found successfully",
-            products
+            products: productsWithBase64Photos
         });
     } catch (error) {
         res.status(500).json({
