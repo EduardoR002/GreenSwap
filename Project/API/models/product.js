@@ -38,6 +38,10 @@ module.exports = function(sequelize, DataTypes) {
         model: 'seller',
         key: 'idseller'
       }
+    },
+    photo: {
+      type: DataTypes.BLOB,
+      allowNull: true
     }
   }, {
     sequelize,
