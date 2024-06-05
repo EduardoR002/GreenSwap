@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import '../CSS/productRegist.css'
 import '../CSS/navbar.css';
@@ -6,6 +6,8 @@ import Navbar from './navbar';
 import {fetchSellerId} from '../APIF/seller.fetch'
 
 function ProductRegister() {
+
+  const [sellerId, setSellerId] = useState(null);
 
   useEffect(() => {
     async function getSellerId() {
