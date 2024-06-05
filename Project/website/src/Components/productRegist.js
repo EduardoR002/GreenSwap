@@ -24,7 +24,7 @@ function ProductRegister() {
     }
     async function getTypes() {
       try {
-        const typesData = await fetchAllTypes();
+        const typesData = await fetchProductType();
         setTypes(typesData);
       } catch (error) {
         console.error('Failed to fetch types:', error);
