@@ -122,9 +122,9 @@ function ProductRegister() {
         </div>
 
         <div className="input-box-07">
-          <label className="label-forms" htmlFor="type">Product Type:
+          <label className="label-forms" htmlFor="productType">Product Type:</label>
             <select
-              className="poppins-regular input-07"
+              className="poppins-regular product-register-dropdown"
               id="productType"
               value={selectedType}
               onChange={(e) => setSelectedType(e.target.value)}
@@ -136,7 +136,6 @@ function ProductRegister() {
                 </option>
               ))}
             </select>
-          </label>
         </div>
 
         <div className="input-box-07">

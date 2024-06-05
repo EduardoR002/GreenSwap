@@ -122,3 +122,19 @@
 .button-07:hover {
     background-color: #011c25;
 }
+
+.product-register-dropdown {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s;
+  }
+  
+  .product-register-dropdown:focus {
+    border-color: #04B204;
+    outline: none;
+  }
