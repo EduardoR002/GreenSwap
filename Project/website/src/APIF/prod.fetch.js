@@ -24,6 +24,28 @@ async function fetchProduct(idproduct) {
     } catch (error) {
       throw new Error(`Error: ${error.message}`);
     }
+}
+
+async function fetchProductType(){
+  const prodPath = `${API_BASE_URL}/tproduct//getall`;
+
+  try {
+    const res = await fetch(path, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        return data.types;
+    } else {
+        throw new Error(`Failed to fetch types: ${res.status} ${res.statusText}`);
+    }
+  } catch (error) {
+    throw new Error(`Error: ${error.message}`);
   }
-  
-  export { fetchProduct };
+}
+
+export { fetchProduct, fetchProductType };
