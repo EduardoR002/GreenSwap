@@ -1,7 +1,7 @@
 const models = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { createToken } = require('./tokens.controller.js');
+const { createToken, createTokenSeller } = require('./tokens.controller.js');
 const token = require('../models/token.js');
 const {getSellerLogin} = require('./seller.controller.js');
 
