@@ -3,8 +3,23 @@ import { Link } from "react-router-dom";
 import '../CSS/productRegist.css'
 import '../CSS/navbar.css';
 import Navbar from './navbar';
+import {fetchSellerId} from '../APIF/seller.fetch'
 
 function ProductRegister() {
+
+  useEffect(() => {
+    async function getSellerId() {
+      const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+      try {
+        const data = await fetchSellerId(token);
+        setSellerId(data.sellerid);
+      } catch (error) {
+        console.error('Failed to fetch seller id:', error);
+      }
+    }
+    getSellerId();
+  }, []);
+
   const [image, setImage] = useState(null);
   const [imageShow, setImageShow] = useState(null);
 
@@ -35,7 +50,7 @@ function ProductRegister() {
     formData.append('price', productPrice);
     formData.append('stock', productQuantity);
     formData.append('idtypeproduct', productType);
-    formData.append('idseller', 2);
+    formData.append('idseller', sellerId);
     formData.append('photo', image);
 
     try {
