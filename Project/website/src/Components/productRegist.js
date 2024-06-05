@@ -5,12 +5,14 @@ import '../CSS/navbar.css';
 import Navbar from './navbar';
 import {fetchSellerId,} from '../APIF/seller.fetch'
 import { fetchProductType } from '../APIF/prod.fetch';
+import { useHistory } from 'react-router-dom';
 
 function ProductRegister() {
 
   const [types, setTypes] = useState([]); // Estado para armazenar os tipos de produto
   const [selectedType, setSelectedType] = useState(""); // Estado para o tipo de produto selecionado
   const [sellerId, setSellerId] = useState(null);
+  const history = useHistory();
 
   useEffect(() => {
     async function getSellerId() {
@@ -73,8 +75,7 @@ function ProductRegister() {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        console.log(data);
+        history.push('/');
       } else {
         console.error('Failed to register product');
       }
