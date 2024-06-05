@@ -70,13 +70,13 @@ const Navbar = () => {
       <div className="full-section-container-05">
         <div className="left-section-container-05">
           <div className="section-05">
-            <Link to="../ranking" className="Link">Ranking</Link>
+            <Link to="../ranking" className="Link a-05 poppins-regular">Ranking</Link>
           </div>
           <div className="section-05">
-            <Link to="../orders" className="Link">Orders</Link>
+            <Link to="../orders" className="Link a-05 poppins-regular">Orders</Link>
           </div>
           <div className="section-05">
-            <Link to="../proposals" className="Link">Proposals</Link>
+            <Link to="../proposals" className="Link a-05 poppins-regular">Proposals</Link>
           </div>
         </div>
         <div className="right-section-container-05">
