@@ -131,8 +131,8 @@ function ProductRegister() {
             >
               <option value="">Select a type</option>
               {types.map((type) => (
-                <option key={type.id} value={type.id}>
-                  {type.name}
+                <option key={type.idtypeproduct} value={type.idtypeproduct}>
+                  {type.typeproduct}
                 </option>
               ))}
             </select>
