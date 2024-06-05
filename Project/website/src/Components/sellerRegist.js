@@ -7,11 +7,11 @@ import GreenSwap from '../images/GreenSwap.png';
 function SellerRegister() {
   const handleSellerRegister = async () => {
     const formData = {
-      nif: document.getElementById('nif').value, // Alterado para 'nif'
-      description: document.getElementById('description').value, // Alterado para 'description'
+      nif: document.getElementById('nif').value, 
+      description: document.getElementById('description').value, 
     };
     try {
-      const res = await fetch('http://localhost:3000/requestseller/create', {
+      const res = await fetch('http://localhost:3000/requestseller/createRequestSeller', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
