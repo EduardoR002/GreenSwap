@@ -304,7 +304,7 @@ async function loginUser(req, res) {
                 });
             } else {
                 // User is also a seller, generate seller token and send response
-                const token = await createToken(user.idUser, 'seller');
+                const token = await createTokenSeller(user.idUser, seller.idseller ,'seller');
                 res.cookie('token', token, {
                     httpOnly: true,
                     secure: true,

@@ -22,6 +22,26 @@ async function createToken(id, role) {
     }
 }
 
+async function createTokenSeller(id, sellerid, role) {
+    try {
+        // Generate JWT token
+        const token = jwt.sign(
+            { id: id, sellerid: sellerid, role: role},
+            '0f1ab83a576c30f57aa5c33de4009cc923923ac041f6f63af8daa1a5ad53254a',
+            { expiresIn: '1h' }
+        );
+
+        await models.token.create({
+            token: token
+        });
+
+        return token;
+
+    } catch (error) {
+        throw new Error('Error at creating/updating token: ' + error.message);
+    }
+}
+
 async function getRole(req, res) {
     const { token } = req.body
     try {
@@ -41,6 +61,19 @@ async function getId(req, res) {
         const decoded = jwt.verify(token, '0f1ab83a576c30f57aa5c33de4009cc923923ac041f6f63af8daa1a5ad53254a');
         return res.status(200).json({
             id: decoded.id
+        })
+    } catch (error) {
+        console.error('Invalid or expired token:', error.message);
+        throw new Error('Invalid or expired token');
+    }
+}
+
+async function getSellerId(req, res) {
+    const { token } = req.body
+    try {
+        const decoded = jwt.verify(token, '0f1ab83a576c30f57aa5c33de4009cc923923ac041f6f63af8daa1a5ad53254a');
+        return res.status(200).json({
+            sellerid: decoded.sellerid
         })
     } catch (error) {
         console.error('Invalid or expired token:', error.message);
@@ -125,5 +158,7 @@ module.exports = {
     renewToken: renewToken,
     validateToken: validateToken,
     getRole: getRole,
-    getId: getId
+    getId: getId,
+    createTokenSeller: createTokenSeller,
+    getSellerId: getSellerId
 };
