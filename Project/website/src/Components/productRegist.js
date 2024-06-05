@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import '../CSS/productRegist.css'
 import '../CSS/navbar.css';
 import Navbar from './navbar';
-import {fetchSellerId} from '../APIF/seller.fetch'
+import {fetchSellerId,} from '../APIF/seller.fetch'
+import { fetchProductType } from '../APIF/prod.fetch';
 
 function ProductRegister() {
 
+  const [types, setTypes] = useState([]); // Estado para armazenar os tipos de produto
+  const [selectedType, setSelectedType] = useState(""); // Estado para o tipo de produto selecionado
   const [sellerId, setSellerId] = useState(null);
 
   useEffect(() => {
@@ -19,7 +22,16 @@ function ProductRegister() {
         console.error('Failed to fetch seller id:', error);
       }
     }
+    async function getTypes() {
+      try {
+        const typesData = await fetchAllTypes();
+        setTypes(typesData);
+      } catch (error) {
+        console.error('Failed to fetch types:', error);
+      }
+    }
     getSellerId();
+    getTypes();
   }, []);
 
   const [image, setImage] = useState(null);
@@ -45,13 +57,12 @@ function ProductRegister() {
     const productDescription = document.getElementById('productDescription').value;
     const productPrice = document.getElementById('productPrice').value;
     const productQuantity = document.getElementById('productQuantity').value;
-    const productType = document.getElementById('productType').value;
 
     formData.append('name', productName);
     formData.append('description', productDescription);
     formData.append('price', productPrice);
     formData.append('stock', productQuantity);
-    formData.append('idtypeproduct', productType);
+    formData.append('idtypeproduct', selectedType);
     formData.append('idseller', sellerId);
     formData.append('photo', image);
 
@@ -112,12 +123,19 @@ function ProductRegister() {
 
         <div className="input-box-07">
           <label className="label-forms" htmlFor="type">Product Type:
-            <input
+            <select
               className="poppins-regular input-07"
-              type="text"
               id="productType"
-              placeholder=""
-            />
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
+            >
+              <option value="">Select a type</option>
+              {types.map((type) => (
+                <option key={type.id} value={type.id}>
+                  {type.name}
+                </option>
+              ))}
+            </select>
           </label>
         </div>
 
