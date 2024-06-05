@@ -94,7 +94,6 @@ function Home() {
                 <input type="text" className="search-input-03" placeholder="Search..." />
                 <button className="search-button-03">Search</button>
             </div>
-            <br />
             <div className="productsHome-03">
                 {products.map((product, index) => (
                     <div className="product-container-03" key={index}>

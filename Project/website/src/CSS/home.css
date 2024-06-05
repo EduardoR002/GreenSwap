@@ -52,14 +52,16 @@
 }
 
 .productsHome-03 {
+    margin-top: 0; /* Mover o div para cima */
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    margin: 0 auto;
     width: 90%;
     height: 100%;
-    padding: 20px; /*unit*/
+    padding: 20px; /* Espaçamento interno */
     text-align: center;
+    margin-left: auto;  /* Centraliza horizontalmente */
+    margin-right: auto; /* Centraliza horizontalmente */
 }
 
 .product-container-03{
@@ -94,8 +96,10 @@
     border-style: solid;
     border-width: 5px;
     border-color: #04B204;
-    max-width: 300px; /* Set the maximum width of the image */
-    max-height: 300px; /* Set the maximum height of the image */
+    width: 250px; /* Set the maximum width of the image */
+    height: 250px; /* Set the maximum height of the image */
+    object-fit: cover;
+    object-position: center; 
 }
 
 .seller-03{
