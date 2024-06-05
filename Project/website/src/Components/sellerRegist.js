@@ -7,11 +7,11 @@ import GreenSwap from '../images/GreenSwap.png';
 function SellerRegister() {
   const handleSellerRegister = async () => {
     const formData = {
-      email: document.getElementById('email').value,
-      description: document.getElementById('productDescription').value,
+      nif: document.getElementById('nif').value, // Alterado para 'nif'
+      description: document.getElementById('description').value, // Alterado para 'description'
     };
     try {
-      const res = await fetch('http://localhost:3000/seller/create', {
+      const res = await fetch('http://localhost:3000/requestseller/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -23,14 +23,7 @@ function SellerRegister() {
         document.cookie = `user=${data.user.name}; path=/`;
         alert("Criado com sucesso");
       } else if (res.status === 422) {
-        alert("Phone number must be 9 digits long");
-      } else if (res.status === 409) {
-        const data = await res.json();
-        if (data.message === "Email already exists") {
-          alert("Email already exist");
-        } else if (data.message === "Phone number already exists") {
-          alert("Phone number already exist");
-        }
+        // Handle 422 status code if needed
       }
     } catch (error) {
       console.error('Erro:', error.message);
@@ -38,38 +31,49 @@ function SellerRegister() {
   };
 
   return (
-    <div className="seller-register-container">
-      <div className="form-container">
-      <a className='a-05'>
-                <Link to={"../home"}><img src={GreenSwap} className="icon-05" alt="GreenSwap Icon" /></Link>
-                </a>
-        <h1 className="form-title">Be a Seller</h1>
-        
-        <div className="input-group">
-          <label htmlFor="email">Email:</label>
-          <input
-            className="input-field"
-            type="email"
-            id="email"
-            placeholder="Enter your email"
-          />
+    <>
+      <div id="bg-04" />
+      <div className="main-04">
+        {/* Clickable icon that takes the user to the home page */}
+        <div className="iconDiv-04">
+          <Link to={'../home'}>
+            <img
+              src={logo}
+              style={{ width: "60%", height: "60%" }}
+              className="icon-04"
+              alt="Logo"
+            />
+          </Link>
         </div>
-        
-        <div className="input-group">
-          <label htmlFor="productDescription">Description:</label>
-          <input
-            className="input-field"
-            type="text"
-            id="productDescription"
-            placeholder="Enter product description"
-          />
+        {/* Form */}
+        <div className="formDiv-04">
+          <span className="poppins-regular greetings-04">
+            <b>Be a seller!</b>
+          </span>
+          <div className="input-box-04">
+            <span className="material-symbols-outlined"></span>
+            <input
+              className="poppins-regular input-04"
+              type="text"
+              id="nif" // Alterado para 'nif'
+              placeholder="NIF"
+            />
+          </div>
+          <div className="input-box-04">
+            <span className="material-symbols-outlined"></span>
+            <input
+              className="poppins-regular input-04"
+              type="text"
+              id="description" // Alterado para 'description'
+              placeholder="Description"
+            />
+          </div>
+          <button className="poppins-regular button-04" onClick={handleSellerRegister}>
+            Submit
+          </button>
         </div>
-        
-        <button className="submit-button" onClick={handleSellerRegister}>
-          Submit Request
-        </button>
       </div>
-    </div>
+    </>
   );
 }
 
