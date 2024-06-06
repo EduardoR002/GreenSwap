@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { createPurchase, getAllPurchases, editPurchase, createDirectPurchase, deliverPurchase, cancelPeriodicPurchase, getUserPurchases, deliveredPurchase} = require('../controllers/purchase.controller.js')
+const { createPurchase, getAllPurchases, editPurchase, createDirectPurchase, deliverPurchase, cancelPeriodicPurchase, getUserPurchases, deliveredPurchase, getSellerPurchases} = require('../controllers/purchase.controller.js')
 
 const router = Router();
 
@@ -11,6 +11,7 @@ router.post("/deliverPurchase", deliverPurchase);
 router.post("/cancelPeriodic", cancelPeriodicPurchase);
 router.post("/getUserPurchase", getUserPurchases);
 router.post("/deliveredpurchase", deliveredPurchase);
+router.post('/getSellerPurchase', getSellerPurchases);
 
 
 module.exports = router;

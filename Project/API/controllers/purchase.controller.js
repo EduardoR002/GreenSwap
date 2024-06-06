@@ -331,6 +331,41 @@ async function getUserPurchases(req, res){
     }
 }
 
+async function getSellerPurchases(req, res) {
+    const { sellerId } = req.body;
+    console.log('Received sellerId:', sellerId);
+
+    if (!sellerId) {
+        return res.status(400).json({ message: 'SellerId is required' });
+    }
+
+    try {
+        const seller = await models.seller.findByPk(sellerId);
+        if (seller) {
+            const [result] = await models.sequelize.query(
+                'CALL getSellerPurchases(:sellerId)',
+                {
+                    replacements: { sellerId: sellerId },
+                    type: models.sequelize.QueryTypes.SELECT // Use RAW para retornar um array de resultados
+                }
+            );
+            console.log('Query result:', result);
+            return res.status(200).json(result);
+        } else {
+            console.log('Seller not found for sellerId:', sellerId);
+            return res.status(404).json({
+                message: 'Seller not found'
+            });
+        }
+    } catch (error) {
+        console.error('An error occurred:', error);
+        return res.status(500).json({
+            message: "An error occurred",
+            error: error.message,
+        });
+    }
+}
+
 module.exports = {
     createPurchase: createPurchase,
     getAllPurchases: getAllPurchases,
@@ -339,5 +374,6 @@ module.exports = {
     deliverPurchase: deliverPurchase,
     cancelPeriodicPurchase: cancelPeriodicPurchase,
     getUserPurchases: getUserPurchases,
-    deliveredPurchase: deliveredPurchase
+    deliveredPurchase: deliveredPurchase,
+    getSellerPurchases: getSellerPurchases
 };

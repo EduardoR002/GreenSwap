@@ -1,0 +1,81 @@
+.navbar-position {
+    margin-top: 20px;
+  }
+  
+  .purchases-container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    max-width: 90%;
+  }
+  
+  .purchases-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .purchases-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+  }
+  
+  .purchases-table th,
+  .purchases-table td {
+    padding: 12px 15px;
+    text-align: center;
+  }
+  
+  .purchases-table th {
+    background-color: #28a745;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  .purchases-table td {
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .purchases-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .purchases-table th,
+  .purchases-table td {
+    border: 1px solid #ddd;
+  }
+  
+  @media (max-width: 768px) {
+    .purchases-container {
+      padding: 10px;
+    }
+  
+    .purchases-title {
+      font-size: 20px;
+    }
+  
+    .purchases-table th,
+    .purchases-table td {
+      padding: 8px;
+    }
+  }
+
+  .deliver-button {
+    background-color: #28a745; /* Cor verde */
+    color: #fff; /* Cor do texto branco */
+    border: none; /* Remove bordas */
+    padding: 8px 12px; /* Espaçamento interno */
+    border-radius: 4px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor de mãozinha */
+    transition: background-color 0.3s; /* Transição suave ao passar o mouse */
+  }
+  
+  .deliver-button:hover {
+    background-color: #218838; /* Cor verde mais escura ao passar o mouse */
+  }
+  
