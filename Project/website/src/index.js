@@ -178,18 +178,10 @@ async function getProds() {
 const generateProductRoutes = async () => {
   try {
     const product = await getProds();
-
-    const productRoutes = [];
-
-    //console.log(product[0].idproduct)
-
-    for (let i = 0; i <= product.length; i++) {
-      productRoutes.push({
-        path: `products/${product[i].idproduct}`,
-        element: <ProductPage />, 
-      });
-    }
-
+    const productRoutes = product.map(prod => ({
+      path: `products/${prod.idproduct}`,
+      element: <ProductPage />,
+    }));
     return productRoutes;
   } catch (error) {
     console.error('Error generating product routes:', error);
@@ -199,7 +191,7 @@ const generateProductRoutes = async () => {
 
 
 // Combinando as rotas principais com as rotas de produtos geradas dinamicamente
-const combinedRoutes = [...mainRoutes, ...await generateProductRoutes()];
+const combinedRoutes = [...mainRoutes, ...(await generateProductRoutes())];
 
 // Criando o roteador
 const router = createBrowserRouter(createRoutesFromElements(
@@ -208,7 +200,7 @@ const router = createBrowserRouter(createRoutesFromElements(
   ))
 ));
 
-const root = createRoot(document.getElementById('root')); // Use createRoot de react-dom/client
+const root = createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
