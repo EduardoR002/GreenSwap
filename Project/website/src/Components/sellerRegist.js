@@ -3,15 +3,21 @@ import '../CSS/sellerRegist.css';
 import logo from '../images/GreenSwap.png';
 import { Link } from "react-router-dom";
 import GreenSwap from '../images/GreenSwap.png';
+import { fetchUserId} from '../APIF/user.fetch';
 
 function SellerRegister() {
   const handleSellerRegister = async () => {
+
+    //preciso do token
+
     const formData = {
       nif: document.getElementById('nif').value, 
       description: document.getElementById('description').value, 
+      //iduser: fetchUserId(token),
+      //idstate = 1,
     };
     try {
-      const res = await fetch('http://localhost:3000/requestseller/createRequestSeller', {
+      const res = await fetch('http://localhost:3000/requestseller/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
