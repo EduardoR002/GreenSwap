@@ -27,8 +27,8 @@ function SellerRegister() {
       nif: document.getElementById('nif').value, 
       description: document.getElementById('description').value,
       photo: "",
-      iduser: id,
       idstate : 1,
+      iduser: id,
     };
     try {
       const res = await fetch('http://localhost:3000/requestseller/create', {
