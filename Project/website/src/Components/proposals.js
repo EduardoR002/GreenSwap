@@ -1,59 +1,73 @@
-import React, { useRef }  from "react";
-import '../CSS/ranking.css' //TO CHANGE
-import { Link } from "react-router-dom";
-import "../CSS/proposals.css"
-import '../CSS/navbar.css';
+import React, { useEffect, useState } from 'react';
 import Navbar from './navbar';
+import { fetchUserId } from '../APIF/user.fetch';
+import { getUserProposals } from '../APIF/proposal.fetch'; // Certifique-se de criar e importar a função corretamente
+import '../CSS/userproposal.css';
 
-//Function that will present proposal page of the website
 function Proposals() {
+  const [proposals, setProposals] = useState([]);
+  const [userId, setUserId] = useState(null);
 
-    return (
-
-      <div className="navbar-position"> {/* Navbar common to all pages*/}
-      <Navbar />
-
-      {/* Div where will apear user proposals*/}
-      <div className="proposal-container-14">
-
-          {/* Div for product information and picture*/}
-          <div className='product-container-14'>
-
-                <div className='left-content-14'>
-
-                  <Link to={'../products/'}  className="Link">
-                                <img className='product-img-14' src='https://picsum.photos/328/204'/>
-                  </Link>
-                            <span className='poppins-regular product-h1-14'>{}Tomates</span>
-                            <span className='poppins-regular product-h2-14'>{}15€/kg</span>
-                            <div className='seller-14'>
-                            <span class="material-symbols-outlined mso-14">
-                                    person
-                            </span>
-                            <span className='poppins-regular seller-h3-14'>{}John</span>
-                  </div>
-            </div>
-
-                {/* Div for proposal information*/}
-                <div className='right-content-14'>
-
-                  <span className="poppins-regular product-info-h1-14"><b>Proposal Date:</b> {} </span><br></br>
-                  <span className="poppins-regular product-info-h1-14"><b>Quantity:</b> {} kg </span><br></br>
-                  <span className="poppins-regular product-info-h1-14"><b>Price:</b> $ </span><br></br>
-                  <span className="poppins-regular product-info-h1-14"><b>State: </b> {} </span><br></br>
-
-
-
-          </div>
-
-      </div>
-         
-      
-      </div>
-
-
-    </div>
-      );
+  useEffect(() => {
+    async function loadUserProposals() {
+      try {
+        const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        const userData = await fetchUserId(token);
+        setUserId(userData.id);
+        
+        const proposalsData = await getUserProposals(userData.id);
+        setProposals(proposalsData);
+      } catch (error) {
+        console.error('Error fetching user proposals:', error);
+        setProposals([]);
+      }
     }
+
+    loadUserProposals();
+  }, []);
+
+  return (
+    <div className="navbar-position">
+      <Navbar />
+      <div className="proposals-container">
+        <h2 className="proposals-title">My Proposals</h2>
+        <table className="proposals-table">
+          <thead>
+            <tr>
+              <th>Proposal ID</th>
+              <th>Product Name</th>
+              <th>Description</th>
+              <th>Quantity</th>
+              <th>Original Price</th>
+              <th>New Price</th>
+              <th>Type</th>
+              <th>State</th>
+              <th>Start Day</th>
+              <th>Future Date</th>
+              <th>Seller Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {proposals.map((proposal) => (
+              <tr key={proposal.idproposal}>
+                <td>{proposal.idproposal}</td>
+                <td>{proposal.product_name}</td>
+                <td>{proposal.product_description}</td>
+                <td>{proposal.quantity}</td>
+                <td>{proposal.product_price}</td>
+                <td>{proposal.newprice}</td>
+                <td>{proposal.proposal_type}</td>
+                <td>{proposal.proposal_state}</td>
+                <td>{proposal.startday || 'N/A'}</td>
+                <td>{proposal.futuredate || 'N/A'}</td>
+                <td>{proposal.seller_name}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
 
 export default Proposals;

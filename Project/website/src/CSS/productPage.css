@@ -130,6 +130,10 @@
   .popup p {
     margin-bottom: 20px;
   }
+
+  .popup-button {
+    background-color: #04B204;
+  }
   
   .button-04 {
     cursor: pointer;

@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../CSS/productPage.css';
 import '../CSS/login.css';
 import Navbar from './navbar';
 import { fetchProduct } from '../APIF/prod.fetch.js';
 import { createDirectPurchase } from '../APIF/purchase.fetch.js';
-import { fetchUserId} from '../APIF/user.fetch';
+import { fetchUserId } from '../APIF/user.fetch';
+import { createDirectProposal, createPeriodicProposal, createFutureProposal} from '../APIF/proposal.fetch.js';
 
 function ProductPage() {
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [showProposalConfirmation, setShowProposalConfirmation] = useState(false);
+  const [showPeriodicProposalConfirmation, setShowPeriodicProposalConfirmation] = useState(false);
+  const [showFutureProposalConfirmation, setShowFutureProposalConfirmation] = useState(false);
   const [showPeriodicPurchase, setShowPeriodicPurchase] = useState(false);
   const [showFuturePurchase, setShowFuturePurchase] = useState(false);
   const [showProposal, setShowProposal] = useState(false);
@@ -16,6 +20,9 @@ function ProductPage() {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [newPrice, setNewPrice] = useState('');
+  const [startDay, setStartDay] = useState('');
+  const [futurePurchaseDate, setFuturePurchaseDate] = useState('');
   const [id, setId] = useState(null);
   const navigate = useNavigate();
 
@@ -56,9 +63,9 @@ function ProductPage() {
 
   const handlePurchaseSubmit = async () => {
     try {
-      const buydate = new Date().toISOString().split('T')[0]; // Data atual
-      const price = product.price; // Usando o preço do produto
-      const idUser = id; // ID do usuário, substitua conforme necessário
+      const buydate = new Date().toISOString().split('T')[0];
+      const price = product.price;
+      const idUser = id;
 
       const success = await createDirectPurchase(buydate, quantity, price, productId, idUser);
       if (success) {
@@ -72,8 +79,62 @@ function ProductPage() {
     }
   };
 
+  const handleProposalSubmit = async () => {
+    try {
+      const success = await createDirectProposal(newPrice, productId, id, quantity);
+      if (success) {
+        setShowProposalConfirmation(true);
+      } else {
+        alert('Failed to create proposal');
+      }
+    } catch (error) {
+      console.error('Error creating proposal:', error);
+      alert('Error creating proposal');
+    }
+  };
+
+  const handlePeriodicProposalSubmit = async () => {
+    try {
+      const success = await createPeriodicProposal(newPrice, productId, id, quantity, startDay);
+      if (success) {
+        setShowPeriodicProposalConfirmation(true);
+      } else {
+        alert('Failed to create periodic proposal');
+      }
+    } catch (error) {
+      console.error('Error creating periodic proposal:', error);
+      alert('Error creating periodic proposal');
+    }
+  };
+
+  const handleFutureProposalSubmit = async () => {
+    try {
+      const success = await createFutureProposal(newPrice, productId, id, quantity, futurePurchaseDate);
+      if (success) {
+        setShowFutureProposalConfirmation(true);
+      } else {
+        alert('Failed to create future proposal');
+      }
+    } catch (error) {
+      console.error('Error creating future proposal:', error);
+      alert('Error creating future proposal');
+    }
+  };
+
   const handleQuantityChange = (e) => {
     setQuantity(e.target.value);
+  };
+
+  const handleNewPriceChange = (e) => {
+    setNewPrice(e.target.value);
+  };
+
+  const handleStartDayChange = (e) => {
+    setStartDay(e.target.value);
+  };
+
+  const handleFuturePurchaseDateChange = (e) => {
+    setFuturePurchaseDate(e.target.value);
   };
 
   const handlePeriodicPurchaseClick = () => {
@@ -101,7 +162,7 @@ function ProductPage() {
   };
 
   const handleOkClick = () => {
-    navigate('/home'); // Redireciona para a página inicial
+    navigate('/');
   };
 
   function arrayBufferToBase64(buffer) {
@@ -150,41 +211,113 @@ function ProductPage() {
               <input
                 className='poppins-regular input-13'
                 type="number"
-                placeholder='Quantity'
+                placeholder="Quantity"
                 value={quantity}
                 onChange={handleQuantityChange}
               />
               <button className="button-04 poppins-regular" onClick={handlePurchaseSubmit}>Submit</button>
             </div>
           )}
+          {showProposal && (
+            <div className="additional-content">
+              <input
+                className='poppins-regular input-13'
+                type="number"
+                placeholder="Quantity"
+                value={quantity}
+                onChange={handleQuantityChange}
+              />
+              <input
+                className='poppins-regular input-13'
+                type="number"
+                placeholder="New Price"
+                value={newPrice}
+                onChange={handleNewPriceChange}
+              />
+              <button className="button-04 poppins-regular" onClick={handleProposalSubmit}>Submit</button>
+            </div>
+          )}
           {showPeriodicPurchase && (
             <div className="additional-content">
-              <input className='poppins-regular input-13' type="number" placeholder='Quantity' /> 
-              <input className='poppins-regular input-13' type="text" placeholder='New Price' /> 
-              <input className='poppins-regular input-13' type="text" placeholder='Start Date' />
-              <button className="button-04 poppins-regular">Submit</button>
+              <input
+                className='poppins-regular input-13'
+                type="number"
+                placeholder="Quantity"
+                value={quantity}
+                onChange={handleQuantityChange}
+              />
+              <input
+                className='poppins-regular input-13'
+                type="number"
+                placeholder="New Price"
+                value={newPrice}
+                onChange={handleNewPriceChange}
+              />
+              <input
+                className='poppins-regular input-13'
+                type="date"
+                placeholder="Start Day"
+                value={startDay}
+                onChange={handleStartDayChange}
+              />
+              <button className="button-04 poppins-regular" onClick={handlePeriodicProposalSubmit}>Submit</button>
             </div>
           )}
           {showFuturePurchase && (
             <div className="additional-content">
-              <input className='poppins-regular input-13' type="number" placeholder='Quantity' />  
-              <input className='poppins-regular input-13' type="text" placeholder='New Price' /> 
-              <input className='poppins-regular input-13' type="text" placeholder='Receive Date' />
-              <button className="button-04 poppins-regular">Submit</button>
-            </div>
-          )}
-          {showProposal && (
-            <div className="additional-content">
-              <input className='poppins-regular input-13' type="number" placeholder='Quantity' /> 
-              <input className='poppins-regular input-13' type="text" placeholder='New Price' /> 
-              <button className="button-04 poppins-regular">Submit</button>
+              <input
+                className='poppins-regular input-13'
+                type="number"
+                placeholder="Quantity"
+                value={quantity}
+                onChange={handleQuantityChange}
+              />
+              <input
+                className='poppins-regular input-13'
+                type="number"
+                placeholder="New Price"
+                value={newPrice}
+                onChange={handleNewPriceChange}
+              />
+              <input
+                className='poppins-regular input-13'
+                type="date"
+                placeholder="Future Purchase Date"
+                value={futurePurchaseDate}
+                onChange={handleFuturePurchaseDateChange}
+              />
+              <button className="button-04 poppins-regular" onClick={handleFutureProposalSubmit}>Submit</button>
             </div>
           )}
           {showConfirmation && (
             <div className="popup-overlay">
               <div className="popup">
-                <p>Purchase created successfully!</p>
-                <button className="button-04 poppins-regular" onClick={handleOkClick}>Ok</button>
+                <p>Purchase submitted successfully!</p>
+                <button className="button-04 poppins-regular popup-button" onClick={handleOkClick}>OK</button>
+              </div>
+            </div>
+          )}
+          {showProposalConfirmation && (
+            <div className="popup-overlay">
+              <div className="popup">
+                <p>Proposal submitted successfully!</p>
+                <button className="button-04 poppins-regular popup-button" onClick={handleOkClick}>OK</button>
+              </div>
+            </div>
+          )}
+          {showPeriodicProposalConfirmation && (
+            <div className="popup-overlay">
+              <div className="popup">
+                <p>Periodic proposal submitted successfully!</p>
+                <button className="button-04 poppins-regular popup-button" onClick={handleOkClick}>OK</button>
+              </div>
+            </div>
+          )}
+          {showFutureProposalConfirmation && (
+            <div className="popup-overlay">
+              <div className="popup">
+                <p>Future proposal submitted successfully!</p>
+                <button className="button-04 poppins-regular popup-button" onClick={handleOkClick}>OK</button>
               </div>
             </div>
           )}
@@ -192,7 +325,6 @@ function ProductPage() {
       )}
     </div>
   );
-
 }
 
 export default ProductPage;

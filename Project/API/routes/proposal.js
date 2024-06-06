@@ -3,7 +3,7 @@ const { createDirectProposal, getAllProposals, editProposal, acceptProposal, ref
 
 const router = Router();
 
-router.post("/createDirectPurchase",createDirectProposal);
+router.post("/createDirectProposal",createDirectProposal);
 router.get("/getall", getAllProposals);
 router.put("/editproposal/:idproposal",editProposal);
 router.post("/acceptproposal", acceptProposal);
