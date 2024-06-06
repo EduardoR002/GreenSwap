@@ -23,11 +23,19 @@ import SellerProposals from './Components/sellerProposals';
 import Proposals from './Components/proposals';
 import ProductPage from './Components/productPage';
 import Certifier from './Components/certifier';
+import { Navigate } from 'react-router-dom';
 
 let vt_res = await validateToken();
 
 const role = vt_res.role;
 const isLoggedIn = vt_res.loggedin;
+
+const roleBasedRedirect = (role, component) => {
+  if (role === "certifier") {
+    return <Navigate to="/certifier" replace />;
+  }
+  return component;
+}
 
 //console.log("This user is logged in? -> "+isLoggedIn+" Role: "+role);
 
@@ -35,7 +43,7 @@ const isLoggedIn = vt_res.loggedin;
 const mainRoutes = [
   {
     path: '/',
-    element: <Home />,
+    element: roleBasedRedirect(role, <Home />),
     errorElement: <E404 />
   },
 
@@ -51,7 +59,7 @@ const mainRoutes = [
 
   {
     path: 'home',
-    element: <Home />
+    element: roleBasedRedirect(role, <Home />)
   },
 
   {
