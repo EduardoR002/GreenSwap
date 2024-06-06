@@ -81,7 +81,27 @@
 
 .input-13{
     border: 5px solid #08A205;
-    width: 211px;
+    width: 170px;
     height: 30px;
     font-size: 25px;
 }
+
+.button-group-04 {
+    display: flex;
+    gap: 10px;
+  }
+
+.additional-content {
+    position: fixed;
+    bottom: 20%;
+    right: 25%;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #34bc4b;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .additional-content input {
+    display: block;
+    margin-bottom: 10px; /* Adiciona um espaçamento de 10px entre os inputs */
+  }
