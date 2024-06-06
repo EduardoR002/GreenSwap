@@ -39,9 +39,13 @@
     width: 500px;
     height: 311px;
     border: 8px solid #04B204;
-    background: url("https://picsum.photos/1920/1080") lightgray 50% / cover no-repeat;  
     margin-left: 88px;
     margin-top: 20px;
+}
+
+.prod-frame-13 >*{
+    width: 500px;
+    height: 311px;
 }
 
 .prod-price-13{

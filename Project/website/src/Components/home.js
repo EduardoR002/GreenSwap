@@ -54,8 +54,8 @@ function Home() {
 
     useEffect(() => {
         getProducts();
-    }, []); // Empty array as the second argument ensures the effect runs only once after mount
-    
+    }, []);
+
     async function getProducts() {
         const formData = {
             search_name: "",
@@ -74,7 +74,7 @@ function Home() {
 
             const data = await res.json();
 
-            if (res.ok) { // Check if response status is in the range 200-299
+            if (res.ok) {
                 const flattenedProducts = Object.values(data.products[0]);
                 setProducts(flattenedProducts);
             } else {
@@ -97,7 +97,7 @@ function Home() {
             <div className="productsHome-03">
                 {products.map((product, index) => (
                     <div className="product-container-03" key={index}>
-                        <Link to={'../products/' + product.idproduct} className="Link">
+                        <Link to={`/products/${product.idproduct}`} className="Link">
                             {product.photo ? (
                                 <img
                                     className="product-img-03"
