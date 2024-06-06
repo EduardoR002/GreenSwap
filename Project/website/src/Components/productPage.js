@@ -7,6 +7,10 @@ import { fetchProduct } from '../APIF/prod.fetch.js';
 
 function ProductPage() {
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [showPeriodicPurchase, setShowPeriodicPurchase] = useState(false);
+  const [showFuturePurchase, setShowFuturePurchase] = useState(false);
+  const [showProposal, setShowProposal] = useState(false);
+  const [showPurchase, setShowPurchase] = useState(false);
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
 
@@ -14,7 +18,7 @@ function ProductPage() {
     async function loadProduct() {
       try {
         const productData = await fetchProduct(productId);
-        console.log('Product data received:', productData); // Log para verificar os dados recebidos
+        console.log('Product data received:', productData);
         if (productData && typeof productData === 'object') {
           setProduct(productData);
         } else {
@@ -28,7 +32,35 @@ function ProductPage() {
   }, [productId]);
 
   const handleBuyClick = () => {
-    setShowConfirmation(true);
+    setShowPurchase(true);
+    setShowPeriodicPurchase(false);
+    setShowFuturePurchase(false);
+    setShowProposal(false);
+    setShowConfirmation(false);
+  };
+
+  const handlePeriodicPurchaseClick = () => {
+    setShowPeriodicPurchase(true);
+    setShowPurchase(false);
+    setShowFuturePurchase(false);
+    setShowProposal(false);
+    setShowConfirmation(false);
+  };
+
+  const handleFuturePurchaseClick = () => {
+    setShowFuturePurchase(true);
+    setShowPeriodicPurchase(false);
+    setShowPurchase(false);
+    setShowProposal(false);
+    setShowConfirmation(false);
+  };
+
+  const handleProposalClick = () => {
+    setShowProposal(true);
+    setShowPeriodicPurchase(false);
+    setShowFuturePurchase(false);
+    setShowPurchase(false);
+    setShowConfirmation(false);
   };
 
   function arrayBufferToBase64(buffer) {
@@ -43,7 +75,7 @@ function ProductPage() {
   return (
     <div className="navbar-position">
       <Navbar />
-      {product && !showConfirmation ? (
+      {product && (
         <div className='prod-cont-13'>
           <div className='prod-cont-left-13'>
             <div className='prod-frame-13'>
@@ -65,17 +97,43 @@ function ProductPage() {
               <span className='poppins-regular prod-price-13'>{product.price}€/Kg</span>
               <span className='poppins-regular prod-desc-13'>{product.description}</span>
             </div>
-            <div className='pct-down'>
-              <input className='poppins-regular input-13' placeholder='Novo Preço' />
-              <input className='poppins-regular input-13' placeholder='Quantidade' />
-              <button className="button-04 poppins-regular" onClick={handleBuyClick}>Comprar</button>
-            </div>
           </div>
+          <div className="button-group-04">
+            <button className="button-04 poppins-regular" onClick={handleBuyClick}>Purchase Now</button>
+            <button className="button-04 poppins-regular" onClick={handleProposalClick}>Proposal</button>
+            <button className="button-04 poppins-regular" onClick={handlePeriodicPurchaseClick}>Periodic Proposal</button>
+            <button className="button-04 poppins-regular" onClick={handleFuturePurchaseClick}>Future Proposal</button>
+          </div>
+          {showPurchase && (
+            <div className="additional-content">
+              <input className='poppins-regular input-13' type="number" placeholder='Quantity' />  
+              <button className="button-04 poppins-regular">Submit</button>
+            </div>
+          )}
+          {showPeriodicPurchase && (
+            <div className="additional-content">
+               <input className='poppins-regular input-13' type="number" placeholder='Quantity' /> 
+               <input className='poppins-regular input-13' type="text" placeholder='New Price' /> 
+               <input className='poppins-regular input-13' type="text" placeholder='Start Date' />
+               <button className="button-04 poppins-regular">Submit</button>
+            </div>
+          )}
+          {showFuturePurchase && (
+            <div className="additional-content">
+              <input className='poppins-regular input-13' type="number" placeholder='Quantity' />  
+              <input className='poppins-regular input-13' type="text" placeholder='New Price' /> 
+              <input className='poppins-regular input-13' type="text" placeholder='Receive Date' />
+              <button className="button-04 poppins-regular">Submit</button>
+            </div>
+          )}
+          {showProposal && (
+            <div className="additional-content">
+               <input className='poppins-regular input-13' type="number" placeholder='Quantity' /> 
+               <input className='poppins-regular input-13' type="text" placeholder='New Price' /> 
+               <button className="button-04 poppins-regular">Submit</button>
+            </div>
+          )}
         </div>
-      ) : showConfirmation ? (
-        <p className='poppins-regular'>Obrigado pela sua escolha!</p>
-      ) : (
-        <p className='poppins-regular'>Loading...</p>
       )}
     </div>
   );
