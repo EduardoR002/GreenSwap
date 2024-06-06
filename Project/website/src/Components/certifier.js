@@ -3,7 +3,7 @@ import '../CSS/navbar.css';
 import Navbar from './navbar';
 import '../CSS/login.css';
 import '../CSS/certifier.css';
-import { fetchRequestSeller } from '../APIF/requestSeller';
+import { fetchRequestSeller, fetchAcceptSellerRequest, fetchRefuseSellerRequest } from '../APIF/requestSeller';
 
 function Certifier() {
   const [requests, setRequests] = useState(null);
@@ -49,6 +49,7 @@ function Certifier() {
                   <th className='poppins-regular'><b>User ID</b></th>
                   <th className='poppins-regular'><b>NIF</b></th>
                   <th className='poppins-regular'><b>Req State</b></th>
+                  <th className='poppins-regular'><b>Options</b></th>
                 </tr>
               </thead>
               <tbody>
@@ -57,7 +58,17 @@ function Certifier() {
                     <td className='poppins-regular'>{request.idrequestseller}</td>
                     <td className='poppins-regular'>{request.iduser}</td>
                     <td className='poppins-regular'>{request.nif}</td>
-                    <td className={`poppins-regular ${getStateClass(request.idstate)}`}>{request.idstate}</td>
+                    <td className={`poppins-regular ${getStateClass(request.idstate)}`}>{getStateClass(request.idstate)}</td>
+                    
+                    {getStateClass(request.idstate) === 'pending' ? ( 
+                      <td>
+                        <button className='poppins-regular b-15' onClick={() => fetchAcceptSellerRequest(request.idrequestseller, 1)}>Accept</button>
+                        <button className='poppins-regular b-15' onClick={() => fetchRefuseSellerRequest(request.idrequestseller)}>Refuse</button>
+                      </td>
+                    ) : (
+                      <></>
+                    )}
+                   
                   </tr>
                 ))}
               </tbody>

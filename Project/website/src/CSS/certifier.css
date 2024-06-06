@@ -39,3 +39,10 @@ table {
     background-color: red; /* Por exemplo, cor da fonte vermelha */
 }
 
+.b-15{
+  height: 50px;
+  width: 100px;
+  margin: 0px;
+  padding: 0px;
+}
+
