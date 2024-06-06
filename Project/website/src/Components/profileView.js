@@ -1,103 +1,165 @@
 import React, { useState, useEffect } from 'react';
-import '../CSS/profileView.css'
-import { Link } from "react-router-dom";
-import '../CSS/navbar.css';
+import '../CSS/profileView.css';
+import { useParams } from 'react-router-dom';
 import Navbar from './navbar';
+import { fetchUserId, fetchUser, editUser } from '../APIF/user.fetch';
 
-//Function that will present  user profile page on website
 function ProfileView() {
-
-  var loggedin;
-
-  const [products, setProducts] = useState([]);
+  const [id, setId] = useState(null);
+  const [user, setUser] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [updatedUser, setUpdatedUser] = useState({});
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
-      getProducts();
-  }, []); // O array vazio como segundo argumento garante que o efeito só execute uma vez após a montagem
-
-  async function getProducts() {
-      const formData = {
-          search_name: " ",
-          max_price: 0,
-          min_price: 0
-      };
-  
-      //console.log('Sending request with data:', formData);
-  
+    async function getId() {
+      const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, '$1');
       try {
-          const res = await fetch('http://localhost:3000/product/getall', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(formData),
-          });
-  
-          const data = await res.json();
-  
-          if (res.ok) { // Check if response status is in the range 200-299
-              const flattenedProducts = Object.values(data.products[0]);
-              setProducts(flattenedProducts);
-          } else {
-              console.error('Failed to fetch products:', res.status, res.statusText);
-          }
+        const data = await fetchUserId(token);
+        setId(data.id);
+        const userdata = await fetchUser(data.id);
+        setUser(userdata);
+        setUpdatedUser(userdata); // Initialize updatedUser with the fetched data
       } catch (error) {
-          console.error('Error:', error.message);
+        console.error('Failed to fetch user id:', error);
       }
-  }
+    }
+    console.log('Show Popup state changed:', showPopup);
+    getId();
+  }, [showPopup]);
 
+  const handleEditToggle = () => {
+    setIsEditing(!isEditing);
+  };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUpdatedUser({
+      ...updatedUser,
+      [name]: value,
+    });
+  };
+
+  const handleSave = async () => {
+    try {
+      const updatedUserData = await editUser(id, updatedUser);
+      console.log('Updated user data:', updatedUserData);
+      setUser(updatedUserData);
+      setIsEditing(false);
+      setShowPopup(true); 
+      console.log('Popup should be shown:', showPopup);
+    } catch (error) {
+      console.error('Failed to update user:', error);
+    }
+  };
+
+  const handlePopupClose = () => {
+    setShowPopup(false);
+    window.location.reload(); // Refresh the page
+  };
+
+  if (!user) {
     return (
-
-      <div className="navbar-position"> {/* Navbar common to all pages*/}
+      <div className="navbar-position">
         <Navbar />
-
-           
-        <div>
-          <div className="profile">
-            <img className="profile-pic" src="https://fakeimg.pl/400x400/03000f/029904?text=Profile+Image" alt="Not Loaded" />
-            <div className="profile-info">
-              <label htmlFor="nome">Name:</label>
-              <p id="nome">{}----------</p>
-              <br />
-              <label htmlFor="data-nascimento">Birth Date:</label>
-              <p id="data-nascimento">{}aa/mm/yyyy</p>
-              <br />
-              <label htmlFor="morada">Adress:</label>
-              <p id="morada">{}-----</p>
-              <br />
-              <label htmlFor="biografia">Biography:</label>
-              <p id="biografia">{}----------</p>
-            </div>
-          </div>
-    
-          <div className="yourProducts">
-            <h1>My Products</h1>
-
-            {/* Div where will apear  diverse products*/}
-            <div className="productsHome-12">
-            {products.map((product, index) => (
-                        <div className='product-container-12' key={index}>
-                            <Link to={'../products/'+product.idproduct}  className="Link">
-                                <img className='product-img-12' src='https://picsum.photos/328/204'/>
-                            </Link>
-                            <span className='poppins-regular product-h1-12'>{product.name}</span>
-                            <span className='poppins-regular product-h2-12'>{product.price}€/kg</span>
-                            <div className='seller-03'>
-                                <span class="material-symbols-outlined mso-12">
-                                    person
-                                </span>
-                                <span className='poppins-regular seller-h3-12'>{product.seller_name}</span>
-                            </div>
-                        </div>
-                    ))}
-              {/*<p>Aqui vão aparecer os produtos da home page</p>*/}
-              </div>
-
-          </div>
+        <div className="profile">
+          <p>Loading...</p>
         </div>
       </div>
-      );
-    }
+    );
+  }
+
+  return (
+    <div className="navbar-position">
+      <Navbar />
+      <div className="profile-container">
+        <div className="profile">
+          <img
+            className="profile-pic"
+            src={user.photo ? `data:image/jpeg;base64,${user.photo}` : 'https://cdn-icons-png.flaticon.com/512/4122/4122901.png'}
+            alt="Profile"
+          />
+          <div className="profile-info">
+            <label htmlFor="nome">Name:</label>
+            {isEditing ? (
+              <input
+                type="text"
+                id="nome"
+                name="name"
+                value={updatedUser.name}
+                onChange={handleChange}
+              />
+            ) : (
+              <p id="nome">{user.name}</p>
+            )}
+            <label htmlFor="email">Email:</label>
+            {isEditing ? (
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={updatedUser.email}
+                onChange={handleChange}
+              />
+            ) : (
+              <p id="email">{user.email}</p>
+            )}
+            <label htmlFor="phone">Phone:</label>
+            {isEditing ? (
+              <input
+                type="text"
+                id="phone"
+                name="phone"
+                value={updatedUser.phone}
+                onChange={handleChange}
+              />
+            ) : (
+              <p id="phone">{user.phone}</p>
+            )}
+            <label htmlFor="address">Address:</label>
+            {isEditing ? (
+              <input
+                type="text"
+                id="address"
+                name="address"
+                value={updatedUser.address}
+                onChange={handleChange}
+              />
+            ) : (
+              <p id="address">{user.address}</p>
+            )}
+            <label htmlFor="description">Description:</label>
+            {isEditing ? (
+              <textarea
+                id="description"
+                name="description"
+                value={updatedUser.description}
+                onChange={handleChange}
+              />
+            ) : (
+              <p id="description">{user.description || 'N/A'}</p>
+            )}
+            <label htmlFor="created-at">Account Created:</label>
+            <p id="created-at">{new Date(user.createdAt).toLocaleDateString()}</p>
+          </div>
+          {isEditing ? (
+            <button className="edit-save-button" onClick={handleSave}>Save</button>
+          ) : (
+            <button className="edit-save-button" onClick={handleEditToggle}>Edit Profile</button>
+          )}
+        </div>
+      </div>
+      {showPopup && (
+        <div className="popupProfile-overlay">
+          <div className="popupProfile">
+            <h2>Success!</h2>
+            <p>Your profile has been updated successfully.</p>
+            <button className="popupProfile-button" onClick={handlePopupClose}>Ok</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default ProfileView;

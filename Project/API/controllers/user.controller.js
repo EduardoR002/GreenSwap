@@ -206,7 +206,6 @@ async function editUser(req, res){
                     ]
                 }
             });
-
             if (existingUser) {
                 if (existingUser.email === updatedUserData.email && existingUser.idUser !== userId) {
                     return res.status(409).json({
@@ -228,6 +227,10 @@ async function editUser(req, res){
         } else {
             Object.assign(user, updatedUserData);
             const updatedUser = await user.save();
+            return res.status(200).json({
+                message: "User updated successfully",
+                user: updatedUser
+            });
         }
     } catch (error) {
         return res.status(500).json({
