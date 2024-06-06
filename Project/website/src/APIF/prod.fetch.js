@@ -28,7 +28,7 @@ async function fetchProduct(idproduct) {
 }
 
 async function fetchProductType(){
-  const prodTypePath = `${API_BASE_URL}/tproduct//getall`;
+  const prodTypePath = `${API_BASE_URL}/tproduct/getall`;
 
   try {
     const res = await fetch(prodTypePath, {

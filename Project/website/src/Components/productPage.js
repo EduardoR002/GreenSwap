@@ -4,6 +4,8 @@ import '../CSS/productPage.css';
 import '../CSS/login.css';
 import Navbar from './navbar';
 import { fetchProduct } from '../APIF/prod.fetch.js';
+import { createDirectPurchase } from '../APIF/purchase.fetch.js';
+import { fetchUserId} from '../APIF/user.fetch';
 
 function ProductPage() {
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -13,6 +15,8 @@ function ProductPage() {
   const [showPurchase, setShowPurchase] = useState(false);
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+  const [id, setId] = useState(null);
 
   useEffect(() => {
     async function loadProduct() {
@@ -28,6 +32,16 @@ function ProductPage() {
         console.error('Error fetching product:', error);
       }
     }
+    async function getId() {
+      const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+      try {
+        const data = await fetchUserId(token);
+        setId(data.id);
+      } catch (error) {
+        console.error('Failed to fetch seller id:', error);
+      }
+    }
+    getId();
     loadProduct();
   }, [productId]);
 
@@ -37,6 +51,28 @@ function ProductPage() {
     setShowFuturePurchase(false);
     setShowProposal(false);
     setShowConfirmation(false);
+  };
+
+  const handlePurchaseSubmit = async () => {
+    try {
+      const buydate = new Date().toISOString().split('T')[0]; // Data atual
+      const price = product.price; // Usando o preço do produto
+      const idUser = id; // ID do usuário, substitua conforme necessário
+
+      const success = await createDirectPurchase(buydate, quantity, price, productId, idUser);
+      if (success) {
+        setShowConfirmation(true);
+      } else {
+        alert('Failed to create purchase');
+      }
+    } catch (error) {
+      console.error('Error creating purchase:', error);
+      alert('Error creating purchase');
+    }
+  };
+
+  const handleQuantityChange = (e) => {
+    setQuantity(e.target.value);
   };
 
   const handlePeriodicPurchaseClick = () => {
@@ -106,8 +142,14 @@ function ProductPage() {
           </div>
           {showPurchase && (
             <div className="additional-content">
-              <input className='poppins-regular input-13' type="number" placeholder='Quantity' />  
-              <button className="button-04 poppins-regular">Submit</button>
+              <input
+                className='poppins-regular input-13'
+                type="number"
+                placeholder='Quantity'
+                value={quantity}
+                onChange={handleQuantityChange}
+              />
+              <button className="button-04 poppins-regular" onClick={handlePurchaseSubmit}>Submit</button>
             </div>
           )}
           {showPeriodicPurchase && (
@@ -131,6 +173,11 @@ function ProductPage() {
                <input className='poppins-regular input-13' type="number" placeholder='Quantity' /> 
                <input className='poppins-regular input-13' type="text" placeholder='New Price' /> 
                <button className="button-04 poppins-regular">Submit</button>
+            </div>
+          )}
+          {showConfirmation && (
+            <div className="confirmation-message">
+              Purchase created successfully!
             </div>
           )}
         </div>
