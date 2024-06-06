@@ -39,7 +39,6 @@ function SellerRegister() {
       });
       if (res.status === 200) {
         const data = await res.json();
-        document.cookie = `user=${data.user.name}; path=/`;
         alert("Criado com sucesso");
       } else if (res.status === 422) {
         // Handle 422 status code if needed
