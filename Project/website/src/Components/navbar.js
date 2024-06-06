@@ -69,15 +69,22 @@ const Navbar = () => {
       </div>
       <div className="full-section-container-05">
         <div className="left-section-container-05">
-          <div className="section-05">
-            <Link to="../ranking" className="Link a-05 poppins-regular">Ranking</Link>
-          </div>
-          <div className="section-05">
-            <Link to="../orders" className="Link a-05 poppins-regular">Orders</Link>
-          </div>
-          <div className="section-05">
-            <Link to="../proposals" className="Link a-05 poppins-regular">Proposals</Link>
-          </div>
+          {role !== "certifier" ? (
+            <>
+              <div className="section-05">
+              <Link to="../ranking" className="Link a-05 poppins-regular">Ranking</Link>
+            </div>
+            <div className="section-05">
+              <Link to="../orders" className="Link a-05 poppins-regular">Orders</Link>
+            </div>
+            <div className="section-05">
+              <Link to="../proposals" className="Link a-05 poppins-regular">Proposals</Link>
+            </div>
+            </>
+          ) : (
+            <></>
+          )}
+          
         </div>
         <div className="right-section-container-05">
           {/* If user is logged and its a seller it will appear Button of Seller Mode, if not will appear a button for got to seller regist page */}
@@ -87,18 +94,28 @@ const Navbar = () => {
                 <button className="seller-button">Seller Options</button>
               </Link>
             </div>
-          ) : (
+          ) : role !== "certifier" ? (
+            <>
             <div className='section-05'>
               <Link to="../sellerRegist" className="Link">
                 <button className="seller-button">Be a Seller</button>
               </Link>
             </div>
+            </>
+          ) : (
+            <></>
           )}
-          <div className="section-05-2">
+          {role !== "certifier" ? (
+            <>
+            <div className="section-05-2">
             <Link to="../profileView" className="Link">
               <span className="material-symbols-outlined navbar-symbols-05">Person</span>
             </Link>
           </div>
+            </>
+          ) : (
+            <></>
+          )}
           <div className="main-log">
             {/* If user is logged in it will appear login, and create account button, if not it will appear logout */}
             {!loggedin ? (
