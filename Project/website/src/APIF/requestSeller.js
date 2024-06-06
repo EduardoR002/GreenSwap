@@ -22,4 +22,51 @@ async function fetchRequestSeller() {
     }
   }
   
-  export { fetchRequestSeller };
+async function fetchAcceptSellerRequest(idrequestseller, idcertifier){
+  const path = `${API_BASE_URL}/certificate/acceptseller`;
+
+  const formData = { 
+    idrequestseller : idrequestseller,
+    idcertifier : idcertifier
+  };
+
+  try {
+    const res = await fetch(path, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+
+    const data = await res.json();
+
+  } catch (error) {
+    throw new Error(`Error: ${error.message}`);
+  }
+}
+
+async function fetchRefuseSellerRequest(idrequestseller){
+  const path = `${API_BASE_URL}/certificate/refuseseller`;
+
+  const formData = { 
+    idrequestseller : idrequestseller,
+  };
+
+  try {
+    const res = await fetch(path, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+
+    const data = await res.json();
+
+  } catch (error) {
+    throw new Error(`Error: ${error.message}`);
+  }
+}
+
+export { fetchRequestSeller, fetchAcceptSellerRequest, fetchRefuseSellerRequest };
