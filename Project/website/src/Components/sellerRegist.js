@@ -25,7 +25,8 @@ function SellerRegister() {
 
     const formData = {
       nif: document.getElementById('nif').value, 
-      description: document.getElementById('description').value, 
+      description: document.getElementById('description').value,
+      photo: "",
       iduser: id,
       idstate : 1,
     };
@@ -41,7 +42,6 @@ function SellerRegister() {
         const data = await res.json();
         alert("Criado com sucesso");
       } else if (res.status === 422) {
-        // Handle 422 status code if needed
       }
     } catch (error) {
       console.error('Erro:', error.message);
