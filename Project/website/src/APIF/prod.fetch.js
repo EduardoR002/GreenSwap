@@ -49,4 +49,19 @@ async function fetchProductType(){
   }
 }
 
-export { fetchProduct, fetchProductType };
+async function getProductsBySeller(idseller) {
+  const response = await fetch(`${API_BASE_URL}/product/getProductsBySeller`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ idseller })
+  });
+  if (!response.ok) {
+    throw new Error('Failed to fetch products');
+  }
+  const data = await response.json();
+  return Object.values(data);
+}
+
+export { fetchProduct, fetchProductType, getProductsBySeller};

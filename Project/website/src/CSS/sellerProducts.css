@@ -1,0 +1,43 @@
+/* Estilos básicos para a página de produtos do vendedor */
+
+.table-container {
+  padding: 20px;
+}
+
+.products-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.products-table th,
+.products-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.products-table th {
+  background-color: #28a745; /* Cor verde de fundo para o cabeçalho */
+  color: white; /* Cor branca para o texto do cabeçalho */
+  font-weight: bold;
+}
+
+.products-table td {
+  background-color: #ffffff; /* Cor branca para o fundo das células */
+  color: #000000; /* Cor preta para o texto das células */
+}
+
+.product-img-table {
+  max-width: 100px;
+  height: auto;
+}
+
+.placeholder-image {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  background-color: #f2f2f2;
+  line-height: 100px;
+  text-align: center;
+  color: #ccc;
+}

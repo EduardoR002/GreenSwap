@@ -84,7 +84,7 @@ async function createFutureProposal(newPrice, idProduct, idUser, quantity, futur
     } catch (error) {
       throw new Error(`Error: ${error.message}`);
     }
-  }
+}
 
 async function getUserProposals(userId) {
   const userProposalsPath = `${API_BASE_URL}/proposal/getUserProposals`;
@@ -111,6 +111,61 @@ async function getUserProposals(userId) {
       console.error('Error:', error);
       return [];
     }
-  }
+}
 
-export {createDirectProposal, createPeriodicProposal, createFutureProposal, getUserProposals}
+async function getSellerProposals(userId) {
+  const sellerProposalsPath = `${API_BASE_URL}/proposal/getSellerProposals`;
+  const formData = {
+    userId: userId
+  };
+  try {
+    const res = await fetch(sellerProposalsPath, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      console.log('Fetched seller proposals:', data);
+      // Convert object with numeric keys to array
+      return Object.values(data);
+    } else {
+      throw new Error(`Failed to fetch seller proposals: ${res.status} ${res.statusText}`);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    return [];
+  }
+}
+
+async function acceptProposal(idproposal) {
+  const response = await fetch(`${API_BASE_URL}/proposal/acceptproposal`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({idproposal})
+  });
+  if (!response.ok) {
+    throw new Error('Failed to accept proposal');
+  }
+  return await response.json();
+}
+
+async function rejectProposal(idproposal) {
+  const response = await fetch(`${API_BASE_URL}/proposal/refuseproposal`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({idproposal})
+  });
+  if (!response.ok) {
+    throw new Error('Failed to reject proposal');
+  }
+  return await response.json();
+}
+
+export {createDirectProposal, createPeriodicProposal, createFutureProposal, getUserProposals, getSellerProposals, acceptProposal, rejectProposal}
