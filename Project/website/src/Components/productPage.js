@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import '../CSS/productPage.css';
 import '../CSS/login.css';
 import Navbar from './navbar';
@@ -17,6 +17,7 @@ function ProductPage() {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [id, setId] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function loadProduct() {
@@ -99,6 +100,10 @@ function ProductPage() {
     setShowConfirmation(false);
   };
 
+  const handleOkClick = () => {
+    navigate('/home'); // Redireciona para a página inicial
+  };
+
   function arrayBufferToBase64(buffer) {
     const bytes = new Uint8Array(buffer);
     let binary = '';
@@ -154,10 +159,10 @@ function ProductPage() {
           )}
           {showPeriodicPurchase && (
             <div className="additional-content">
-               <input className='poppins-regular input-13' type="number" placeholder='Quantity' /> 
-               <input className='poppins-regular input-13' type="text" placeholder='New Price' /> 
-               <input className='poppins-regular input-13' type="text" placeholder='Start Date' />
-               <button className="button-04 poppins-regular">Submit</button>
+              <input className='poppins-regular input-13' type="number" placeholder='Quantity' /> 
+              <input className='poppins-regular input-13' type="text" placeholder='New Price' /> 
+              <input className='poppins-regular input-13' type="text" placeholder='Start Date' />
+              <button className="button-04 poppins-regular">Submit</button>
             </div>
           )}
           {showFuturePurchase && (
@@ -170,20 +175,24 @@ function ProductPage() {
           )}
           {showProposal && (
             <div className="additional-content">
-               <input className='poppins-regular input-13' type="number" placeholder='Quantity' /> 
-               <input className='poppins-regular input-13' type="text" placeholder='New Price' /> 
-               <button className="button-04 poppins-regular">Submit</button>
+              <input className='poppins-regular input-13' type="number" placeholder='Quantity' /> 
+              <input className='poppins-regular input-13' type="text" placeholder='New Price' /> 
+              <button className="button-04 poppins-regular">Submit</button>
             </div>
           )}
           {showConfirmation && (
-            <div className="confirmation-message">
-              Purchase created successfully!
+            <div className="popup-overlay">
+              <div className="popup">
+                <p>Purchase created successfully!</p>
+                <button className="button-04 poppins-regular" onClick={handleOkClick}>Ok</button>
+              </div>
             </div>
           )}
         </div>
       )}
     </div>
   );
+
 }
 
 export default ProductPage;
